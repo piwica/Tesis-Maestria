@@ -1,0 +1,287 @@
+\section{Introducción}
+El \textit{graph mining} se encarga de hacer descubrimiento de conocimiento en estructuras de grafos. El descubrimiento implica tareas de (a) aprendizaje supervisado encontrando patrones que distinguen un conjunto de grafos de otros, y para lo cual se necesita un conjunto de ejemplos positivos y otro conjunto de ejemplos negativos; (b) aprendizaje no supervisado por medio del agrupamiento o \textit{clustering}; y (c) visualización de grafos para representar el conocimiento.
+
+Dentro del área de la salud, la redes son usadas para representar conocimiento médico. El Hospital Italiano de Buenos Aires extiende un grafo dirigido acíclico llamado SNOMED CT como terminología de referencia, con múltiples fines: epidemiológicos, estadísticos, económicos, soporte para la investigación, etc. SNOMED CT es usado también para representar el conocimiento de los problemas de los pacientes, lo que permite pasar de problemas más genéricos a más específicos en una organización jerárquica.
+
+En las primeras secciones de éste capítulo presento los diferentes patrones que son evaluados en el análisis de grafos y de las redes que representan, con el objetivo de hallar comunidades significativas que permitan clasificar la red según la información contextual y detectar outliers.
+
+En la última sección se encuentra las definiciones de lista de problemas del hospital italiano y cómo ésta extiende el modelo de datos de SNOMED CT.
+
+\section{Redes}
+\subsection{Definición}
+Las redes están presentes en casi cada aspecto de nuestra vida, la tecnología nos ubica en un mundo lleno de redes, y las relaciones físicas o lógicas que establecemos con nuestro entorno constituyen una red en sí misma. Al final de la década del noventa, el avance y popularidad de los computadores cambió la manera como se entendían las redes. La capacidad de los computadores hizo posible acumular grandes bases de datos con estructuras de redes y analizarlas rápida y eficientemente. Esto permitió por primera vez, la comparación de datos de redes reales con los modelos existentes, en particular el modelo ER. Otra influencia importante de la revolución de la computación fue la creación y rápido desarrollo de dos redes enormes: la internet y la World Wide Web (WWW). A continuación presento algunos ejemplos clásicos de redes, aunque en la literatura siguen surgiendo nuevos.
+
+\subsection{Tipos de redes}\cite{Cohen2010}
+% * <mariad.avila@hospitalitaliano.org.ar> 2017-07-01T16:52:38.003Z:
+% 
+% Actualizar a 2017
+% 
+% ^.
+
+\paragraph{Redes de computadores y la internet:} Los nodos son los computadores y los enlaces son físicos. Existen varios tamaños de redes, desde una simple LAN (local area network), donde generalmente un pequeño número de computadores están conectados entre ellos, hasta WAN (wide area network) redes de áreas geográficas extensas que consisten desde decenas hasta miles de computadores conectados.
+ 
+La internet, como una red compleja, es generalmente estudiada en 2 niveles: (1) a nivel del router, donde cada router es un nodo, y dos nodos físicamente conectados están conectados por un enlace, y (2) el nivel AS (sistemas autónomos), donde cada sistema autónomo es tratado como nodo, y dos ASs que tienen una conexión física están conectados por un enlace.
+ 
+\paragraph{Redes tecnológicas:} Estas redes incluyen las red de energía eléctrica, la red de teléfono y la red de transporte. Muchas de estas redes tienden a estar altamente correlacionadas con el espacio en el cual residen.
+ 
+\paragraph{Redes virtuales tecnológicas y la WWW:} Este tipo de red también está basado en computadores y otras tecnologías, pero los enlaces y algunas veces los nodos en esta red, son lógicos y no físicos. La red más grande y ampliamente conocida es la  World Wide Web (WWW), en ella cada página es un nodo en la red, y cada hiperenlace entre las páginas es un enlace dirigido.
+ 
+\paragraph{Redes sociales:} Contempla las redes con interacciones entre individuos. Estos pueden consistir en redes de amigos o conocidos, relaciones de trabajo o sexuales. Además de su importancia en los estudios sociales, entender la estructura de estas redes es también importante para los epidemiólogos, ya que es por medio de estas redes que las epidemias se propagan.
+ 
+\paragraph{Redes económicas:} Son un tipo especial de red social donde los nodos no son individuos sino compañías, países o industrias y los enlaces pueden ser las relaciones comerciales, empresas que comparten un director, fluctuaciones correlacionadas con rendimiento de las acciones, etc.
+ 
+\paragraph{Redes biológicas:}Este tipo abarca diferentes tipos de redes, las redes biológicas pueden ser lógicas, representando interacciones entre proteínas, entre genes, o entre proteínas y genes. Interacciones entre moléculas en las vías metabólicas de la célula pueden ser vistas como una red. Aunque las interacciones son físicas, los enlaces no son entidades físicas sino la posibilidad de una interacción entre dos moléculas. Otras redes lógicas son las ecológicas predador-presa (donde los nodos son las especies, y los enlaces dirigidos representan la depredación de una especie por la otra). Otro tipo de redes biológicas son las redes biológicas físicas, como el sistema de nervios, las neuronas en el cerebro y la red de venas en un organismo.
+ 
+\paragraph{Redes en física:} En el mundo de los fenómenos físicos, se pueden considerar muchos tipos de redes, tanto redes físicas, como la de materiales de estado sólido donde los átomos están enlazados con su átomo vecino más cercano en la red, y las redes lógicas, como la que representa el panorama energético.
+
+\paragraph{Redes de salud:} A continuación enumero ejemplos del uso de las redes en el área de la salud.
+\begin{itemize}
+\item La red de enfermedades humanas\cite{Goh2007TheNetwork.} es una red de trastornos y enfermedades genéticas enlazados a su gen que permite explorar el fenotipo y las enfermedades genéticas asociadas, indicando así el origen genético que tienen en común muchas enfermedades. Este proyecto nació en el 2007, y para el 2014 agregaron la red de síntomas a partir de metadata de los encabezados de temas médicos (MeSH) de PubMed. A partir de estas redes han hecho múltiples trabajos que explican la interacción entre enfermedades, interacciones entre proteínas, interacciones de enfermedades con drogas y comorbolidades.
+\item La red de medicina\cite{Haaren2013,Barabsi2011NetworkDisease}, bajo la premisa que una enfermedad es rara vez consecuencia de una anormalidad en una sóla parte del sistema, implican que Las redes resultantes típicamente ilustran el impacto y la complejidad de la asociación de las enfermedades, en la cual las enfermedades pueden ser agrupadas y clusterizadas.
+
+\end{itemize}
+
+
+\section{Graphmining}
+La minería de datos se ha convertido en sinónimo de encontrar patrones frecuentes en datos transaccionales, el término más general descubrimiento de conocimiento abarca esta y otras tareas. Descubrimiento o aprendizaje no supervisado en graph mining implica no sólo la tarea de encontrar patrones en un conjunto de transacciones, sino también encontrar la posible superposición de patrones en un gran grafo. Descubrimiento también implica la tarea de clustering, la cual intenta describir todos los datos por medio de la identificación de categorías o clusters que comparten patrones comunes de atributos y relaciones. Clustering también puede extraer relaciones entre clusters, resultando en una organización jerárquica o taxonómica  sobre los clusters encontrados en los datos.\cite{Cook2006}
+ 
+En contraste, el aprendizaje supervisado es la tarea de extraer patrones que distinguen un conjunto de grafos de otros. Estos conjuntos son típicamente llamados los ejemplos positivos y los negativos. Este conjunto de ejemplos pueden contener muchas transacciones de grafos o un sólo gran grafo. El objetivo es encontrar un patrón gráfico que aparezca a menudo en los ejemplos positivos pero no en los ejemplos negativos. Tal patrón puede ser usado para predecir la clase (positiva o negativa) de nuevos ejemplos. \cite{Cook2006}
+ 
+La última tarea en graph mining es la visualización del conocimiento descubierto. La visualización de grafos es la representación de los nodos, enlaces y etiquetas de un grafo de tal manera que los humanos entiendan los conceptos representados por el grafo.\cite{Cook2006}
+
+\section{Grafos}
+Los grafos son usados para describir conceptos matemáticos en las redes. Los grafos representan las propiedades topológicas esenciales de una red mediante el tratamiento de ésta como una colección de nodos y enlaces. Este enfoque permite usar herramientas y métodos matemáticos para realizar cálculos en redes complejas cuyas propiedades sean similares a las de un grafo.
+
+Un grafo es un conjunto de pares ordenados $G=(V,E)$ tal que $E\subseteq [V]^{2}$, así cada elemento de $E$ está asociado a un par de elementos (el mismo o distinto) de $V$. Los elementos de $V$ son llamados vértices (o nodos o puntos) de G, y los elementos de $E$ son llamados aristas (o líneas) de G.\cite{Diestel2005GraphTheory,Balakrishnan2000ATheory} 
+
+Si $G(e)={u,v}$, entonces los vértices $u$ y $v$ son los nodos finales de la arista $e$ y se dice que los vértices $u$ y $v$ son adyacentes si $u \neq v$. El grado de un vértice $v$ es el número de $|E(v)|$ de aristas de $v$, es decir el número de vértices adyacentes a $v$. Un vértice de grado 0 está isolado.\cite{Diestel2005GraphTheory,Balakrishnan2000ATheory}
+
+\subsection{Patrones de grafos en redes}\cite{Tang2010}
+La mayoría de las redes de gran escala comparten patrones que no se notan en redes pequeñas. Entre todos los patrones, la mayoría de las características más conocidas son: \textbf{distribución libre de escala, efecto de mundo pequeño y fuertes estructuras de comunidad}.
+
+\subsubsection{Distribución libre de escala}\cite{Tang2010}
+Muchas estadísticas en el mundo real tiene una típica escala, un valor alrededor del cual las mediciones de la muestra se centran. Por ejemplo, la altura de todas las personas en Argentina, la velocidad de los autos en las autopistas, etc. Pero los grados de los nodos en las redes de gran escala a menudo siguen una distribución de ley de potencia (también conocidas como distribución Zipfian, distribución Pareto). 
+ 
+Una distribución que sigue la ley de potencia es también llamada distribución sin escalas, ya que la forma de la distribución permanece sin cambios, excepto para una constante multiplicativa general cuando la escala de unidades se incrementa por un factor. Esto es
+\begin{equation}
+p(ax)=bp(x)
+\end{equation}
+ 
+Donde $a$ y $b$ son constantes. En otras palabras, no existe una escala característica con la variable aleatoria. La forma funcional es la misma para todas las escalas. La red con una distribución libre de escalas para grados nodales también se denomina \textbf{red libre de escala}.
+ 
+Mientras que para las distribuciones normales, es extremadamente raro que un evento ocurra con una desviación muy lejana de la media, en las distribuciones de ley de potencias la cola es mucho más larga. De tal manera que es común que algunos nodos de la red tengan alto grado mientras que la mayoría tienen pocas conexiones. La razón es que la cola de una distribución de ley de potencias decae polinomialmente. Esto es asintotáticamente más lento que en la distribución normal que lo hace exponencialmente, resultando en un fenómeno de cola pesada. La curva de la distribución de ley de potencias se convierte en una línea si graficamos la distribución en una escala log-log, ya que
+\begin{equation}
+\log p(x) =-\alpha \log x + \log C
+\end{equation}
+Esta gráfica es comúnmente usada para verificar si la distribución sigue la ley de potencias. Una estimación más robusta es aproximar la función de distribución acumulativa (cdf), descripta con la siguiente ecuación:
+\begin{equation}
+F(X\geq x) \propto  x^{-\alpha+1 }
+\end{equation}
+
+\subsubsection{Efectos de comunidades}
+Informalmente, una comunidad es un conjunto de nodos donde cada nodo es más cercano a otros nodos en su comunidad que a los nodos que están fuera de ella. Este efecto ha sido encontrado especialmente en las redes sociales.\cite{Tang2010}
+
+Los efectos de comunidades pueden ser medidos con diferentes métricas, a continuación describo las que serán usadas en el análisis de la red de la lista de problemas.
+
+\paragraph{Coeficiente de agrupamiento - Transitividad}
+La transitividad\cite{Wasserman1994} $C^{\Delta}$ Se calcula como una medida de la proporción de triángulos cerrados en un grafo:
+\begin{equation}
+C^{\Delta} =3x\frac{\text{número de triángulos}}{\text{número de tripletas conectadas}}
+\end{equation}
+Esta métrica muestra cuán agrupado es el grafo, ya que representa la probabilidad de que dos nodos estén conectados si comparten un vecino en común. En el contexto de la lista de problemas, si los problemas $P1$, $P2$ ocurren en pacientes que también tengan $P3$, esta métrica representa la probabilidad de que $P1$ y $P2$ ocurran juntas.
+
+\paragraph{Coeficiente de agrupamiento - Promedio}\cite{Saramaki2006,Kaiser2008}
+Calcula el promedio del coeficiente de agrupamiento del grafo G. 
+El coeficiente de agrupamiento se calcula con la siguiente ecuación.
+\begin{equation}
+C = \frac{1}{n}\sum_{v \in G} c_v,
+\end{equation}
+
+\paragraph{Longitud media del camino mínimo entre nodos}
+Calcula la media de la distancia entre los nodos en un grafo.
+
+\subsubsection{Detección de comunidades}
+Según Blonde et al.\cite{Blondel2008FastNetworks}, el problema de detección de comunidades requiere la partición de una red en comunidades de nodos densamente conectados, donde los nodos que pertenecen a diferentes comunidades están escasamente conectados. Formulaciones exactas de este problema de optimización son conocidas por ser computacionalmente intratables. En los últimos años se han propuesto muchos algoritmos para encontrar particiones razonablemente buenas de una manera razonablemente rápida, debido al incremento de la disponibilidad de conjuntos de datos con grandes redes y el impacto de las redes en la vida. Se pueden distinguir los siguientes tipos de algoritmos:
+% * <mariad.avila@hospitalitaliano.org.ar> 2017-07-01T19:41:32.016Z:
+% 
+% Mejorar la cita
+% 
+% ^.
+\begin{itemize}
+\item \textbf{Divisivos:} Detectan enlaces entre comunidades y las eliminan de la red. 
+\item \textbf{Aglomerativos:} Une nodos/comunidades recursivamente.
+\item \textbf{Optimización:} Maximiza una función objetivo.
+\end{itemize}
+
+\paragraph{Algoritmo: leading eigenvector}\cite{Newman2006FindingMatrices.} 
+\begin{itemize}
+\item Complejidad: $c|V|^2 + |E|$
+\end{itemize} 
+El algoritmo Leading Eigenvector para detectar estructura de comunidades fue implementado por igraph usando un algoritmo recursivo que divide la red maximizando la modularidad respecto a la red original. 
+ 
+Los métodos basados en este enfoque han tenido excelentes resultados en test estandarizados. Desafortunadamente, optimización exhaustiva de la modularidad requiere grandes esfuerzos computacionales, incluyendo algoritmos voraces (\textit{greedy}), enfriamiento simulado (\textit{simulated annealing}) y optimización extrema (\textit{EO}). El algoritmo desarrollado por Newman tiene un enfoque diferente, en el cual se reescribe la función de modularidad en términos de la matriz, lo cual permite expresar la tarea de optimización como un problema espectral en el álgebra lineal. Este enfoque lidera una familia de algoritmos rápidos para detectar comunidades que producen resultados competitivos con los mejores métodos previos.
+ 
+\paragraph{Algoritmo: multilevel}\cite{Blondel2008FastNetworks} 
+\begin{itemize}
+\item Complejidad: ``lineal'' cuando  $|V|$ es aproximadamente $|E|$, el algoritmo sugiere que podría ser cuadrática con los grafos completamente conectados.
+% * <mariad.avila@hospitalitaliano.org.ar> 2017-07-01T19:50:42.851Z:
+% 
+% Definir grafo completamente conectado
+% 
+% ^.
+\end{itemize}
+El tamaño típico de las grandes redes como las redes sociales, las redes telefónicas móviles o la web, ahora se cuenta en millones cuando no billones de nodos y en este escala se demanda nuevos métodos para recuperar información a partir de su estructura. Un enfoque prometedor consiste en la descomposición de redes en subunidades o comunidades, las cuales son conjuntos de nodos altamente interconectados. La identificación de estas comunidades es de crucial importancia ya que pueden ayudar a descubrir modulos funcionales desconocidos a priori tales como tópicos en redes de información o ciber comunidades en redes sociales. Ademas, las meta redes resultantes, cuyos nodos son comunidades, pueden ser usadas para visualizar la estructura de la red original.
+ 
+El algoritmo multilevel encuentra particiones con alta modularidad en grandes redes en poco tiempo y despliega una completa estructura de comunidad jerárquica para una red, dando así acceso a diferentes resoluciones de una detección de comunidades. El algoritmo se divide en dos fases que se repiten iterativamente. Asume que se empieza con una red ponderada de $N$ nodos. Primero, se asigna una comunidad diferente a cada nodo de la red. De esta manera, en esta partición inicial hay tantas comunidades como nodos. Entonces, por cada nodo $i$ se considera los $j$ vecinos de $i$ se evalúa la ganancia de modularidad que se obtendría al eliminar el nodo $i$ de esta comunidad y colocarlo en la comunidad $j$. El nodo $i$ es entonces puesto en la comunidad en la cual la ganancia es máxima y positiva. Si no se obtiene una ganancia positiva, entonces el nodo $i$ se mantiene en su comunidad original. Este proceso es aplicado repetidamente y de manera secuencial para todos los nodos hasta que no se puede lograr ninguna mejora.
+ 
+\paragraph{Algoritmo: label propagation}\cite{Raghavan2007NearNetworks.}
+\begin{itemize}
+\item Complejidad: $|V| + |E|$
+\end{itemize}
+Cada nodo es iniciado con una etiqueta y en cada iteración del algoritmo, cada nodo adopta la etiqueta que la mayor cantidad de sus vecino tiene, con los enlaces uniformemente rotos al azar. A medida que las etiquetas se propagan a través de la red de esta manera, grupos de nodos densamente conectados constituyen un consenso en sus etiquetas. Al final del algoritmo,los nodos con la misma etiqueta son conectados como comunidad. Las ventajas de este algoritmo sobre otros métodos es su simplicidad y su efectividad en el tiempo. El algoritmo usa la estructura de la red para guiar su progreso y no optimiza alguna métrica específica. Además, el número de comunidades y sus tamaños no son conocidos a priori y son determinados cuando finaliza el algoritmo.
+ 
+Aunque las redes con una sola comunidad satisface el criterio de parada, este proceso de formación de grupos y competencia “penaliza” que todos los nodos adquieren la misma etiqueta en el caso de redes heterogéneas con una estructura de comunidad implícita. En el caso de redes homogéneas que no tienen estructura de comunidades, el algoritmo identifica la red como una sola comunidad.
+
+\subsubsection{Evaluación de estructuras}
+En esta sección he descrito algunos algoritmos para la detección de comunidades. En parte, la razón por la cual hay tantas definiciones y métodos, es que no está clara cómo debe ser la estructura de una comunidad en una red real. De tal manera que diferentes métodos han sido desarrollados según las necesidades de sus autores\cite{Tang2010}.
+
+Para poder comparar los diferentes resultados obtenidos con los algoritmos, utilizaré las siguientes estrategias:
+
+\begin{itemize}
+\item Cálculo de modularidad
+\item Comparación de las comunidades con un gold-standard 
+\end{itemize}
+
+\subsubsection{Cálculo de modularidad}
+ 
+Según Newman\cite{Newman2006FindingMatrices.}, una buena división de una red en comunidades no es sólamente en la cual el número de aristas que hay entre los grupos es pequeño, sino en la que el número de aristas entre los grupos es menor al esperado. Sólo si el número de aristas entre los grupos es significativamente más bajo al esperado se puede decir con justificación que se ha encontrado una estructura de comunidad significativa. Equivalentemente, se puede examinar el número de aristas en comunidades y buscar divisiones de las redes en las cuales este número es más alto del esperado, los dos enfoques son equivalentes. Estas consideraciones constituyen una medida basada en un punto de corte para modificar una función de beneficio $Q$ definida como
+\begin{equation}
+Q =  (\text{Número de aristas en la comunidad}) -  (\text{Número de aristas esperadas})
+\end{equation} 
+
+Esta función de beneficio es llamada \textbf{modularidad}. La modularidad de una partición es un valor escalar entre -1 y 1, la cual mide la densidad de los enlaces en las comunidades comparados con los enlaces entre las comunidades\cite{Blondel2008FastNetworks}. Entre más se acerca a 1 indica estructura de comunidades más fuertes, y entre más se acerque a menos -1 indica que los nodos están distribuidos en comunidades a las que no pertenecen\cite{Tang2010}.
+
+\subsection{Análisis de redes}
+El análisis de redes involucra una variedad de tareas, a continuación listo las que aplicaré en este trabajo: \cite{Tang2010}:
+\begin{itemize}
+  \item Análisis de centralidad, ayuda a identificar los problemas “más importantes” en la red. Ayudará a entender la influencia y el poder del problema en la red:
+  
+\begin{itemize}
+\item \textbf{Grado.}
+Cuenta el número de conexiones que tiene un nodo. Los problemas con los grados más altos serán los que más ocurren en los pacientes.
+\item \textbf{Intermediación (\textit{betweenness}).} Mide el número de veces que un nodo en particular es miembro de los caminos más cortos entre otros dos nodos.
+Usualmente, la medida de intermediación está normalizada en el rango de [0, 1], dónde 0 es un nodo desconectado y 1 un nodo por donde pasan todas las conexiones.\cite{Cook2006,Brath2015GraphData}
+\item \textbf{Cercanía (\textit{Closeness}).} La cercanía de un nodo mide la distancia promedio a todos los otros nodos. Si pocos nodos son alcanzables, entonces la medida de cercanía es pequeña, al igual si la distancia entre los nodos aumenta. \cite{Cook2006,Brath2015GraphData}.
+\item \textbf{Eigenvector.} Dado un nodo suma recursivamente todas las distancias a todos los otros nodos. Entre más centrales sean los otros nodos, el nodo que se está midiendo tendrá mayor centralidad\cite{Brath2015GraphData}.
+\end{itemize}
+  \item Detección de comunidades. Los problemas dentro de la red forman grupos. Esta tarea identificará las comunidades a través del estudio de estructuras de redes.
+  \item Clasificación de redes y detección de outliers. Algunos problemas están etiquetados con información contextual, las cuales son :servicio de salud, ámbito y grupo etario. Por ejemplo, en una red con algunos problemas pocos comunes identificados como del Servicio Cardiológico, ¿es posible inferir otros problemas poco comunes asociados por su co-ocurrencia en los pacientes?
+\end{itemize}
+
+\section{Lista de problemas}
+\subsection{Historia}
+A fines de la década del 60 Weed\cite{Weed1968} publicó sus ideas respecto a los \textbf{Registros Médicos Orientados a Problemas (RMOP)} que permite identificar y monitorear cada problema médico. Esta lista de problemas debería ser una tabla dinámica de contenidos que pueden ser actualizados en cualquier momento. El HIBA implementó su historia clínica electrónica (HCE) en el año 1998, utilizando la lista de problemas como componente estructural, este proyecto desarrollado in-house actualmente permite el registro de toda la información relacionada con la salud de los pacientes para su posterior análisis\cite{Luna2013,luna2003implementacion}. La HCE es una aplicación web, orientada a problemas y centrada en los pacientes, con funcionalidades personalizadas que dependen del ámbito o nivel de asistencia (ambulatorio, internación general, guardia, triage, internación geriátrica, internación domiciliaria, seguimiento domiciliario, episodio externo y episodio ambulatorio)
+ 
+Cuando un paciente llega a atenderse, el flujo de trabajo de la atención médica requiere que los profesionales ingresen los problemas mediante una línea de texto libre. Durante la implementación de la HCE y la capacitación de los médicos se definió claramente el concepto de \textbf{problema}, que consiste en motivo de consulta o diagnóstico que
+genere una acción por parte del sistema de salud\cite{lopez2004codificacion}. Desde 1998 hasta el año 2017 se cargaron más de \num{1700000} textos libres distintos en la lista de problemas de la HCE del HIBA, agrupados en \num{580000} conceptos.
+
+El texto narrativo no estructurado es aún hoy la forma de documentación más frecuentemente usada en medicina y por medio de la codificación del mismo se intenta disminuir la ambigüedad propia del texto libre. Los motivos por los cuales se codifica son múltiples tales como el económico (para facturar un acto médico), epidemiológico o estadístico (para tener datos sobre incidencia y prevalencia de patologías en una población dada), soporte para la investigación (permite la recuperación de información para estudios científicos), asistencial (permite reclutar candidatos para programas de disease management) y por supuesto en el contexto de una HCE es útil para el funcionamiento de sistemas de soporte clínico en la toma de decisiones\cite{lopez2004codificacion,lopez2002creacion}. 
+
+El proceso de la codificación se realiza de manera secundaria y centralizada, a cargo de un número reducido de profesionales de la medicina que concentran el conocimiento de la clasificación a utilizar y son los responsables de asignar secundariamente los códigos correspondientes a las rúbricas de texto libre que el personal asistencial registra durante la atención. Esta modalidad asegura una mejor consistencia en la codificación\cite{lopez2004codificacion,lopez2005desarrollo}.
+
+\subsection{Snomed CT}
+\textit{Snomed} es una nomenclatura desarrollada por el Colegio Americano de Patólogos para describir morfología y anatomía, desde el año 1965 ha evolucionado en diferentes versiones, hasta \textit{Snomed RT} cuyo desarrollo estaba basado en lógica. Esta última versión se unió en el año 2002 a \textit{Clinical Terms Version 3} desarrollada por el sistema de salud inglés, dando origen a \textit{Snomed CT} por \textit{Clinical Terms}. En 2007, la \textit{International Health Terminology Standards Development Organisation (IHTSDO)} adquirió los derechos de propiedad intelectual sobre todas las versiones de Snomed. Aunque en un principio se tratara de una nomenclatura sistematizada de medicina, en la actualidad es la terminología más completa y precisa del mundo. \cite{Bhattacharyya2016SNOMEDIHTSDO}
+
+\textit{Snomed CT} permite el almacenamiento y la recuperación de información clínica basados en su significado, la definición de la información se construye a partir de relaciones semánticas\cite{Rector,Bhattacharyya2016,ihtsdo2016SG}. Cuando un sólo concepto no es suficiente para definir la información, se puede crear uno nuevo siguiendo las especificaciones de representación composicional, a esto se le llama post-coordinación. El Hospital Italiano de Buenos Aires extendió a Snomed CT a partir del año 2002, al año \num{2017} cuenta en su sistema terminológico con \num{520000} conceptos post-coordinados y \num{60000} mapeados directamente (pre-coordinados) . Una de sus grandes ventajas es su gran tamaño y cubrimiento, pero a su vez es el principal obstáculo para su uso y mantenimiento.
+
+\subsection{Componentes de Snomed CT}
+El modelo lógico de SNOMED CT define la manera en la cual cada componente  y sus derivados están relacionados. Los tipos de componentes son conceptos, descripciones y relaciones. El modelo lógico especifica una representación estructurada de los conceptos usados para representar las entidades clínicas, las descripciones  que son usadas para representar las diferentes variaciones léxicas del concepto, y las relaciones entre los conceptos.\cite{ihtsdo2016SG}
+
+\paragraph{Conceptos:}
+Cada concepto representa una única entidad clínica, la cual está referenciada a un identificador único, numérico y fácilmente procesable por un computador. El identificador provee una referencia única y sin ambiguedades a cada concepto y no tiene tiene ninguna semántica.\cite{ihtsdo2016SG}
+
+\paragraph{Descripciones:}
+Un conjunto de descripciones textuales son asignadas a cada concepto. De esta manera el humano obtiene una representación del concepto en su lenguaje natural.
+
+\paragraph{Relaciones:}
+Una relación representa una asociación entre dos conceptos. Las relaciones son usadas para definir lógicamente el significado de un concepto de tal manera que pueda ser procesada por un computador. Hay dos tipos de relaciones:
+
+\begin{enumerate}
+\item Relaciones subtipo: Usa la relación $|\text{is a}|$, de tal manera que el concepto $P$ $|\text{is a}|$ $Q$,  define que el concepto $P$ es un subtipo de concepto $Q$, o de manera inversa que $Q$ es un supertipo de $P$
+\item Relaciones atributos: Una relación atributo contribuye a la definición del concepto mediante la asociación con otros valores que permiten la caracterización del concepto, estos valores pueden ser estructuras corporales, sustancias, objetos físicos, etc.
+\end{enumerate}
+
+Diseccionado la estructura esquemática de Snomed Ct, cada concepto es representado con un nodo en el grafo y cada relación entre los conceptos es representada por una arista. No hay relaciones circulares y todas son unidireccionales sin excepciones, pero un concepto $P$ puede tener más de una relación de salida o concepto $Q$.\cite{Bhattacharyya2016}.
+
+\subsection{Modelo de Conceptos de Snomed CT}
+Los conceptos de Snomed CT tienen una organización jerárquica, en la forma de un grafo dirigido acíclico, lo que permite pasar de conceptos más genéricos a más específicos en grados de granularidad\cite{Bhattacharyya2016}. El modelo especifica la forma en que los conceptos están dispuestos dentro de los subtipos de jerarquía y los tipos de relaciones de atributos que se permiten en los conceptos que pertenecen a dicha jerarquía \cite{Bhattacharyya2016,ihtsdo2016SG}. Como consecuencia, cada concepto debe pertenecer a una sola jerarquía.
+% * <mariad.avila@hospitalitaliano.org.ar> 2017-07-02T20:04:44.802Z:
+% 
+% > grafo dirigido acíclico
+% Definir grafo dirigido acíclico en grafos
+% 
+% ^.
+ 
+Hay 19 jerarquías, no todas son usadas para representar conceptos clínicos. Las siguientes 8 jerarquías tienen reglas para definir atributos y crear conceptos clínicos según IHTSDO\cite{ihtsdo2016EG}.
+
+\begin{itemize}
+\item \textbf{Hallazgo clínico}, representa los resultados de una observación clínica, evaluación o juicio e incluye estados clínicos normales y anormales. La jerarquía de hallazgo clínico incluye conceptos para representar diagnósticos.
+\item Los\textbf{ procedimientos} representan actividades realizadas en la prestación de servicios de salud. Incluyen no sólo los procedimientos invasivos sino también la administración de medicamentos, toma  de imágenes, educación, terapias y procedimientos administrativos.
+\item Los \textbf{especímenes} representan entidades que son obtenidas (usualmente de pacientes) para el análisis.
+\item \textbf{Estructuras corporales}, representan estructuras anatómicas normales y anormales.
+\item \textbf{Productos biológicos/farmacéuticos}, representan productos farmacéuticos (no dispositivos)
+\item Las \textbf{situaciones de contexto explícito} representan conceptos en los cuales el contexto clínico es especificado como parte de una definición del mismo concepto. Esto incluye la presencia o ausencia de una condición, ya sea que el hallazgo clínico es actual, hace parte del pasado o está relacionado a alguien diferente al paciente.
+\item Los \textbf{eventos} represente las ocurrencias que excluyen a los procedimientos y las intervenciones.
+\item Por último, los \textbf{objetos físicos }representan a los objetos naturales o hechos por el hombre.
+\end{itemize}
+ 
+La tabla \ref{jerarquiasLista} contiene las jerarquías que son usadas en la lista de problemas y la frecuencia de conceptos, se puede observar que las jerarquías más usadas son Hallazgo Clínico, Situación con Contexto Explícito y Procedimientos.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[htb]
+\centering
+\caption{Jerarquías de la lista de problemas}
+\label{jerarquiasLista}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lll@{}}
+\toprule
+Jerarquía & Cantidad de Problemas & Conceptos diferentes \\ \midrule
+HALLAZGO CLÍNICO & 13594650 & 82732 \\
+SITUACIÓN CON CONTEXTO EXPLÍCITO & 1222531 & 5086 \\
+PROCEDIMIENTO & 1138167 & 14991 \\
+OTRAS JERARQUÍAS & 144553 & 1122 \\
+EVENTO & 40084 & 298 \\
+ESTRUCTURA CORPORAL & 11274 & 186 \\
+PRODUCTO BIOLÓGICO/FARMACÉUTICO & 2040 & 35 \\
+OBJETO FÍSICO & 1285 & 75 \\ \bottomrule
+\end{tabular}
+}
+\end{table}
+
+\subsection{Reference sets}
+Para facilitar el uso de SNOMED CT se construyen \textit{reference set (refset)}, los cuales agrupan los conceptos en determinados dominios como especialidades, cohortes, tipos de enfermedades, etc. Estos dominios son llamados subset simples.
+
+SNOMED CT no define metodologías para construir refset con conceptos que se agrupen por un contexto, la metodología propuesta es agrupar los conceptos usados en el histórico de la lista de problemas según el contexto dado por el área jerárquica, el grupo etario y el nivel de asistencia con el que fue registrado.
+
+A continuación, en la tabla \ref{refsetsSnomed} presento la lista de refset disponibles por las organizaciones que tienen listas públicas de problemas que agrupan conceptos en las dimensiones que se analizaron en esta tesis, para compararlas como estándar.
+
+\begin{table}[htb]
+\caption{Reference Sets disponibles como estándar}
+\label{refsetsSnomed}
+\begin{tabularx}{\textwidth}{@{}XXX@{}}
+\toprule
+Organización & Descripción & Refset disponibles \\ \midrule
+Kaiser permanente (US) & En el 2010, anunció la donación de su Convergent Medical Terminology (CMT). Esta donación contiene el conjunto de conceptos más usados en ciertos dominios. Kaiser permanente es un consorcio que integra 28 centros médicos y tiene presencia en 8 estados, es la organización más grande de cuidado médico en Estados Unidos. & Cardiology; Common Lab Procedures; Emergency Department; Endocrine,  Nephrology, and Urology; ENT, Gastroenterology, and Infectious Diseases; Hematology and Oncology; History and Family History; Injury; Mental Health; Miscellaneous Problem List ; Musculoskeletal; Neurology; Obstetrics and Gynecology; Ophthalmology; Orthopedics; Pediatrics; Primary Care; Radiology; Skin/Dermatology and Respiratory; Specimen Source and Specimen Type; Urology \& Nephrology; Vaccinations; Vascular Procedures List \\
+% National Health Service (UK) & El servicio nacional de salud provee en línea\footnote{https://dd4c.digital.nhs.uk/dd4c/} una base de datos con todos los subsets creados por UK Terminology Centre. Los Subsets disponibles están basados en especialidades o hacen parte de requerimientos nacionales& +400 subsets simples \\ 
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Resumen}
+En este capítulo he presentado el graph mining y el conjunto de técnicas que usaré para analizar la red que representa el conocimiento médico en SNOMED CT: (a) análisis de centralidad, (b) detección de comunidades y (c) clasificación y detección de outliers.
+
+Expliqué cuáles son los componentes y el modelo lógico de SNOMED CT, el cual tiene una estructura jerárquica. Este capítulo permitió detectar que la lista de problemas se concentra principalmente en 4 jerarquías de las 19: Hallazgo clínico, Situación con contexto explícito, Procedimiento y Eventos, los conceptos que estén por fuera de estas jerarquías se interpretan como ruido.
+Gracias al estudio del estado del arte definí también que la metodología de aprendizaje no supervisado que  permite agrupar conceptos en un contexto, puede usarse como una metodología replicable para generar \textit{refset} de SNOMED CT.
+
+En los siguientes capítulos usaré las definiciones presentadas en éste, para caracterizar la red de la listar de problemas y crear comunidades según el contexto. Mi trabajo se centra en este punto, contribuyendo a la organización de los datos y a la creación de servicios para recuperar conceptos dentro de un contexto.

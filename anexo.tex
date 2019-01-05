@@ -1,0 +1,354 @@
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{multirow}
+% \usepackage{lscape}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+\tiny
+\begin{landscape}
+\begin{longtable}[c]{@{}lp{0.2\linewidth}lp{0.2\linewidth}lp{0.2\linewidth}l@{}}
+\caption{Top de 10 conceptos de los agrupamientos con las mayores distancias semánticas en la red de problemas}
+\label{top10_rp}\\
+\toprule
+\multirow{2}{*}{Cluster(tamaño)}  & \multicolumn{2}{l}{Grado}                                              & \multicolumn{2}{l}{Cercanía}                                    & \multicolumn{2}{l}{Intermedicación}                                      \\* \cmidrule(l){2-7} 
+                                  & Concepto                                                      & Valor  & Concepto                                               & Valor  & Concepto                                                      & Valor    \\* \cmidrule(r){1-7}
+\endfirsthead
+%
+\multicolumn{7}{c}%
+{{\bfseries Table \thetable\ Continúa de página anterior}} \\
+\toprule
+\multirow{2}{*}{Cluster(tamaño)}  & \multicolumn{2}{l}{Grado}                                              & \multicolumn{2}{l}{Cercanía}                                    & \multicolumn{2}{l}{Intermedicación}                                      \\* \cmidrule(l){2-7} 
+                                  & Concepto                                                      & Valor  & Concepto                                               & Valor  & Concepto                                                      & Valor    \\* \cmidrule(r){1-7}
+\endhead
+%
+\cmidrule(l){2-7}
+\endfoot
+%
+\endlastfoot
+%
+\multirow{3}{*}{cluster\_1(3)}    & QUIMIOTERAPIA                                                 & 1.862  & QUIMIOTERAPIA                                          & 0,0715 & QUIMIOTERAPIA                                                 & 42,33    \\
+                                  & CARCINOMA ENDOMETRIAL                                         & 680    & CARCINOMA ENDOMETRIAL                                  & 0,0713 & CARCINOMA ENDOMETRIAL                                         & 18,63    \\
+                                  & ADENOCARCINOMA DE ENDOMETRIO                                  & 598    & ADENOCARCINOMA DE ENDOMETRIO                           & 0,0713 & ADENOCARCINOMA DE ENDOMETRIO                                  & 5,53     \\
+\multirow{10}{*}{cluster\_6(84)}  & FIEBRE                                                        & 51.606 & FIEBRE                                                 & 0,0744 & RESFRÍO COMÚN                                                 & 2.307,62 \\
+                                  & TOS                                                           & 29.334 & TOS                                                    & 0,0737 & FARINGITIS                                                    & 1.395,75 \\
+                                  & BRONCOESPASMO                                                 & 24.608 & VÓMITOS                                                & 0,0734 & TOS CON FIEBRE                                                & 325,83   \\
+                                  & VÓMITOS                                                       & 22.430 & DIARREA                                                & 0,0734 & AMIGDALECTOMÍA                                                & 237,49   \\
+                                  & DIARREA                                                       & 21.892 & IRRITACIÓN DEL OJO                                     & 0,0733 & EXACERBACIÓN AGUDA DE ASMA                                    & 217,75   \\
+                                  & IRRITACIÓN DEL OJO                                            & 19.910 & FARINGITIS                                             & 0,0731 & FORÚNCULO                                                     & 149,61   \\
+                                  & NEUMONÍA                                                      & 18.860 & ERUPCIÓN CUTÁNEA                                       & 0,0731 & ENFERMEDAD HEPÁTICA INFLAMATORIA                              & 124,90   \\
+                                  & FARINGITIS                                                    & 17.538 & GASTROENTERITIS                                        & 0,0730 & NEUMONITIS                                                    & 106,20   \\
+                                  & ERUPCIÓN CUTÁNEA                                              & 17.402 & TRAUMA CEREBRAL                                        & 0,0730 & INSUFICIENCIA DE LA PELÍCULA LAGRIMAL                         & 94,53    \\
+                                  & TRAUMA CEREBRAL                                               & 16.920 & CERVICODINIA                                           & 0,0729 & CONJUNTIVITIS                                                 & 85,14    \\
+\multirow{10}{*}{cluster\_10(45)} & MALESTAR GENERAL                                              & 46.096 & MALESTAR GENERAL                                       & 0,0747 & INMUNODEFICIENCIA COMBINADA SEVERA                            & 455,20   \\
+                                  & SÍNDROME DE INSUFICIENCIA RENAL CRÓNICA                       & 15.020 & APOYO NUTRICIONAL                                      & 0,0729 & MALESTAR GENERAL                                              & 155,88   \\
+                                  & APOYO NUTRICIONAL                                             & 14.356 & SÍNDROME DE INSUFICIENCIA RENAL CRÓNICA                & 0,0726 & ABDOMEN AGUDO                                                 & 149,82   \\
+                                  & ADMINISTRACIÓN DE ANTICOAGULANTE                              & 8.552  & ADMINISTRACIÓN DE ANTICOAGULANTE                       & 0,0723 & NEUROPATÍA DESMIELINIZANTE                                    & 85,62    \\
+                                  & SÍNDROME DE INSUFICIENCIA RENAL                               & 8.286  & SÍNDROME DE INSUFICIENCIA RENAL                        & 0,0722 & INYECCIÓN DE GAMMAGLOBULINA                                   & 77,27    \\
+                                  & ABDOMEN AGUDO                                                 & 6.080  & ABDOMEN AGUDO                                          & 0,0721 & POLIRRADICULOPATÍA DESMIELINIZANTE INFLAMATORIA CRÓNICA       & 32,00    \\
+                                  & HALLAZGO POSPROCEDIMIENTO                                     & 5.240  & HALLAZGO POSPROCEDIMIENTO                              & 0,0719 & PERITONITIS                                                   & 21,08    \\
+                                  & TRATAMIENTO CON ANTIBIÓTICOS                                  & 4.142  & TRATAMIENTO CON ANTIBIÓTICOS                           & 0,0718 & HALLAZGO POSPROCEDIMIENTO                                     & 20,57    \\
+                                  & INSUFICIENCIA RENAL CRÓNICA REAGUDIZADA                       & 3.704  & DIABETES MELLITUS TIPO 1                               & 0,0718 & SÍNDROME DE INSUFICIENCIA RENAL CRÓNICA                       & 18,50    \\
+                                  & DIABETES MELLITUS TIPO 1                                      & 3.494  & INSUFICIENCIA RENAL CRÓNICA REAGUDIZADA                & 0,0718 & GLOMERULONEFRITIS                                             & 16,66    \\
+\multirow{10}{*}{cluster\_16(34)} & PACIENTE ACTUALMENTE EMBARAZADA                               & 17.324 & MAREO                                                  & 0,0730 & AMENAZA DE TRABAJO DE PARTO PREMATURO (TRASTORNO)             & 283,58   \\
+                                  & ANSIEDAD                                                      & 14.658 & ANSIEDAD                                               & 0,0728 & INTOXICACIÓN POR FÁRMACO Y/O SUSTANCIA MEDICINAL              & 267,73   \\
+                                  & MAREO                                                         & 14.348 & GRIPE                                                  & 0,0726 & SANGRADO VAGINAL                                              & 171,41   \\
+                                  & PUERPERIO                                                     & 10.694 & PACIENTE ACTUALMENTE EMBARAZADA                        & 0,0725 & DOLOR SUPRAPÚBICO                                             & 142,86   \\
+                                  & GRIPE                                                         & 10.450 & CAMBIO EN LOS SÍNTOMAS GINECOLÓGICOS                   & 0,0722 & TRASTORNO MENTAL                                              & 116,94   \\
+                                  & TRASTORNO MENTAL                                              & 9.632  & TRASTORNO MENTAL                                       & 0,0722 & ÚTERO UNICORNE                                                & 114,16   \\
+                                  & CAMBIO EN LOS SÍNTOMAS GINECOLÓGICOS                          & 7.698  & PUERPERIO                                              & 0,0722 & INSOMNIO                                                      & 85,10    \\
+                                  & CONTRACCIONES UTERINAS PRESENTES                              & 7.618  & CÓLICO RENAL                                           & 0,0722 & CAMBIO EN LOS SÍNTOMAS GINECOLÓGICOS                          & 55,21    \\
+                                  & SANGRADO VAGINAL                                              & 7.576  & SANGRADO VAGINAL                                       & 0,0721 & CÓLICO RENAL                                                  & 37,12    \\
+                                  & CÓLICO RENAL                                                  & 7.036  & LIPOTIMIA                                              & 0,0721 & PACIENTE ACTUALMENTE EMBARAZADA                               & 35,84    \\
+\multirow{6}{*}{cluster\_22(6)}   & HEMOPTISIS                                                    & 2.982  & HEMOPTISIS                                             & 0,0717 & CARCINOMA DE LARINGE                                          & 15,64    \\
+                                  & DESNUTRICIÓN                                                  & 2.722  & DESNUTRICIÓN                                           & 0,0717 & FIEBRE POSOPERATORIA                                          & 14,88    \\
+                                  & DIABETES MELLITUS SECUNDARIA                                  & 1.762  & DIABETES MELLITUS SECUNDARIA                           & 0,0716 & DESNUTRICIÓN                                                  & 14,63    \\
+                                  & FIEBRE POSOPERATORIA                                          & 1.420  & FIEBRE POSOPERATORIA                                   & 0,0715 & HEMOPTISIS                                                    & 7,98     \\
+                                  & TUMOR MALIGNO DE LA LARINGE                                   & 1.126  & TUMOR MALIGNO DE LA LARINGE                            & 0,0714 & TUMOR MALIGNO DE LA LARINGE                                   & 4,80     \\
+                                  & CARCINOMA DE LARINGE                                          & 734    & CARCINOMA DE LARINGE                                   & 0,0713 & DIABETES MELLITUS SECUNDARIA                                  & 3,83     \\
+\multirow{10}{*}{cluster\_27(59)} & HIPERTENSIÓN ARTERIAL                                         & 30.020 & HIPERTENSIÓN ARTERIAL                                  & 0,0740 & COLANGITIS AGUDA                                              & 804,66   \\
+                                  & LUMBALGIA                                                     & 22.022 & LUMBALGIA                                              & 0,0734 & COGNICIÓN ALTERADA                                            & 386,24   \\
+                                  & DISLIPIDEMIA                                                  & 15.682 & DISLIPIDEMIA                                           & 0,0732 & DISLIPIDEMIA                                                  & 182,20   \\
+                                  & DOLOR DE HOMBRO                                               & 12.770 & DOLOR DE HOMBRO                                        & 0,0729 & CÁLCULO RENAL                                                 & 171,41   \\
+                                  & ACCIDENTE CEREBROVASCULAR                                     & 12.476 & HIPOTIROIDISMO                                         & 0,0728 & GOTA                                                          & 155,88   \\
+                                  & HIPOTIROIDISMO                                                & 11.264 & TRASTORNO DE CONDUCCIÓN CARDÍACA                       & 0,0726 & DISFAGIA                                                      & 145,24   \\
+                                  & TRASTORNO DEPRESIVO                                           & 11.188 & CAÍDA ACCIDENTAL                                       & 0,0726 & LESIÓN TRAUMÁTICA DE LA PIERNA                                & 128,45   \\
+                                  & CAÍDA ACCIDENTAL                                              & 11.016 & TRASTORNO DEPRESIVO                                    & 0,0726 & ANGINA DE PECHO                                               & 114,08   \\
+                                  & TROMBOSIS VENOSA PROFUNDA                                     & 11.014 & ACCIDENTE CEREBROVASCULAR                              & 0,0726 & ANCIANO FRÁGIL                                                & 106,45   \\
+                                  & TRASTORNO DE CONDUCCIÓN CARDÍACA                              & 10.130 & INDIGESTIÓN                                            & 0,0725 & DOLOR DE HOMBRO                                               & 105,73   \\
+\multirow{10}{*}{cluster\_30(77)} & SERVICIO DE MEDICINA TRANSFUSIONAL                            & 27.586 & PROCEDIMIENTO DE FISIOTERAPIA                          & 0,0736 & HIPOMAGNESEMIA                                                & 143,92   \\
+                                  & PROCEDIMIENTO DE FISIOTERAPIA                                 & 25.532 & SERVICIO DE MEDICINA TRANSFUSIONAL                     & 0,0733 & LEUCEMIA LINFOBLÁSTICA AGUDA COMÚN                            & 121,80   \\
+                                  & ENFERMEDAD INFECCIOSA DE LAS VÍAS URINARIAS INFERIORES        & 9.372  & ENFERMEDAD INFECCIOSA DE LAS VÍAS URINARIAS INFERIORES & 0,0725 & SEPSIS                                                        & 57,29    \\
+                                  & SEPSIS                                                        & 7.298  & SEPSIS                                                 & 0,0721 & TUMOR MALIGNO DE TESTÍCULO                                    & 56,80    \\
+                                  & NEUTROPENIA FEBRIL                                            & 6.320  & TRASTORNO DE ADAPTACIÓN                                & 0,0721 & CARCINOMA DE MAMA                                             & 40,16    \\
+                                  & TRASTORNO DE ADAPTACIÓN                                       & 5.836  & HEMORRAGIA DIGESTIVA ALTA                              & 0,0720 & LEUCEMIA                                                      & 32,11    \\
+                                  & HEMORRAGIA DIGESTIVA ALTA                                     & 5.792  & NEUTROPENIA FEBRIL                                     & 0,0719 & REEMPLAZO TOTAL DE CADERA                                     & 30,02    \\
+                                  & LINFOMA MALIGNO (CLÍNICO)                                     & 5.228  & HALLAZGO RELACIONADO CON UN PROCEDIMIENTO              & 0,0719 & NEUTROPENIA FEBRIL                                            & 27,73    \\
+                                  & HALLAZGO RELACIONADO CON UN PROCEDIMIENTO                     & 5.090  & CIRROSIS HEPÁTICA                                      & 0,0718 & TRASPLANTE DE HÍGADO                                          & 26,30    \\
+                                  & CIRROSIS HEPÁTICA                                             & 4.632  & LINFOMA MALIGNO (CLÍNICO)                              & 0,0718 & ENFERMEDAD INFECCIOSA DE LAS VÍAS URINARIAS INFERIORES        & 25,85    \\
+\multirow{10}{*}{cluster\_34(22)} & DOLOR ABDOMINAL                                               & 35.502 & DOLOR ABDOMINAL                                        & 0,0741 & CÁLCULO VESICAL                                               & 121,93   \\
+                                  & CEFALEA                                                       & 20.358 & CEFALEA                                                & 0,0733 & DOLOR EPIGÁSTRICO                                             & 66,69    \\
+                                  & LESIÓN TRAUMÁTICA DEL PIE                                     & 11.986 & LESIÓN TRAUMÁTICA DEL PIE                              & 0,0727 & MASTITIS                                                      & 45,56    \\
+                                  & CONVULSIÓN                                                    & 10.288 & DOLOR EPIGÁSTRICO                                      & 0,0725 & DOLOR ABDOMINAL                                               & 30,75    \\
+                                  & DOLOR EPIGÁSTRICO                                             & 8.790  & CONVULSIÓN                                             & 0,0724 & FATIGA                                                        & 21,56    \\
+                                  & VÉRTIGO                                                       & 5.754  & VÉRTIGO                                                & 0,0722 & HALLAZGO RELACIONADO CON EL VÓMITO                            & 21,47    \\
+                                  & EPILEPSIA                                                     & 5.306  & NÁUSEAS Y VÓMITOS                                      & 0,0720 & CEFALEA                                                       & 18,53    \\
+                                  & NÁUSEAS Y VÓMITOS                                             & 4.946  & FATIGA                                                 & 0,0720 & MONONUCLEOSIS INFECCIOSA                                      & 17,00    \\
+                                  & FATIGA                                                        & 4.688  & EPILEPSIA                                              & 0,0720 & COLOCACIÓN DE UNA SONDA NASOGÁSTRICA                          & 14,20    \\
+                                  & MASTITIS                                                      & 2.876  & COLESTASIS                                             & 0,0717 & HIPERAMONEMIA                                                 & 5,94     \\
+\multirow{10}{*}{cluster\_36(25)} & DISNEA                                                        & 17.886 & SÍNDROME DE DEPENDENCIA DEL TABACO                     & 0,0732 & ANEMIA FERROPÉNICA                                            & 575,25   \\
+                                  & SÍNDROME DE DEPENDENCIA DEL TABACO                            & 14.358 & DISNEA                                                 & 0,0730 & AFASIA                                                        & 46,02    \\
+                                  & INSUFICIENCIA CARDÍACA CONGESTIVA                             & 12.482 & DORSALGIA (HALLAZGO)                                   & 0,0726 & TUMOR DE KLATSKIN                                             & 30,90    \\
+                                  & INSUFICIENCIA CARDÍACA                                        & 10.070 & INSUFICIENCIA CARDÍACA CONGESTIVA                      & 0,0724 & EXACERBACIÓN AGUDA DE ENFERMEDAD PULMONAR OBSTRUCTIVA CRÓNICA & 30,75    \\
+                                  & DORSALGIA (HALLAZGO)                                          & 9.774  & FIBRILACIÓN AURICULAR                                  & 0,0723 & INSUFICIENCIA CARDÍACA CRÓNICA                                & 18,50    \\
+                                  & FIBRILACIÓN AURICULAR                                         & 8.682  & INSUFICIENCIA CARDÍACA                                 & 0,0723 & ARTERIOSCLEROSIS CORONARIA                                    & 17,81    \\
+                                  & ARTERIOSCLEROSIS CORONARIA                                    & 6.636  & ARTERIOSCLEROSIS CORONARIA                             & 0,0721 & AFASIA COMBINADA                                              & 16,63    \\
+                                  & EXACERBACIÓN AGUDA DE ENFERMEDAD PULMONAR OBSTRUCTIVA CRÓNICA & 6.146  & ANEMIA FERROPÉNICA                                     & 0,0721 & FIBRILACIÓN AURICULAR                                         & 13,77    \\
+                                  & TROMBOEMBOLIA PULMONAR                                        & 6.104  & TROMBOEMBOLIA PULMONAR                                 & 0,0720 & TROMBOEMBOLIA PULMONAR                                        & 12,51    \\
+                                  & DERRAME PLEURAL                                               & 5.812  & DERRAME PLEURAL                                        & 0,0719 & ÚLCERA POR DECÚBITO                                           & 11,37    \\* \cmidrule(l){2-7} 
+\end{longtable}
+\end{landscape}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage{lscape}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+\begin{landscape}
+\begin{longtable}[c]
+{@{}lp{0.2\linewidth}lp{0.2\linewidth}lp{0.2\linewidth}l@{}}
+\caption{Top de 10 conceptos de los agrupamientos con las mayores distancias semánticas en la red de problemas unida a la red semántica de SNOMED CT}
+\label{top10_rsp}\\
+\toprule
+\multirow{2}{*}{Cluster(tamaño)} & \multicolumn{2}{l}{Grado}                                         & \multicolumn{2}{l}{Cercanía}                                      & \multicolumn{2}{l}{Intermediación}                                  \\* \cmidrule(l){2-7} 
+                                 & Concepto                                                 & Valor  & Concepto                                                 & Valor  & Concepto                                                 & Valor    \\* \cmidrule(r){1-7}
+\endfirsthead
+%
+\multicolumn{7}{c}%
+{{\bfseries Table \thetable\ Continúa de página anterior}} \\
+\toprule
+\multirow{2}{*}{Cluster(tamaño)} & \multicolumn{2}{l}{Grado}                                         & \multicolumn{2}{l}{Cercanía}                                      & \multicolumn{2}{l}{Intermediación}                                  \\* \cmidrule(l){2-7} 
+                                 & Concepto                                                 & Valor  & Concepto                                                 & Valor  & Concepto                                                 & Valor    \\* \cmidrule(r){1-7}
+\endhead
+%
+\cmidrule(l){2-7}
+\endfoot
+%
+\endlastfoot
+%
+\multirow{3}{*}{cluster\_0(3)}   & INCISIÓN DE LA TRÁQUEA                                   & 2.116  & INCISIÓN DE LA TRÁQUEA                                   & 0,0716 & AMIGDALECTOMÍA                                           & 237,49   \\
+                                 & AMIGDALECTOMÍA                                           & 1.326  & AMIGDALECTOMÍA                                           & 0,0715 & INCISIÓN DE LA TRÁQUEA                                   & 11,79    \\
+                                 & CIRUGÍA DE CATARATAS                                     & 1.208  & CIRUGÍA DE CATARATAS                                     & 0,0715 & CIRUGÍA DE CATARATAS                                     & 1,58     \\
+\multirow{2}{*}{cluster\_1(2)}   & DERRAME PLEURAL                                          & 5.812  & DERRAME PLEURAL                                          & 0,0719 & ENFERMEDAD PULMONAR OBSTRUCTIVA CRÓNICA, GRAVE           & 5,95     \\
+                                 & ENFERMEDAD PULMONAR OBSTRUCTIVA CRÓNICA, GRAVE           & 1.060  & ENFERMEDAD PULMONAR OBSTRUCTIVA CRÓNICA, GRAVE           & 0,0714 & DERRAME PLEURAL                                          & 3,36     \\
+\multirow{2}{*}{cluster\_2(2)}   & FÍSTULA TRAQUEOESOFÁGICA                                 & 148    & FÍSTULA TRAQUEOESOFÁGICA                                 & 0,0711 & ÚTERO UNICORNE                                           & 114,16   \\
+                                 & ÚTERO UNICORNE                                           & 36     & ÚTERO UNICORNE                                           & 0,0706 & FÍSTULA TRAQUEOESOFÁGICA                                 & 2,23     \\
+\multirow{2}{*}{cluster\_3(2)}   & FRACTURA DE FÉMUR                                        & 2.636  & FRACTURA DE FÉMUR                                        & 0,0716 & OSTEOGENIA IMPERFECTA                                    & 12,19    \\
+                                 & OSTEOGENIA IMPERFECTA                                    & 50     & OSTEOGENIA IMPERFECTA                                    & 0,0709 & FRACTURA DE FÉMUR                                        & 2,83     \\
+\multirow{2}{*}{cluster\_6(2)}   & HIPERCORTISOLISMO                                        & 496    & HIPERCORTISOLISMO                                        & 0,0713 & TUMOR DE KLATSKIN                                        & 30,90    \\
+                                 & TUMOR DE KLATSKIN                                        & 370    & TUMOR DE KLATSKIN                                        & 0,0712 & HIPERCORTISOLISMO                                        & 2,19     \\
+\multirow{2}{*}{cluster\_7(2)}   & PARASITISMO INTESTINAL                                   & 1.666  & PARASITISMO INTESTINAL                                   & 0,0715 & PARASITISMO INTESTINAL                                   & 31,32    \\
+                                 & LITIASIS COLEDOCIANA                                     & 1.432  & LITIASIS COLEDOCIANA                                     & 0,0715 & LITIASIS COLEDOCIANA                                     & 7,59     \\
+\multirow{2}{*}{cluster\_8(2)}   & DIARREA CRÓNICA                                          & 3.406  & DIARREA CRÓNICA                                          & 0,0718 & FIBROSIS QUÍSTICA                                        & 36,17    \\
+                                 & FIBROSIS QUÍSTICA                                        & 492    & FIBROSIS QUÍSTICA                                        & 0,0712 & DIARREA CRÓNICA                                          & 2,00     \\
+\multirow{4}{*}{cluster\_10(4)}  & GASTROENTERITIS                                          & 15.090 & GASTROENTERITIS                                          & 0,0730 & HIPOSPADIAS                                              & 7,70     \\
+                                 & ESTREÑIMIENTO                                            & 11.590 & ESTREÑIMIENTO                                            & 0,0726 & ESTREÑIMIENTO                                            & 6,74     \\
+                                 & HIPOSPADIAS                                              & 530    & HIPOSPADIAS                                              & 0,0712 & DISGENESIA GONADAL                                       & 2,28     \\
+                                 & DISGENESIA GONADAL                                       & 58     & DISGENESIA GONADAL                                       & 0,0709 & GASTROENTERITIS                                          & 1,61     \\
+\multirow{2}{*}{cluster\_13(2)}  & VÓMITOS                                                  & 22.430 & VÓMITOS                                                  & 0,0734 & DIARREA                                                  & 21,82    \\
+                                 & DIARREA                                                  & 21.892 & DIARREA                                                  & 0,0734 & VÓMITOS                                                  & 16,75    \\
+\multirow{2}{*}{cluster\_14(2)}  & ENFERMEDAD INFECCIOSA DE LAS VÍAS URINARIAS INFERIORES   & 9.372  & ENFERMEDAD INFECCIOSA DE LAS VÍAS URINARIAS INFERIORES   & 0,0725 & ENFERMEDAD INFECCIOSA DE LAS VÍAS URINARIAS INFERIORES   & 25,85    \\
+                                 & HEMATOMA RETROPERITONEAL                                 & 542    & HEMATOMA RETROPERITONEAL                                 & 0,0713 & HEMATOMA RETROPERITONEAL                                 & 5,63     \\
+\multirow{2}{*}{cluster\_15(2)}  & RESFRÍO COMÚN                                            & 10.414 & RESFRÍO COMÚN                                            & 0,0726 & RESFRÍO COMÚN                                            & 2.307,62 \\
+                                 & CONGESTIÓN NASAL                                         & 6.282  & CONGESTIÓN NASAL                                         & 0,0722 & CONGESTIÓN NASAL                                         & 3,96     \\
+\multirow{2}{*}{cluster\_17(2)}  & PUERPERIO                                                & 10.694 & PUERPERIO                                                & 0,0722 & EMBARAZO GEMELAR                                         & 8,27     \\
+                                 & EMBARAZO GEMELAR                                         & 1.340  & EMBARAZO GEMELAR                                         & 0,0714 & PUERPERIO                                                & 3,29     \\
+\multirow{3}{*}{cluster\_19(3)}  & ACCIDENTE CEREBROVASCULAR                                & 12.476 & ACCIDENTE CEREBROVASCULAR                                & 0,0726 & DEMENCIA                                                 & 20,17    \\
+                                 & DEMENCIA                                                 & 7.420  & DEMENCIA                                                 & 0,0721 & ENFERMEDAD DE ALZHEIMER                                  & 8,17     \\
+                                 & ENFERMEDAD DE ALZHEIMER                                  & 2.232  & ENFERMEDAD DE ALZHEIMER                                  & 0,0716 & ACCIDENTE CEREBROVASCULAR                                & 5,21     \\
+\multirow{2}{*}{cluster\_22(2)}  & NEUTROPENIA FEBRIL                                       & 6.320  & NEUTROPENIA FEBRIL                                       & 0,0719 & HIPOMAGNESEMIA                                           & 143,92   \\
+                                 & HIPOMAGNESEMIA                                           & 1.146  & HIPOMAGNESEMIA                                           & 0,0715 & NEUTROPENIA FEBRIL                                       & 27,73    \\
+\multirow{3}{*}{cluster\_26(3)}  & VULVOVAGINITIS                                           & 5.654  & VULVOVAGINITIS                                           & 0,0721 & VULVOVAGINITIS                                           & 32,83    \\
+                                 & LEIOMIOMA DEL ÚTERO                                      & 2.934  & LEIOMIOMA DEL ÚTERO                                      & 0,0717 & BARTOLINITIS                                             & 6,25     \\
+                                 & BARTOLINITIS                                             & 1.330  & BARTOLINITIS                                             & 0,0715 & LEIOMIOMA DEL ÚTERO                                      & 2,85     \\
+\multirow{2}{*}{cluster\_29(2)}  & INSUFICIENCIA CARDÍACA DIASTÓLICA                        & 760    & INSUFICIENCIA CARDÍACA DIASTÓLICA                        & 0,0713 & ARTERITIS DE TAKAYASU                                    & 9,25     \\
+                                 & ARTERITIS DE TAKAYASU                                    & 58     & ARTERITIS DE TAKAYASU                                    & 0,0709 & INSUFICIENCIA CARDÍACA DIASTÓLICA                        & 5,89     \\
+\multirow{2}{*}{cluster\_30(2)}  & TUMOR MALIGNO DE LA VESÍCULA BILIAR                      & 320    & NEOPLASIA DE LA AMPOLLA DE VATER                         & 0,0713 & TUMOR MALIGNO DE LA VESÍCULA BILIAR                      & 9,04     \\
+                                 & NEOPLASIA DE LA AMPOLLA DE VATER                         & 312    & TUMOR MALIGNO DE LA VESÍCULA BILIAR                      & 0,0712 & NEOPLASIA DE LA AMPOLLA DE VATER                         & 1,52     \\
+\multirow{5}{*}{cluster\_33(5)}  & CONJUNTIVITIS AGUDA                                      & 5.982  & CONJUNTIVITIS AGUDA                                      & 0,0722 & ORZUELO                                                  & 80,30    \\
+                                 & ORZUELO                                                  & 4.644  & ORZUELO                                                  & 0,0720 & CONJUNTIVITIS AGUDA                                      & 60,15    \\
+                                 & CUERPO EXTRAÑO EN LA CÓRNEA                              & 1.688  & CUERPO EXTRAÑO EN LA CÓRNEA                              & 0,0716 & CUERPO EXTRAÑO EN LA CÓRNEA                              & 3,15     \\
+                                 & OTITIS MEDIA PURULENTA                                   & 1.248  & UVEÍTIS                                                  & 0,0715 & UVEÍTIS                                                  & 2,75     \\
+                                 & UVEÍTIS                                                  & 902    & OTITIS MEDIA PURULENTA                                   & 0,0714 & OTITIS MEDIA PURULENTA                                   & 2,16     \\
+\multirow{3}{*}{cluster\_34(3)}  & APOYO NUTRICIONAL                                        & 14.356 & APOYO NUTRICIONAL                                        & 0,0729 & INYECCIÓN DE GAMMAGLOBULINA                              & 77,27    \\
+                                 & TRATAMIENTO CON ANTIBIÓTICOS INTRAVENOSOS                & 1.392  & TRATAMIENTO CON ANTIBIÓTICOS INTRAVENOSOS                & 0,0715 & TRATAMIENTO CON ANTIBIÓTICOS INTRAVENOSOS                & 10,36    \\
+                                 & INYECCIÓN DE GAMMAGLOBULINA                              & 1.348  & INYECCIÓN DE GAMMAGLOBULINA                              & 0,0715 & APOYO NUTRICIONAL                                        & 5,11     \\
+\multirow{2}{*}{cluster\_35(2)}  & OPERACIÓN CESÁREA                                        & 3.106  & OPERACIÓN CESÁREA                                        & 0,0717 & OPERACIÓN CESÁREA                                        & 6,82     \\
+                                 & LIGADURA TUBARIA BILATERAL                               & 302    & LIGADURA TUBARIA BILATERAL                               & 0,0712 & LIGADURA TUBARIA BILATERAL                               & 6,00     \\
+\multirow{4}{*}{cluster\_36(4)}  & FRACTURA DE FÉMUR PROXIMAL                               & 7.180  & FRACTURA DE FÉMUR PROXIMAL                               & 0,0720 & DEBILIDAD DE EXTREMIDAD                                  & 33,47    \\
+                                 & DEBILIDAD DE EXTREMIDAD                                  & 1.784  & DEBILIDAD DE EXTREMIDAD                                  & 0,0716 & PARESIA DE LA EXTREMIDAD INFERIOR                        & 17,41    \\
+                                 & PARESIA DE LA EXTREMIDAD INFERIOR                        & 1.384  & PARESIA DE LA EXTREMIDAD INFERIOR                        & 0,0715 & DISCOPATÍA                                               & 4,64     \\
+                                 & DISCOPATÍA                                               & 740    & DISCOPATÍA                                               & 0,0714 & FRACTURA DE FÉMUR PROXIMAL                               & 1,39     \\
+\multirow{2}{*}{cluster\_37(2)}  & CÁLCULO VESICAL                                          & 1.280  & CÁLCULO VESICAL                                          & 0,0715 & CÁLCULO VESICAL                                          & 121,93   \\
+                                 & ESTENOSIS PILÓRICA                                       & 692    & ESTENOSIS PILÓRICA                                       & 0,0713 & ESTENOSIS PILÓRICA                                       & 3,41     \\
+\multirow{2}{*}{cluster\_38(2)}  & ANASTOMOSIS ARTERIOVENOSA QUIRÚRGICA PARA DIÁLISIS RENAL & 780    & ANASTOMOSIS ARTERIOVENOSA QUIRÚRGICA PARA DIÁLISIS RENAL & 0,0714 & RESECCIÓN DE RIÑÓN                                       & 15,92    \\
+                                 & RESECCIÓN DE RIÑÓN                                       & 320    & RESECCIÓN DE RIÑÓN                                       & 0,0712 & ANASTOMOSIS ARTERIOVENOSA QUIRÚRGICA PARA DIÁLISIS RENAL & 5,65     \\
+\multirow{6}{*}{cluster\_39(6)}  & ENFERMEDAD HEPÁTICA INFLAMATORIA                         & 2.222  & ENFERMEDAD HEPÁTICA INFLAMATORIA                         & 0,0716 & ENFERMEDAD HEPÁTICA INFLAMATORIA                         & 124,90   \\
+                                 & NEOPLASIA MALIGNA SECUNDARIA DE HÍGADO                   & 1.944  & NEOPLASIA MALIGNA SECUNDARIA DE HÍGADO                   & 0,0715 & COLECCIÓN INTRABDOMINAL                                  & 30,02    \\
+                                 & HIPOFUNCIÓN SUPRARRENAL                                  & 1.424  & HIPOFUNCIÓN SUPRARRENAL                                  & 0,0715 & HIPOFUNCIÓN SUPRARRENAL                                  & 12,33    \\
+                                 & COLECCIÓN INTRABDOMINAL                                  & 730    & COLECCIÓN INTRABDOMINAL                                  & 0,0713 & NEOPLASIA MALIGNA PRIMARIA DEL RETROPERITONEO            & 5,35     \\
+                                 & CARCINOMA DE VEJIGA                                      & 538    & CARCINOMA DE VEJIGA                                      & 0,0713 & CARCINOMA DE VEJIGA                                      & 2,27     \\
+                                 & NEOPLASIA MALIGNA PRIMARIA DEL RETROPERITONEO            & 32     & NEOPLASIA MALIGNA PRIMARIA DEL RETROPERITONEO            & 0,0702 & NEOPLASIA MALIGNA SECUNDARIA DE HÍGADO                   & 2,06     \\
+\multirow{3}{*}{cluster\_40(3)}  & ERUPCIÓN CUTÁNEA                                         & 17.402 & ERUPCIÓN CUTÁNEA                                         & 0,0731 & ERUPCIÓN CUTÁNEA                                         & 71,98    \\
+                                 & VARICELA                                                 & 5.332  & VARICELA                                                 & 0,0719 & ERUPCIÓN PRURIGINOSA                                     & 16,43    \\
+                                 & ERUPCIÓN PRURIGINOSA                                     & 3.382  & ERUPCIÓN PRURIGINOSA                                     & 0,0718 & VARICELA                                                 & 5,85     \\
+\multirow{2}{*}{cluster\_41(2)}  & OBSTRUCCIÓN INTESTINAL                                   & 6.422  & OBSTRUCCIÓN INTESTINAL                                   & 0,0720 & NEOPLASIA MALIGNA PRIMARIA DE OVARIO                     & 51,19    \\
+                                 & NEOPLASIA MALIGNA PRIMARIA DE OVARIO                     & 2.010  & NEOPLASIA MALIGNA PRIMARIA DE OVARIO                     & 0,0715 & OBSTRUCCIÓN INTESTINAL                                   & 9,63     \\
+\multirow{2}{*}{cluster\_45(2)}  & FRACTURA DE EXTREMO SUPERIOR DE TIBIA                    & 210    & FRACTURA DE EXTREMO SUPERIOR DE TIBIA                    & 0,0711 & FRACTURA DE EXTREMO SUPERIOR DE TIBIA                    & 10,49    \\
+                                 & FRACTURA DE FÉMUR DISTAL                                 & 110    & FRACTURA DE FÉMUR DISTAL                                 & 0,0704 & FRACTURA DE FÉMUR DISTAL                                 & 2,11     \\
+\multirow{5}{*}{cluster\_47(5)}  & ABDOMEN AGUDO                                            & 6.080  & ABDOMEN AGUDO                                            & 0,0721 & ABDOMEN AGUDO                                            & 149,82   \\
+                                 & INSUFICIENCIA RENAL CRÓNICA REAGUDIZADA                  & 3.704  & INSUFICIENCIA RENAL CRÓNICA REAGUDIZADA                  & 0,0718 & PERITONITIS                                              & 21,08    \\
+                                 & PERITONITIS                                              & 1.964  & PERITONITIS                                              & 0,0716 & PUBERTAD PRECOZ                                          & 6,02     \\
+                                 & VÁLVULAS URETRALES POSTERIORES CONGÉNITAS                & 310    & VÁLVULAS URETRALES POSTERIORES CONGÉNITAS                & 0,0711 & INSUFICIENCIA RENAL CRÓNICA REAGUDIZADA                  & 3,10     \\
+                                 & PUBERTAD PRECOZ                                          & 298    & PUBERTAD PRECOZ                                          & 0,0711 & VÁLVULAS URETRALES POSTERIORES CONGÉNITAS                & 2,25     \\
+\multirow{5}{*}{cluster\_48(5)}  & NEOPLASIA DE LA PELVIS                                   & 1.322  & NEOPLASIA DE LA PELVIS                                   & 0,0715 & TUMOR MALIGNO DE TESTÍCULO                               & 56,80    \\
+                                 & TUMOR MALIGNO DEL CUELLO UTERINO                         & 1.228  & TUMOR MALIGNO DEL CUELLO UTERINO                         & 0,0714 & ENFERMEDAD DE CAROLI                                     & 6,47     \\
+                                 & TUMOR MALIGNO DE TESTÍCULO                               & 486    & TUMOR MALIGNO DE TESTÍCULO                               & 0,0712 & LINFOMA GÁSTRICO                                         & 5,38     \\
+                                 & LINFOMA GÁSTRICO                                         & 126    & LINFOMA GÁSTRICO                                         & 0,0711 & NEOPLASIA DE LA PELVIS                                   & 2,69     \\
+                                 & ENFERMEDAD DE CAROLI                                     & 42     & ENFERMEDAD DE CAROLI                                     & 0,0710 & TUMOR MALIGNO DEL CUELLO UTERINO                         & 2,25     \\
+\multirow{2}{*}{cluster\_49(2)}  & CARCINOMA DE PARÉNQUIMA PULMONAR                         & 646    & CARCINOMA DE PARÉNQUIMA PULMONAR                         & 0,0713 & NEUMONÍA ASPIRATIVA RECURRENTE                           & 4,39     \\
+                                 & NEUMONÍA ASPIRATIVA RECURRENTE                           & 514    & NEUMONÍA ASPIRATIVA RECURRENTE                           & 0,0712 & CARCINOMA DE PARÉNQUIMA PULMONAR                         & 1,92     \\
+\multirow{2}{*}{cluster\_52(2)}  & DIABETES MELLITUS TIPO 2                                 & 11.354 & DIABETES MELLITUS TIPO 2                                 & 0,0726 & DIABETES MELLITUS TIPO 2                                 & 21,61    \\
+                                 & HIPOGLUCEMIA                                             & 2.892  & HIPOGLUCEMIA                                             & 0,0717 & HIPOGLUCEMIA                                             & 3,05     \\
+\multirow{2}{*}{cluster\_53(2)}  & NEUMONITIS                                               & 5.126  & NEUMONITIS                                               & 0,0719 & NEUMONITIS                                               & 106,20   \\
+                                 & ADENOCARCINOMA DEL PULMÓN                                & 1.850  & ADENOCARCINOMA DEL PULMÓN                                & 0,0715 & ADENOCARCINOMA DEL PULMÓN                                & 3,60     \\
+\multirow{8}{*}{cluster\_56(8)}  & PROCTORRAGIA                                             & 9.166  & INDIGESTIÓN                                              & 0,0725 & CÁLCULO RENAL                                            & 171,41   \\
+                                 & INDIGESTIÓN                                              & 8.366  & PROCTORRAGIA                                             & 0,0724 & DISFAGIA                                                 & 145,24   \\
+                                 & DISFAGIA                                                 & 7.016  & VEJIGA: INCONTINENTE                                     & 0,0723 & PROCTORRAGIA                                             & 94,53    \\
+                                 & VEJIGA: INCONTINENTE                                     & 6.504  & DISFAGIA                                                 & 0,0722 & VEJIGA: INCONTINENTE                                     & 8,14     \\
+                                 & CÁLCULO RENAL                                            & 5.112  & CÁLCULO RENAL                                            & 0,0720 & SÍNDROME DE ICTERICIA COLESTÁSICA                        & 7,89     \\
+                                 & HEMORRAGIA DIGESTIVA BAJA                                & 4.132  & HEMORRAGIA DIGESTIVA BAJA                                & 0,0718 & PIELONEFRITIS                                            & 5,51     \\
+                                 & SÍNDROME DE ICTERICIA COLESTÁSICA                        & 3.554  & SÍNDROME DE ICTERICIA COLESTÁSICA                        & 0,0717 & HEMORRAGIA DIGESTIVA BAJA                                & 3,72     \\
+                                 & PIELONEFRITIS                                            & 2.494  & PIELONEFRITIS                                            & 0,0717 & INDIGESTIÓN                                              & 1,87     \\
+\multirow{9}{*}{cluster\_57(9)}  & HEMORRAGIA DIGESTIVA ALTA                                & 5.792  & HEMORRAGIA DIGESTIVA ALTA                                & 0,0720 & CIRROSIS INFECCIOSA                                      & 7,87     \\
+                                 & CIRROSIS HEPÁTICA                                        & 4.632  & CIRROSIS HEPÁTICA                                        & 0,0718 & TUMOR DE CÉLULAS GERMINALES                              & 5,88     \\
+                                 & COLECISTITIS                                             & 3.570  & COLECISTITIS                                             & 0,0718 & HEMORRAGIA DIGESTIVA ALTA                                & 5,09     \\
+                                 & ABSCESO PERIANAL                                         & 2.204  & ABSCESO PERIANAL                                         & 0,0716 & PROCTITIS                                                & 4,53     \\
+                                 & CIRROSIS INFECCIOSA                                      & 1.172  & HEPATITIS AUTOINMUNITARIA                                & 0,0714 & HEPATITIS AUTOINMUNITARIA                                & 3,99     \\
+                                 & HEPATITIS AUTOINMUNITARIA                                & 940    & CIRROSIS INFECCIOSA                                      & 0,0714 & COLECISTITIS                                             & 3,83     \\
+                                 & PROCTITIS                                                & 562    & PROCTITIS                                                & 0,0714 & ABSCESO PERIANAL                                         & 3,23     \\
+                                 & TUMOR DE CÉLULAS GERMINALES                              & 390    & TUMOR DE CÉLULAS GERMINALES                              & 0,0712 & ATRESIA DEL ESÓFAGO                                      & 3,20     \\
+                                 & ATRESIA DEL ESÓFAGO                                      & 386    & ATRESIA DEL ESÓFAGO                                      & 0,0711 & CIRROSIS HEPÁTICA                                        & 2,35     \\
+\multirow{5}{*}{cluster\_60(5)}  & CONJUNTIVITIS                                            & 14.220 & CONJUNTIVITIS                                            & 0,0729 & CONJUNTIVITIS                                            & 85,14    \\
+                                 & OTITIS MEDIA AGUDA                                       & 8.890  & OTITIS MEDIA AGUDA                                       & 0,0723 & OTITIS                                                   & 47,27    \\
+                                 & OTITIS                                                   & 5.932  & OTITIS                                                   & 0,0721 & QUERATITIS                                               & 11,81    \\
+                                 & QUERATITIS                                               & 4.798  & QUERATITIS                                               & 0,0720 & OTITIS MEDIA AGUDA                                       & 11,80    \\
+                                 & ÚLCERA CORNEAL                                           & 4.338  & ÚLCERA CORNEAL                                           & 0,0719 & ÚLCERA CORNEAL                                           & 8,32     \\
+\multirow{2}{*}{cluster\_61(2)}  & TRATAMIENTO CON ANTIBIÓTICOS                             & 4.142  & TRATAMIENTO CON ANTIBIÓTICOS                             & 0,0718 & PLASMAFÉRESIS                                            & 10,97    \\
+                                 & PLASMAFÉRESIS                                            & 468    & PLASMAFÉRESIS                                            & 0,0712 & TRATAMIENTO CON ANTIBIÓTICOS                             & 2,45     \\
+\multirow{3}{*}{cluster\_64(3)}  & TRASTORNO DE CONDUCCIÓN CARDÍACA                         & 10.130 & TRASTORNO DE CONDUCCIÓN CARDÍACA                         & 0,0726 & ANGINA DE PECHO                                          & 114,08   \\
+                                 & ANGINA DE PECHO                                          & 6.282  & ANGINA DE PECHO                                          & 0,0722 & FIBRILACIÓN AURICULAR CRÓNICA                            & 6,33     \\
+                                 & FIBRILACIÓN AURICULAR CRÓNICA                            & 4.548  & FIBRILACIÓN AURICULAR CRÓNICA                            & 0,0719 & TRASTORNO DE CONDUCCIÓN CARDÍACA                         & 1,90     \\
+\multirow{6}{*}{cluster\_65(6)}  & LINFOMA MALIGNO (CLÍNICO)                                & 5.228  & LINFOMA MALIGNO (CLÍNICO)                                & 0,0718 & LINFOMA DE CÉLULAS DEL MANTO                             & 17,11    \\
+                                 & MIELOMA MÚLTIPLE                                         & 3.220  & MIELOMA MÚLTIPLE                                         & 0,0716 & LINFOMA DE BURKITT                                       & 12,88    \\
+                                 & LEUCEMIA MIELOIDE AGUDA                                  & 1.454  & ENFERMEDAD DE HODGKIN                                    & 0,0714 & ENFERMEDAD DE HODGKIN                                    & 12,79    \\
+                                 & ENFERMEDAD DE HODGKIN                                    & 1.294  & LEUCEMIA MIELOIDE AGUDA                                  & 0,0714 & MIELOMA MÚLTIPLE                                         & 11,08    \\
+                                 & LINFOMA DE CÉLULAS DEL MANTO                             & 402    & LINFOMA DE CÉLULAS DEL MANTO                             & 0,0712 & LEUCEMIA MIELOIDE AGUDA                                  & 8,53     \\
+                                 & LINFOMA DE BURKITT                                       & 366    & LINFOMA DE BURKITT                                       & 0,0711 & LINFOMA MALIGNO (CLÍNICO)                                & 2,50     \\
+\multirow{8}{*}{cluster\_66(8)}  & SÍNDROME DE INSUFICIENCIA RENAL CRÓNICA                  & 15.020 & SÍNDROME DE INSUFICIENCIA RENAL CRÓNICA                  & 0,0726 & SÍNDROME DE INSUFICIENCIA RENAL CRÓNICA                  & 18,50    \\
+                                 & SÍNDROME DE INSUFICIENCIA RENAL                          & 8.286  & SÍNDROME DE INSUFICIENCIA RENAL                          & 0,0722 & SÍNDROME NEFRÓTICO                                       & 6,85     \\
+                                 & SÍNDROME NEFRÓTICO                                       & 2.402  & SÍNDROME NEFRÓTICO                                       & 0,0716 & SÍNDROME DE INSUFICIENCIA RENAL                          & 5,95     \\
+                                 & INSUFICIENCIA RENAL EN ESTADIO TERMINAL                  & 1.522  & INSUFICIENCIA RENAL EN ESTADIO TERMINAL                  & 0,0715 & GLOMERULOSCLEROSIS SEGMENTARIA FOCAL                     & 3,83     \\
+                                 & INSUFICIENCIA RENAL CRÓNICA PROGRESIVA                   & 864    & INSUFICIENCIA RENAL CRÓNICA PROGRESIVA                   & 0,0714 & SÍNDROME NEFRÓTICO CONGÉNITO                             & 3,54     \\
+                                 & GLOMERULOSCLEROSIS SEGMENTARIA FOCAL                     & 434    & GLOMERULOSCLEROSIS SEGMENTARIA FOCAL                     & 0,0712 & INSUFICIENCIA RENAL CRÓNICA PROGRESIVA                   & 3,43     \\
+                                 & PROTEINURIA NEFRÓTICA                                    & 392    & PROTEINURIA NEFRÓTICA                                    & 0,0712 & PROTEINURIA NEFRÓTICA                                    & 2,59     \\
+                                 & SÍNDROME NEFRÓTICO CONGÉNITO                             & 70     & SÍNDROME NEFRÓTICO CONGÉNITO                             & 0,0709 & INSUFICIENCIA RENAL EN ESTADIO TERMINAL                  & 2,33     \\
+\multirow{2}{*}{cluster\_67(2)}  & CONTRACCIONES UTERINAS PRESENTES                         & 7.618  & SANGRADO VAGINAL                                         & 0,0721 & SANGRADO VAGINAL                                         & 171,41   \\
+                                 & SANGRADO VAGINAL                                         & 7.576  & CONTRACCIONES UTERINAS PRESENTES                         & 0,0720 & CONTRACCIONES UTERINAS PRESENTES                         & 25,04    \\* \cmidrule(l){2-7} 
+\end{longtable}
+\end{landscape}
+
+\begin{landscape}
+\begin{longtable}[c]{@{}llp{0.25\linewidth}lp{0.25\linewidth}p{0.25\linewidth}@{}}
+\caption{Grupos de dos problemas y evidencia científica}
+\label{evidencia_grupos_2}\\
+\toprule
+Red & ConceptId1 & Problema1 & Conceptid2 & Problema2 & Observación \\* \midrule
+\endfirsthead
+%
+\multicolumn{6}{c}%
+{{\bfseries Table \thetable\ Continúa de página anterior}} \\
+\toprule
+Red & ConceptId1 & Problema1 & Conceptid2 & Problema2 & Observación \\* \midrule
+\endhead
+%
+\cmidrule(l){2-6}
+\endfoot
+%
+\endlastfoot
+%
+\multirow{19}{*}{\textbf{RP}} & 30989003 & GONALGIA & 197247001 & FÍSTULA ENTEROCUTÁNEA & Sin evidencia en documentos científicos \\
+ & 40917007 & OBNUBILACIÓN MENTAL & 48867003 & BRADICARDIA & Efectos secundarios en uso de medicina para el delirio  DOI:10.4088/PCC.09r00938yel \\
+ & 233961000 & ISQUEMIA DE EXTREMIDAD INFERIOR & 363346000 & NEOPLASIA MALIGNA & Sin evidencia en documentos científicos \\
+ & 11483009 & DEFECTO VENTILATORIO & 301199001 & PROBLEMA NASAL & Sin evidencia en documentos científicos \\
+ & 45460008 & TRANSFUSIÓN INTRAUTERINA & 57325008 & ISOINMUNIZACIÓN & DOI: 10.1016/j.transci.2017.10.007 \\
+ & 118944007 & TRASTORNO DE HOMBRO & 301810000 & INFECCIÓN CATEGORIZADA POR LOCALIZACIÓN & Sin evidencia en documentos científicos \\
+ & 40108008 & TALASEMIA & 75451007 & TALASEMIA MAYOR & Especificación \\
+ & 88032003 & AMAUROSIS FUGAZ & 400130008 & ARTERITIS TEMPORAL & doi: 10.1016/j.pop.2010.07.005. \\
+ & 81516001 & NEFRECTOMÍA PARCIAL & 126880001 & NEOPLASIA DEL RIÑÓN & doi: 10.1016/j.juro.2015.09.099 \\
+ & 13212004 & QUEMADURAS DE SEGUNDO GRADO DE SITIOS MÚLTIPLES & 284196006 & QUEMADURA DE PIEL & Sin evidencia en documentos científicos \\
+ & 11466000 & OPERACIÓN CESÁREA & 287664005 & LIGADURA TUBARIA BILATERAL & \url{https://www.acog.org/Clinical-Guidance-and-Publications/Committee-Opinions/Committee-on-Coding-and-Nomenclature/Tubal-Ligation-with-Cesarean-Delivery} \\
+ & 13802001 & ABSCESO DE LA AXILA & 15296000 & ESTERILIDAD & Sin evidencia en documentos científicos \\
+ & 10191004 & EFECTO ANTICOAGULANTE & 309298003 & HALLAZGO RELACIONADO CON TRATAMIENTO FARMACOLÓGICO & Sin evidencia en documentos científicos \\
+ & 28626004 & FÍSTULA VESICOCOLÓNICA & 110352000 & DETERIORO COGNITIVO MÍNIMO & Sin evidencia en documentos científicos \\
+ & 126858004 & NEOPLASIA DE LA AMPOLLA DE VATER & 363353009 & TUMOR MALIGNO DE LA VESÍCULA BILIAR & Sin evidencia en documentos científicos \\
+ & 24079001 & DERMATITIS ATÓPICA & 106190000 & ALERGIA (TRASTORNO) & doi:  10.1158/1055-9965.EPI-14-1243 \\
+ & 190905008 & FIBROSIS QUÍSTICA & 236071009 & DIARREA CRÓNICA & \url{https://www.ncbi.nlm.nih.gov/pubmed/24712288} \\
+ & 34095006 & DESHIDRATACIÓN & 236021006 & HERNIA INGUINAL DERECHA & \url{https://www.ncbi.nlm.nih.gov/pubmed/1124411} \\
+ & 37796009 & MIGRAÑA & 75934005 & ENFERMEDAD METABÓLICA & doi:  10.3389/fneur.2012.00161 \\
+\multirow{44}{*}{\textbf{RSP}} & 60046008 & DERRAME PLEURAL & 313299006 & ENFERMEDAD PULMONAR OBSTRUCTIVA CRÓNICA, GRAVE & doi: 10.5935/1678-9741.20140047. \\
+ & 1372004 & ÚTERO UNICORNE & 95435007 & FÍSTULA TRAQUEOESOFÁGICA & \url{http://revcmhabana.sld.cu/index.php/rcmh/article/view/713/1164} \\
+ & 71620000 & FRACTURA DE FÉMUR & 78314001 & OSTEOGENIA IMPERFECTA & https://www.ncbi.nlm.nih.gov/pubmed/1294087 \\
+ & 276975007 & CARCINOMA DE LARINGE & 363429002 & TUMOR MALIGNO DE LA LARINGE & Especificación \\
+ & 89444000 & ESPECTRO DE HIPOGÉNESIS DE MIEMBRO - OROMANDIBULAR & 276657008 & SÍNDROME DE SUPERPOSICIÓN & Sin evidencia en documentos científicos \\
+ & 47270006 & HIPERCORTISOLISMO & 253017000 & TUMOR DE KLATSKIN & Sin evidencia en documentos científicos \\
+ & 87282003 & PARASITISMO INTESTINAL & 307132003 & LITIASIS COLEDOCIANA & \url{http://scielo.sld.cu/scielo.php?script=sci\_abstract\&pid=S0034-74932000000100009} \\
+ & 190905008 & FIBROSIS QUÍSTICA & 236071009 & DIARREA CRÓNICA & \url{https://www.ncbi.nlm.nih.gov/pubmed/24712288} \\
+ & 12441001 & EPISTAXIS & 232354002 & EPISTAXIS ANTERIOR & Especificación \\
+ & 84229001 & FATIGA & 399153001 & VÉRTIGO & \url{https://symptomchecker.webmd.com/multiple-symptoms?symptoms=dizziness\%7Cfatigue\&symptomids=81\%7C98\&locations=66\%7C66} \\
+ & 16932000 & NÁUSEAS Y VÓMITOS & 300359004 & HALLAZGO RELACIONADO CON EL VÓMITO & Especificación \\
+ & 62315008 & DIARREA & 422400008 & VÓMITOS & \url{https://symptomchecker.webmd.com/multiple-symptoms?symptoms=diarrhea|nausea-or-vomiting\&symptomids=72|156\&locations=24|22} \\
+ & 4009004 & ENFERMEDAD INFECCIOSA DE LAS VÍAS URINARIAS INFERIORES & 236002003 & HEMATOMA RETROPERITONEAL & \url{https://encolombia.com/medicina/revistas-medicas/cirugia/vc-082/trauma-retroperitoneal/} \\
+ & 68235000 & CONGESTIÓN NASAL & 82272006 & RESFRÍO COMÚN & \url{https://www.healthline.com/health/common-cold-symptoms} \\
+ & 65147003 & EMBARAZO GEMELAR & 86569001 & PUERPERIO & trivial \\
+ & 70536003 & TRASPLANTE DE RIÑÓN & 176136000 & CISTOSTOMÍA E INSERCIÓN DE CATÉTER SUPRAPÚBICO & Sin evidencia en documentos científicos \\
+ & 128926000 & HALLAZGO POSPROCEDIMIENTO & 367391008 & MALESTAR GENERAL & trivial \\
+ & 190855004 & HIPOMAGNESEMIA & 409089005 & NEUTROPENIA FEBRIL & Efectos secundarios en uso de medicina para el hypomagnesemia  doi:  10.3892/ol.2013.1301 \\
+ & 40108008 & TALASEMIA & 75451007 & TALASEMIA MAYOR & Especificación \\
+ & 13172003 & PÚRPURA TROMBOCITOPÉNICA IDIOPÁTICA CRÓNICA & 32273002 & PÚRPURA TROMBOCITOPÉNICA IDIOPÁTICA & Especificación \\
+ & 42343007 & INSUFICIENCIA CARDÍACA CONGESTIVA & 84114007 & INSUFICIENCIA CARDÍACA & Especificación \\
+ & 95214007 & NEOPLASIA MALIGNA PRIMARIA DE HÍGADO & 126851005 & NEOPLASIA DEL HÍGADO & Especificación \\
+ & 359789008 & ARTERITIS DE TAKAYASU & 418304008 & INSUFICIENCIA CARDÍACA DIASTÓLICA & Sin evidencia en documentos científicos \\
+ & 126858004 & NEOPLASIA DE LA AMPOLLA DE VATER & 363353009 & TUMOR MALIGNO DE LA VESÍCULA BILIAR & Sin evidencia en documentos científicos \\
+ & 198288003 & ESTADO DE ANSIEDAD & 225624000 & ATAQUE DE PÁNICO & \url{https://www.ncbi.nlm.nih.gov/pubmed/7962579} \\
+ & 11466000 & OPERACIÓN CESÁREA & 287664005 & LIGADURA TUBARIA BILATERAL & \url{https://www.acog.org/Clinical-Guidance-and-Publications/Committee-Opinions/Committee-on-Coding-and-Nomenclature/Tubal-Ligation-with-Cesarean-Delivery} \\
+ & 70650003 & CÁLCULO VESICAL & 367403001 & ESTENOSIS PILÓRICA & Sin evidencia en documentos científicos \\
+ & 79827002 & ANASTOMOSIS ARTERIOVENOSA QUIRÚRGICA PARA DIÁLISIS RENAL & 108022006 & RESECCIÓN DE RIÑÓN & Sin evidencia en documentos científicos \\
+ & 81060008 & OBSTRUCCIÓN INTESTINAL & 93934004 & NEOPLASIA MALIGNA PRIMARIA DE OVARIO & Sin evidencia en documentos científicos \\
+ & 371039008 & TRASTORNO TROMBOEMBÓLICO & 400047006 & ENFERMEDAD VASCULAR PERIFÉRICA & Sin evidencia en documentos científicos \\
+ & 20433007 & FRACTURA DE EXTREMO SUPERIOR DE TIBIA & 263232003 & FRACTURA DE FÉMUR DISTAL & trivial \\
+ & 24057006 & AFASIA COMBINADA & 87486003 & AFASIA & Especificación \\
+ & 254628007 & CARCINOMA DE PARÉNQUIMA PULMONAR & 430969000 & NEUMONÍA ASPIRATIVA RECURRENTE & Sin evidencia en documentos científicos \\
+ & 123845008 & ADENOCARCINOMA DE ENDOMETRIO & 254878006 & CARCINOMA ENDOMETRIAL & Especificación \\
+ & 44054006 & DIABETES MELLITUS TIPO 2 & 302866003 & HIPOGLUCEMIA & \url{https://www.ncbi.nlm.nih.gov/pubmed/29496365} \\
+ & 205237003 & NEUMONITIS & 254626006 & ADENOCARCINOMA DEL PULMÓN & Sin evidencia en documentos científicos \\
+ & 236648008 & RETENCIÓN AGUDA DE ORINA & 267064002 & RETENCIÓN DE ORINA & Especificación \\
+ & 126713003 & NEOPLASIA DE PULMÓN & 309529002 & MASA EN PULMÓN & Especificación \\
+ & 33688009 & COLESTASIS & 59927004 & INSUFICIENCIA HEPÁTICA & doi:  10.3978/j.issn.2305-5839.2015.AB083 \\
+ & 119249001 & AGAMMAGLOBULINEMIA & 119250001 & HIPOGAMMAGLOBULINEMIA & \url{https://www.ncbi.nlm.nih.gov/pubmed/3728553} \\
+ & 20720000 & PLASMAFÉRESIS & 281789004 & TRATAMIENTO CON ANTIBIÓTICOS & \url{https://www.ncbi.nlm.nih.gov/pubmed/26820918} \\
+ & 92814006 & LEUCEMIA LINFOIDE CRÓNICA & 109978004 & LINFOMA DE LINFOCITOS T (CLÍNICO) & \url{https://www.ncbi.nlm.nih.gov/pubmed/28698787} \\
+ & 3006004 & ALTERACIÓN DE LA CONSCIENCIA & 130987000 & CONFUSIÓN AGUDA & \url{https://www.ncbi.nlm.nih.gov/pubmed/22795469} \\
+ & 268471004 & SANGRADO VAGINAL & 289700000 & CONTRACCIONES UTERINAS PRESENTES & Sin evidencia en documentos científicos \\* \cmidrule(l){2-6} 
+\end{longtable}
+\end{landscape}
+\normalsize
