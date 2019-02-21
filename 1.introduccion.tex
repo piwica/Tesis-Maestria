@@ -40,7 +40,7 @@ Snomed CT permite el almacenamiento y la recuperación de información clínica 
 El modelo lógico de Snomed CT define la manera en la cual cada componente  y sus derivados están relacionados. Los tipos de componentes son conceptos, descripciones y relaciones. El modelo lógico especifica una representación estructurada de los conceptos para representar las entidades clínicas, las descripciones  que son usadas para representar las diferentes variaciones léxicas del concepto, y las relaciones entre los conceptos.\cite{ihtsdo2016SG}
 
 \paragraph{Conceptos:}
-Cada concepto representa una única entidad clínica, la cual está referenciada a un identificador único, numérico y fácilmente procesable por un computador. El identificador provee una referencia única y sin ambigüedades a cada concepto y no tiene contenido semántico.\cite{ihtsdo2016SG}
+Cada concepto representa una única entidad clínica, la cual está referenciada a un identificador único, numérico y fácilmente procesable por un computador. El identificador provee una referencia única y sin ambigüedades a cada concepto y no tiene contenido semántico. El identificador es abreviado con SCTID.\cite{ihtsdo2016SG}
 
 \paragraph{Descripciones:}
 Un conjunto de descripciones textuales se asignan a cada concepto. De esta manera el usuario humano obtiene una representación del concepto en lenguaje natural.
@@ -117,7 +117,7 @@ Uno de los aspectos claves en el uso significativo de la terminología es la cre
 
 Snomed CT no define metodologías para construir \textit{\acrshort{refset}} con conceptos que se agrupen por un contexto, la metodología propuesta en esta tesis agrupa los conceptos usados en el histórico de la lista de problemas según el contexto dado por el área jerárquica, el grupo etario y el nivel de asistencia con el que fue registrado. En el caso en el que existan \textit{\acrshort{refset}} públicos con características similares se compara el cubrimiento de su  contenido.
 
-La tabla \ref{refsetsSnomed} presenta la lista de \textit{\acrshort{refset}} disponibles de la organización Kaiser Permantente\footnote{Kaiser Permanente es la organización de mantenimiento de salud, sin fines de lucro, más grande de los Estados Unidos. Es un sistema integrado de prestación de servicios de salud, que organiza y proporciona o coordina la atención de los miembros de la organización. Kaiser Permanente construyó una solución de terminología médica para toda la organización llamada \textit{Convergent Medical Terminology}, que son subconjuntos de terminología adaptada a pacientes y médicos, vinculada a los estándares de interoperabilidad de Estados Unidos e internacionales. Desde el año 2010 donan estos subconjuntos a la \textit{\acrfull{UMLS}}
+La tabla \ref{refsetsSnomed} presenta la lista de \textit{\acrshort{refset}} disponibles de la organización Kaiser Permantente\footnote{Kaiser Permanente es la organización de mantenimiento de salud, sin fines de lucro, más grande de los Estados Unidos. Es un sistema integrado de prestación de servicios de salud, que organiza y proporciona o coordina la atención de los miembros de la organización. Kaiser Permanente construyó una solución de terminología médica para toda la organización llamada \textit{\acrfull{CMT}}, que son subconjuntos de terminología adaptada a pacientes y médicos, vinculada a los estándares de interoperabilidad de Estados Unidos e internacionales. Desde el año 2010 donan estos subconjuntos a la \textit{\acrfull{UMLS}}
 }, que tienen listas públicas de problemas que agrupan conceptos en las dimensiones que se analizaron en esta tesis. Estos subconjuntos son útiles para hacer comparaciones con los resultantes en los experimentos de este trabajo.
 
 \begin{table}[htb]
@@ -126,7 +126,7 @@ La tabla \ref{refsetsSnomed} presenta la lista de \textit{\acrshort{refset}} dis
 \begin{tabularx}{\textwidth}{@{}XXX@{}}
 \toprule
 Organización & Descripción & Refset disponibles \\ \midrule
-Kaiser Permanente (US) & En el 2010, anunció la donación de su Convergent Medical Terminology (CMT). Esta donación contiene el conjunto de conceptos más usados en ciertos dominios. Kaiser Permanente es un consorcio que integra 28 centros médicos y tiene presencia en 8 estados. & C\textit{ardiology; Common Lab Procedures; Emergency Department; Endocrine,  Nephrology, and Urology; ENT, Gastroenterology, and Infectious Diseases; Hematology and Oncology; History and Family History; Injury; Mental Health; Miscellaneous Problem List ; Musculoskeletal; Neurology; Obstetrics and Gynecology; Ophthalmology; Orthopedics; Pediatrics; Primary Care; Radiology; Skin/Dermatology and Respiratory; Specimen Source and Specimen Type; Urology \& Nephrology; Vaccinations; Vascular Procedures List} \\
+Kaiser Permanente (US) & En el 2010, anunció la donación de su \acrshort{CMT}. Esta donación contiene el conjunto de conceptos más usados en ciertos dominios. Kaiser Permanente es un consorcio que integra 28 centros médicos y tiene presencia en 8 estados. & C\textit{ardiology; Common Lab Procedures; Emergency Department; Endocrine,  Nephrology, and Urology; ENT, Gastroenterology, and Infectious Diseases; Hematology and Oncology; History and Family History; Injury; Mental Health; Miscellaneous Problem List ; Musculoskeletal; Neurology; Obstetrics and Gynecology; Ophthalmology; Orthopedics; Pediatrics; Primary Care; Radiology; Skin/Dermatology and Respiratory; Specimen Source and Specimen Type; Urology \& Nephrology; Vaccinations; Vascular Procedures List} \\
 % National Health Service (UK) & El servicio nacional de salud provee en línea\footnote{https://dd4c.digital.nhs.uk/dd4c/} una base de datos con todos los subsets creados por UK Terminology Centre. Los Subsets disponibles están basados en especialidades o hacen parte de requerimientos nacionales& +400 subsets simples \\ 
 \bottomrule
 \end{tabularx}
@@ -220,15 +220,21 @@ Mientras que para las distribuciones normales, es extremadamente raro que un eve
 \begin{equation}
 \log p(x) =-\alpha \log x + \log C
 \end{equation}
-Esta gráfica es comúnmente usada para verificar si la distribución sigue la ley de potencias. Una estimación más robusta es aproximar la función de distribución acumulativa (cdf), descripta con la siguiente ecuación:
+Esta gráfica es comúnmente usada para verificar si la distribución sigue la ley de potencias. Una estimación más robusta es aproximar la función de \acrfull{cdf} descripta con la siguiente ecuación:
 \begin{equation}
 F(X\geq x) \propto  x^{-\alpha+1 }
 \end{equation}
 
 \paragraph{Efectos de comunidades}
-Informalmente, una comunidad es un conjunto de vértices donde cada vértice es más cercano a otros vértices en su comunidad que a los vértices que están fuera de ella. Este efecto ha sido encontrado especialmente en las redes sociales.\cite{Tang2010}
+\label{par:efecto-comunidades}
+Informalmente, una comunidad es un conjunto de vértices donde cada vértice es más cercano a otros vértices en su comunidad que a los vértices que están fuera de ella. Este efecto ha sido encontrado especialmente en las redes sociales \cite{Tang2010}. La figura \ref{fig:ejemploCluster} ilustra las comunidades que se forman a partir de las relaciones de los vértices, cada color representa una comunidad.
 
-<< Gráfica con efecto de comunidades>>
+\begin{figure}
+\caption{Ejemplo de efecto de comunidades}
+\label{fig:ejemploCluster}
+\centering
+\includegraphics[width=\textwidth]{ejemplo_cluster.png}
+\end{figure}
 
 Los efectos de comunidades pueden ser medidos con diferentes métricas, en esta tesis se analiza el coeficiente de agrupamiento global o \textbf{transitividad}, el coeficiente de agrupamiento promedio y la longitud media del camino mínimo entre vértices. 
 

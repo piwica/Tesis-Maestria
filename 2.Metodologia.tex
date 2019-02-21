@@ -1,7 +1,7 @@
 \section{Introducción}
 En este capítulo presento la metodología que enmarca los experimentos realizados. Tomando como base la metodología \textit{\acrfull{CRISP-DM}} divido el trabajo en fases, describo los procesos que se realizan y los entregables que servirán de insumo para la siguiente fase.
 
-En las primeras fases estudio el problema y los datos. La siguiente fase, que es la preparación de los datos genero el conjunto de entrenamiento con los registros previos al año 2017, y el conjunto de validación con los registros del año 2017. En las fases de diseño y evaluación, realizo los experimentos de aprendizaje no supervisado con el fin de encontrar \textit{clusters} significativos con alto valor de precisión y exactitud. En la fase final se organizan los datos y  redacto el documento final.
+En las primeras fases estudio el problema y los datos. La siguiente fase, que es la preparación de los datos genero el conjunto de entrenamiento con los registros previos al año 2017, y el conjunto de validación con los registros del año 2017. En las fases de diseño y evaluación, ejecuto los algoritmos de aprendizaje no supervisado con el fin de encontrar grupos significativos con alto valor de precisión y exactitud. En la fase final se organizan los datos y  redacto el documento final.
 
 \section{Metodología CRISP-DM}
 En el desarrollo de proyectos de minería de datos y descubrimiento de conocimiento, la metodología \textit{\acrfull{CRISP-DM}} es la más usada. Esta metodología fue propuesta por el grupo de empresas conformado por Teradata,
@@ -24,29 +24,53 @@ A continuación describo lo que contempla cada fases de esta tesis.
 Como está consignado en el primer capítulo introductorio, el objetivo es la construcción de una taxonomía de problemas, cuyas relaciones están ponderadas por su co-ocurrencia en las listas de problemas de los pacientes y sus relaciones jerárquicas con Snomed CT. Para alcanzar dicho objetivo, establecí que la meta de minería de datos es representar el conocimiento en un enfoque de red, y a partir del análisis de la red realizar la construcción jerárquica de grupos o clasificaciones de los problemas.
 
 Para realizar esta tesis, el \acrshort{HIBA} proporcionó el acceso a los datos de la lista de problemas y la terminología. En términos de hardware, el \acrshort{HIBA} proporcionó el acceso a un servidor con las siguientes características:
+\begin{itemize}
+\item Sistema Operativo: Ubuntu 16.04.5 LTS (GNU/Linux 4.4.0-138-generic x86\_64)
+\item Memoria RAM: 64 GB 
+\item Espacio de almacenamiento: 760 GB
+\item Número de núcleos: 8 núcleos
+\end{itemize}
 
-<< Características del servidor >>
+\subsection{Fase 2: Entendimiento de los datos.} Esta fase inicia con la recolección de los datos y procede con las actividades que permitan familiarizarse con ellos. El entregable se encuentra en la primera sección del capítulo 3 y contempla un análisis descriptivo para determinar la calidad de los datos de la lista de problemas, la existencia de valores atípicos (\textit{outliers})  que deben ser eliminados de los datos de entrenamiento y validación, y la construcción de contextos interesantes que permitan la formulación de hipótesis.
 
-\subsection{Fase 2: Entendimiento de los datos.} Esta fase inicia con la recolección de los datos y procede con las actividades que permitan familiarizarse con ellos. El entregable se encuentra en la primera sección del capítulo 3 y contempla un análisis descriptivo para determinar la calidad de los datos de la lista de problemas, la existencia de valores atípicos (\textit{outliers}) y la construcción de contextos interesantes que permitan la formulación de hipótesis.
+La construcción de  \textit{\acrshort{refset} } para agrupar problemas por contextos tiene dos metodologías: (1) determinar por extensión cuáles son los conceptos que los componen, ya que no es fácil realizar la restricción por una jerarquía o partes de ella \cite{Hjen2014MethodsSets.,Lee2013AImplementations.}; o (2) la generación automática y el uso de \textit{\acrshort{refset} } públicos para comparar el cubrimiento de su contenido \cite{Lee2013AImplementations.}. Esta tesis usa la segunda metodología, donde a partir de los registros en la lista de problemas de conceptos y  contextos , se generan automáticamente grupos usando aprendizaje no supervisado;  si hay solapamiento se fusionan los contextos,  y finalmente si hay \textit{\acrshort{refset} } similares y disponibles en Kaiser Permanente CMT entonces se evalúa el cubrimiento con ellos.  Posteriormente estos contextos son evaluados manualmente por la residencia de informática médica.  
+
+Los contexto  nivel asistencial y grupo etário tienen una cardinalidad pequeña, 8 y 9 respectivamente. Por el contrario, las áreas jerárquicas tienen una cardinalidad grande, inicialmente son 601 áreas jerárquicas. Las áreas jerárquicas tienen un proceso extra para evaluar  cuán solapadas están y así agruparlas dentro de las más significativas. Este proceso extra se realizar con el algoritmo de aprendizaje supervisado, StanfordNLP ColumnClassifier \cite{manning-EtAl:2014:P14-5}. La variable objetivo del algoritmo de clasificación es  el servicio al que pertenecen los conceptos, un algoritmo de clasificación tendría mayor dificultad para predecir el servicio si hay muchos conceptos similares entre ellos, por lo tanto serían candidatos a fusión. La dificultad se mide con valores de \textit{F1 score}\footnote{\textit{F1-Score} es un valor único que pondera la precisión y la exhaustividad. \textit{F1 score} hace referencia a la efectividad de un modelo y es conocida en la estadística como una proporción de acuerdo específico ya que se aplica a una clase específica, la clase positiva.\cite{Powers2011Evaluation:Correlation}} bajos. Estas fusiones de contextos son también evaluadas por la residencia de informática médica.
+
 
 \subsection{Fase 3: Preparación de los datos.} Esta fase se compone de la extracción de los datos desde el modelo ER, limpieza y transformación de los datos con los que se realizan los experimentos. El entregable es el conjunto de datos de entrenamiento y validación. El conjunto de entrenamiento contiene los registros de problemas previos al 2017. El conjunto de validación contiene los registros que ingresaron a la \acrshort{HCE} en el 2017 y cuyos pacientes tengan una lista de problemas no vacía.
 
-\subsection{Fase 4 y 5: Diseño y evaluación.} Esta fase es iterativa, y se compone de varios ciclos para refinar el modelo de agrupamiento, durante estos ciclos se realizan las siguientes tareas:
+\subsection{Fase 4 y 5: Diseño y evaluación.} Esta fase se compone de las siguientes tareas:
 \begin{itemize}
-\item Construcción del grafo: Determinación del modelo de datos y carga de la base de datos de grafos. Usando los datos de entrenamiento se obtiene un grafo que conecta los problemas a partir de las co-ocurrencias en los pacientes y las relaciones dadas por la terminología de referencia Snomed CT. Los vértices son etiquetados con información contextual: ámbito o nivel de asistencia, grupo etario y área jerárquica.  
+\item Construcción del grafo: Determinación del modelo de datos y carga de la base de datos de grafos Neo4j. Usando los datos de entrenamiento se obtiene un grafo que conecta los problemas a partir de las co-ocurrencias en los pacientes (Red de Problemas) y las relaciones dadas por la terminología de referencia Snomed CT (Red semántica de problemas). Los vértices son etiquetados con información contextual: ámbito o nivel de asistencia, grupo etario y área jerárquica.  
 
-\item Estudio de los patrones en la red: Evaluar la red en un contexto de red libre de escala. El entregable es la caracterización de la red.
+\item Estudio de los patrones en la red: Evaluar la red en un contexto de red libre de escala.El entregable es la caracterización de la red:
+\begin{itemize}
+\item Distribución libre de escala: La hipótesis nula es que los datos se distribuyen según la ley de potencias. Al estimar la función de distribución acumulativa (cdf), si el p-value no permite rechazar la hipótesis nula entonces se compara el estadístico \textit{log-likelihood ratio} con otras distribuciones.
+\item Estructuras de comunidad: Métricas para evaluar cuantitativamente los efectos de comunidad: coeficientes de agrupamiento, longitud media del camino mínimo entre nodos y promedio de grados. El cálculo de estas métricas están disponibles en los paquetes igraph\cite{igraph} y networkx\cite{SciPyProceedings_11} de python.
+\end{itemize}
 
-\item Aprendizaje no supervisado: Identificación de grupos o \textit{clusters} significativos que comparten patrones comunes de atributos y relaciones. Cada uno de los vértices que contiene el \textit{cluster} tiene calculada las medidas de centralidad para entender su influencia dentro de la red.
+\item Aprendizaje no supervisado: Aplicación de algoritmos de aprendizaje no supervisado a la red de problemas y la red semántica de problemas. Dado que no se puede procesa el grafo completo de la red semántica de problemas, se realizan las siguientes tareas con sub-grafos de problemas que co-ocurran en \num{10000}, \num{1000}, \num{100}, \num{10} y \num{5} pacientes:
+\begin{itemize}
+    \item Identificación de grupos o \textit{clusters} significativos que comparten patrones comunes de atributos y relaciones. 
+    \item Cada uno de los vértices que contiene el \textit{cluster} tiene calculada las medidas de centralidad para entender su influencia dentro de la red. 
+    \item A los grupos encontrados se les realiza un test para evaluar la significancia de los \textit{clusters}, los siguientes pasos son realizados 1000 veces:
+    \begin{itemize}
+\item  se generan aleatoriamente aristas en el grafo
+\item  se aplican los algoritmos de aprendizaje no supervisado
+\item  se evalúa si la modularidad es superior a la modularidad del grafo original.
+\end{itemize}
+\end{itemize}
 
-\item Validación de los resultados: Este paso se encarga de validar la capacidad predictiva de los modelos de agrupamiento del aprendizaje no supervisado. La hipótesis es que los vértices que pertenecen al mismo \textit{cluster} permiten completar los problemas faltantes en la lista de los problemas de los pacientes del conjunto de datos de validación. 
+\item Validación de los resultados: Este paso se encarga de validar la capacidad predictiva de los modelos de agrupamiento del aprendizaje no supervisado. Lo que se evalúa es si los vértices que pertenecen al mismo \textit{cluster} permiten completar los problemas faltantes en la lista de los problemas de los pacientes del conjunto de datos de validación. 
 
-Son evaluadas por separado la capacidad predictiva del grafo y la de un subgrafo generado sólo con las relaciones por la co-ocurrencia en los pacientes y los vértices de los problemas, es decir sin SNOMED CT. También son evaluadas las capacidades predictivas filtrando el contexto: ámbito o nivel de asistencia, grupo etario y área jerárquica.
+Son evaluadas por separado la capacidad predictiva  los grupos encontrados a partir del grafo de la red de problemas y de la red semántica de problemas. También son evaluadas las capacidades predictivas filtrando el contexto: ámbito o nivel de asistencia, grupo etario y área jerárquica, sólo en red de problemas.
  \end{itemize}
  
-\subsection{Fase 6: Implementación.} En la última fase organizo los datos y redacto el documento final de la tesis. El plan de implementación en la organización de los datos y los servicios de terminología del acrshort{HIBA} no hacen parte de los entregables de esta tesis.
+\subsection{Fase 6: Implementación.} En la última fase organizo los datos y redacto el documento final de la tesis. El plan de implementación en la organización de los datos y los servicios de terminología del \acrshort{HIBA} no hacen parte de los entregables de esta tesis.
 
 \section{Algoritmos de aprendizaje no supervisado}
+\label{par:aprendizaje_nosupervisado}
 El paquete igraph\cite{igraph} de Python ofrece una variedad de algoritmos para realizar aprendizaje no supervisado. Sin embargo, por el tamaño del grafo algunos algoritmos son imposibles de usar en la práctica. Por ejemplo, el método \textit{leading edge betweenness} para detectar comunidades tiene una complejidad $O(|E||V|^2)$ en el peor caso (donde $|V|$ número de vértices y $|E|$ número de aristas). Para procesar el grafo de esta propuesta de trabajo se necesitaría 181.93 años. Los detalles de otros algoritmos en este paquete para la generación de comunidades se encuentran en la tabla \ref{algoritmos_igraph}.
 
 \begin{table}[tbp]
@@ -128,7 +152,7 @@ Exactitud = \frac{\text{Verdaderos positivos}+\text{Verdaderos negativos}}{\text
 Precision = \frac{\text{Verdaderos positivos}}{\text{Verdaderos positivos}+\text{Falsos positivos}}
 \end{equation}
 
-Teniendo en cuenta que las listas de sugerencias son de un tamaño $n$ ordenados según la relevancia, la exactitud suma los verdaderos positivos, que son los casos en los que la lista de sugerencia contiene la respuesta correcta, y los verdaderos negativos, que son los casos en los que la lista de sugerencias esta vacía y el problema a predecir no está dentro de los conceptos de Snomed CT a ser recuperados, y los divide en la totalidad de los datos de prueba. La precisión evalúa cuántas veces la lista de sugerencias no vacía tiene la respuesta correcta, divido las veces que se dió una respuesta positiva. Debido a que la lista de sugerencias es de tamaño $n$ La medida es llamada precisión al $n$ o $P@n$ y exactitud al $n$ o $Acc@n$.
+Teniendo en cuenta que las listas de sugerencias son de un tamaño $n$ ordenados según la relevancia, la exactitud suma los verdaderos positivos, que son los casos en los que la lista de sugerencia contiene la respuesta correcta, y los verdaderos negativos, que son los casos en los que la lista de sugerencias esta vacía y el problema a predecir no está dentro de los conceptos de Snomed CT a ser recuperados, y los divide en la totalidad de los datos de prueba. La precisión evalúa cuántas veces la lista de sugerencias no vacía tiene la respuesta correcta, dividido las veces que se obtuvo una respuesta positiva. Debido a que la lista de sugerencias es de tamaño $n$ La medida es llamada precisión al $n$ o $P@n$ y exactitud al $n$ o $Acc@n$.
 
 
 

@@ -76,6 +76,7 @@
 
 %Glosario de terminos
 \printglossary[type=\acronymtype,title={Abreviaturas}]
+\printglossary
 
 \cleardoublepage
 \mainmatter
@@ -95,6 +96,14 @@
 %%%% Resultados Parte 1
 \input{3.analisisresultados_1.tex}
  
+\chapter{Capítulo 4: Resultados del análisis de redes}
+%%%% Resultados Parte 2
+\input{4.analisisresultados_2.tex}
+
+%%%% Capítulo 5: Conclusiones
+\chapter{Conclusiones y futuros pasos}
+\input{5.conclusion.tex}
+
 %%%% Capítulo 2: Marco Teórico
 %%\chapter{Marco Teórico}
 %%\input{capitulo2.tex}
@@ -107,17 +116,13 @@
 %%\chapter{Minando la lista de problemas}
 %%\input{capitulo4.tex}
 
-%%%% Capítulo 5: Conclusiones
-%%\chapter{Conclusiones y futuros pasos}
-%%\input{capitulo5.tex}
-
 %%%% Apendice
-%%\clearpage
-%%\appendix
-%%\chapter{Grupos de problemas}
-%%\input{anexo.tex}
-%%\chapter{Agrupamientos por contextos}
-%%\input{anexo_2.tex}
+\clearpage
+\appendix
+\chapter{Grupos de problemas}
+\input{anexo.tex}
+\chapter{Agrupamientos por contextos}
+\input{anexo_2.tex}
 
 %%%% BIBLIOGRAFIA
 \backmatter

@@ -1,0 +1,43 @@
+\section{Conclusiones generales}
+En este trabajo he construido una clasificación de los conceptos de la lista de problemas, a partir de la co-ocurrencia de los problemas dentro de los pacientes y su registro asociado significativamente a diferentes contextos: servicio de atención de salud, nivel asistencial o ámbito y grupo etario. El objetivo de estos grupos o clasificaciones es contribuir al mejoramiento de la calidad de la lista de problemas de los pacientes en su completitud, actualización y granularidad, por medio de la recuperación contextual de información y el uso significativo de Snomed CT.
+
+En la actualidad Snomed CT tiene un amplio cubrimiento de diferentes tópicos relacionados a la salud, es usado en muchos países y está traducido en diferentes idiomas. Uno de los aspectos claves en su uso significativo es la creación de \acrshort{refset} o agrupamientos que puedan ser utilizados como vocabularios controlados dependientes de contextos, sin embargo Snomed CT no específica una metodología para la construcción de dichos agrupamientos.
+
+En esta tesis, construí por medio de algoritmos de graphmining tres niveles diferentes de clasificación de conceptos de Snomed CT: Problemas asociados a niveles asistenciales, Problemas asociados a grupos etarios, Problemas asociados a servicios de atención de salud. Las relaciones entre los conceptos de estas clasificaciones están ponderados por su co-ocurrencia entre los pacientes del Hospital Italiano de Buenos Aires.
+
+En el caso de los problemas asociados a servicios de atención de salud, realicé una validación de su cubrimiento con los \acrshort{refset} publicados por el consorcio \textit{Kaiser Permanente}. En el este capítulo repasaré las contribuciones de estas clasificaciones al proceso de la construcción de \acrshort{refset} de Snomed CT, y presentaré algunas ideas sobre el trabajo futuro de esta línea de investigación.
+
+Se aplicaron algoritmos de aprendizaje no supervisado al grafo construido con la red de problemas (\acrshort{RP})  y sus conexiones semánticas son Snomed CT (\acrshort{RP-SCT}). Los grupos que fueron consistentes en diferentes clasificaciones fueron evaluadas. Se midió  la precisión y exactitud de una lista de predicciones de 10 conceptos que intentaba predecir los problemas que fueron registrados a los pacientes en el año 2017, a partir de los registros de su lista de problemas previo a diciembre de 2016. 
+
+Los \acrshort{refset} de contextos permitieron acotar el universo de búsqueda, y mejoraron significativamente las métricas de precisión y exactitud.
+
+El principal logro de esta tesis es la creación de estas agrupaciones, las cuales tienen múltiples aplicaciones entre las que se cuentan: la recuperación de información, el uso significativo de Snomed CT y la creación de \acrshort{refset} con contexto. Espero que estas aplicaciones deriven una mejora a la calidad de la lista de problemas.
+
+\section{Uso significativo de Snomed CT}
+El primer objetivo del uso significativo de Snomed CT es mantener actualizada la lista de problemas con diagnósticos actuales ya activos. Los recursos para lograr esto son los \acrshort{refset} contextuales. En esta guía Snomed CT, presenta algunos públicos disponibles que sirvieron para evaluar el cubrimiento de los servicios de atención de salud.\cite{meaningfuluse}
+
+La metodología para la construcción de los \acrshort{refset} de Servicios de atención de salud y la comparación con otros experimentos realizados por nova scotia\cite{nova} fueron presentados en el congreso Medical Informatics Europe 2018.\cite{Avila2018SelectionSubsets.}
+
+Con el desarrollo de esta tesis, concluimos que la construcción de estos \acrshort{refset} mejora significativamente la recuperación de información en la lista de problemas. Ya que la precisión y exactitud mejoró significativamente con el uso de \acrshort{refset} de contexto.
+
+Los servicios del Hospital Italiano de Buenos Aires, son usados por historias clínicas electrónicas de Argentina, Uruguay y Chile. En trabajos futuros, sería muy beneficioso realizar un consenso entre el uso de las listas de problemas de todos estos centros médicos, para establecer una única lista de problemas controlada que además esté ponderada la frecuencia de uso en las bases de datos clínicas. Un trabajo similar fue realizado por Kaiser Permanente, pero el propuesto tendría la validez internacional de los países del cono sur. Como resultado Kaiser Permanente ha liberado una única lista de problemas desde el 2009 para ser usado en todas las clínicas de su consorcio y mantener la interoperabilidad.\cite{Dolin2004KaiserTerminology.}
+
+\section{Distancias semánticas}
+
+Estimar la distancia semántica entre términos es una de las herramientas más ampliamente usadas para el procesamiento y entendimiento de textos. En esta tesis fue usada para cuantificar la distancia entre los términos predichos y los términos de prueba, asumiendo que las distancias de tamaño 2 eran lo máximo aceptable. La distancia fue medida con el camino más corto entre los dos nodos del grafo.
+
+Una línea de investigación que se desprende de esta tesis es mejorar la manera como se calculan la distancias semánticas. Existen varias metodologías propuestas para medir la similaridad entre dos conceptos en una ontología, específicamente los trabajos con Snomed CT se pueden dividir en dos categorías: enfoques basados en conocimiento y enfoques basados en corpus.  \cite{Mabotuwana2013,BenAouicha2016,Sanchez2011,Harispe2014}
+
+El enfoque basado en conocimiento explota principalmente la estructura jerárquica y las relaciones semánticas de la ontología para hacer inferencias sobre el conocimiento. Este enfoque mide la distancia entre conceptos usando técnicas como el camino más corto, conteo de aristas, profundidad ontológica y ancestro común más bajo \textit{(Lowest Common Subsumer)}. La similaridad es determinada como el inverso de la distancia en su forma más simple, o alguna otra función matemática basada en la distancia ontológica.\cite{Mabotuwana2013}
+
+El enfoque basado en corpus usa un gran corpus con textos específicos del dominio para determinar el valor de la información de cada concepto. Este valor se determina por la frecuencia del concepto en el corpus. Los menos frecuentes son vistos como más informativos que los más comunes.\cite{Mabotuwana2013}
+
+No hay una métrica \textit{gold estandar} para determinar la similaridad entre dos conceptos de una ontología. En un trabajo futuro se evaluaran los dos enfoques, dado que se cuenta con la ontología y el corpus de la lista de problemas. Esta línea de investigación tiene  el objetivo de hallar una métrica con cierto nivel de confianza que determine cuándo dos conceptos son clínicamente similares.
+
+\section{Implementación en una Historia Clínica Electrónica}
+
+La implementación de los modelos en la historia clínica electrónica sugiere el completo desarrollo de un proyecto de software. Según los resultados teóricos obtenidos en esta tesis la línea futura tendrá el diseño de un experimento observacional de corte transversal con la implementación siguiendo los siguientes criterios de inclusión: áreas jerárquicas agrupadas por servicios de atención de salud: Cardiología, dermatología, endocrinología, nefrología, neurología, oftalmología, otorrinolaringología, pediatría, pisquiatría y traumatología, donde los valores de P@10 y Acc@10 superan el 0.800. También cuando el paciente pertenece a los grupos etarios: 15-24, 55-64 y 75-101, donde los valores de P@10 y Acc@10 superan el 0.900.
+
+Para el desarrollo de proyectos de software, el departamento de informática del hospital sigue los fundamentos de gestión de proyectos. Se realiza un Project Charter donde se define el alcance, riesgos, la metodología y entregables. También una Estructura de Desglose del Trabajo (EDT) con el cronograma. Por otro lado, el hospital requiere que el Comité de Ética de Protocolos de Investigación (CEPI) avale el protocolo de investigación. 
+
+Una vez se han alcanzado los avales y el proyecto ingresa dentro del portfolio del departamento de informática, se da inicio al análisis, diseño, desarrollo y pruebas. Este ciclo de software se realiza iterativamente usando la metodología ágil scrum. 
