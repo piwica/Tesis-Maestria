@@ -1,25 +1,16 @@
 \section{Introducción}
-En los capítulos anteriores realicé una revisión del estado del arte sobre el \textit{graph mining} aplicado en el área de la salud, con las definiciones en las cuales se enmarca esta tesis. Además, describí el proceso para obtener el conjunto de datos de la lista de problemas y los contextos de servicios de atención de salud, nivel asistencial y grupo etario. 
-
 Este capítulo contiene la construcción de dos grafos. El primero con las relaciones a Snomed CT, y el segunda sin las relaciones. Ya que es de interés analizar si las conexiones de Snomed CT mejoran la capacidad de formar comunidades y su capacidad predictiva.
 
-El análisis se compone de la aplicación de las definiciones de los grafos descriptas en los capítulos anteriores, evaluando si los grafos formados siguen patrones de redes de gran escala. Además del análisis sobre los agrupamientos encontrados luego de aplicar los algoritmos \textit{label propagation}, \textit{leading vector} y \textit{multilevel}. 
+El análisis se compone de la aplicación de las definiciones de los grafos descriptas en los capítulos anteriores, para evaluar si los grafos formados siguen patrones de redes de gran escala. Además del análisis sobre los agrupamientos encontrados luego de aplicar los algoritmos \textit{label propagation}, \textit{leading vector} y \textit{multilevel}. 
 
 Finalmente, se evaluará la capacidad predictiva de los conceptos que están en el mismo grupo dada una lista de problema de un paciente. Esta evaluación se realizará usando los {\acrshort{refset}} de los contextos como vocabularios controlados.
 
 \section{Definición del grafo}
-Sea el grafo de la figura\ref{fig:ModeloGrafo} G=(V,E), donde V denota a los vértices, equivalente a nodos: conceptos de snomed CT y pacientes, y E denota las aristas, equivalente a relaciones: \textit{tiene un problema}, o conexiones jerárquicas $|\textit{ES\_UN}|$  (Hallazgo Clínico, Procedimientos, Eventos, Situación con contexto explícito). Las propiedades de nivel asistencial, servicio de atención  y grupo etario pertenecen a la arista {tiene un problema}, ya que un mismo paciente puede acudir al hospital por el mismo problema en diferentes contextos.  Si un mismo paciente acude varias veces con el mismo contexto, esa información se registra en la propiedad frecuencia. A la derecha de la figura\ref{fig:ModeloGrafo} se observa una instancia del modelo, donde el paciente identificado con el id \textbf{12345} tiene:
-\begin{itemize}
-\item el problema \textbf{Varicela}; 
-\item el contexto de este problema es el nivel asistencia de la \textbf{Guardia}, el servicio de atención de salud es \textbf{Pediatría}, y el grupo etario es entre \textbf{5 y 14 años}; 
-\item el paciente acudió \textbf{dos} veces al hospital con el mismo contexto y el mismo problema.
-\item Según Snomed CT, la \textbf{varicela} es una \textbf{enfermedad viral caracterizada por exantema} y es una \textbf{infección por virus varicela zoster}.
-\end{itemize}
+Sea el grafo de la figura \ref{fig:ModeloGrafo} $G=(V,E)$, donde $V$ denota a los vértices, equivalente a nodos: conceptos de snomed CT y pacientes, y $E$ denota las aristas, equivalente a las relaciones $|\textit{TIENE\_PROBLEMA}|$, o las relaciones jerárquicas $|\textit{ES\_UN}|$ entre los conceptos de snomed CT (Hallazgo Clínico, Procedimientos, Eventos, Situación con contexto explícito). Los valores del nivel asistencial, servicio de atención  y grupo etario son propiedades de la arista $|\textit{TIENE\_PROBLEMA}|$, ya que un mismo paciente puede acudir al hospital por el mismo problema en diferentes contextos.  Si un mismo paciente acude varias veces con el mismo problema al mismo contexto, esa información se registra en la propiedad frecuencia. A la derecha de la figura\ref{fig:ModeloGrafo} se observa una instancia del modelo, donde el paciente identificado con el id \textbf{12345} tiene el problema \textbf{Varicela}. El contexto con el que el paciente acudió al hospital es el nivel asistencia de la \textbf{Guardia}, el servicio de atención de salud es \textbf{Pediatría}, y el grupo etario es entre \textbf{5 y 14 años}. El paciente acudió \textbf{dos} veces al hospital con el mismo contexto y el mismo problema. Según snomed CT, la \textbf{varicela} es una {enfermedad viral caracterizada por exantema} y es una \textbf{infección por virus varicela zoster}.
 
+Los \num{88869} conceptos distintos de la lista de problemas están relacionados jerárquicamente con \num{11946} de snomed CT, de tal manera que al usar todos los conceptos de las jerarquías, el número de vértices y aristas de la red son $|V|=$\num{19354} y $|E|=$\num{1173234} respectivamente. 
 
-Los \num{88869} conceptos distintos de la lista de problemas están relacionados jerárquicamente con \num{11946} de Snomed CT, de tal manera que al usar todos los conceptos de las jerarquías, el número de vértices y aristas de la red son $|V|=$\num{19354} y $|E|=$\num{1173234} respectivamente. 
-
-Se realiza el mismo análisis sobre el subgrafo generado sólo con las relaciones \textit{tiene un problema} y los nodos que comparten esta relación. El número de vértices y aristas de este subgrafo son $|V|=$\num{11946} y $|E|=$\num{937107} respectivamente.
+Se realiza el mismo análisis sobre el subgrafo generado sólo con las relaciones $|\textit{TIENE\_PROBLEMA}|$ y los nodos que comparten esta relación. El número de vértices y aristas de este subgrafo son $|V|=$\num{11946} y $|E|=$\num{937107} respectivamente.
 
 Para diferenciar las dos redes, la primera la nombro como \textbf{\acrfull{RP-SCT}} y la segunda la nombro como \textbf{{\acrfull{RP}}}
 
@@ -32,16 +23,16 @@ Para diferenciar las dos redes, la primera la nombro como \textbf{\acrfull{RP-SC
 
 \section{Patrones de la red de la lista de problemas}
 \subsection{Red libre de escala}
-En esta sección evalúo si la redes comparte patrones con redes de gran escala, realizo (1) ajuste a una distribución de ley de potencias usando los grados de cada nodo y (2) comparación con las distribuciones exponencial y logarítmica.
+En esta sección evalúo si la redes comparte patrones con redes de gran escala. Realizo dos pruebas, en la primera hago un ajuste a una distribución de ley de potencias usando los grados de cada nodo, y en la segunda hago una comparación con las distribuciones exponencial y logarítmica (Ver sección \ref{par:definicion-libre-escala}).
 
 En el caso de la \textbf{\acrshort{RP-SCT}} la función \acrshort{cdf} es:
 \begin{equation}
 F(X\geq 51) \propto x^{-1.82 +1}
 \end{equation}
 
-El p-value$(0.3188>0.05)$ no me permite rechazar la hipótesis nula.
+El $p-valor(0.3188>0.05)$ no me permite rechazar la hipótesis nula.
 
-En la tabla \ref{distribucionRPSCT} están los resultados de las comparaciones realizadas entre ley de potencias con otras distribuciones: la distribución exponencial fue usada para confirmar que los datos tienen una cola pesada, y la distribución lognormal tiene un mejor ajuste que la ley de potencias, como se muestra también en la figura \ref{fig:ajusteDistribuciones}.
+En la tabla \ref{distribucionRPSCT} están los resultados de las comparaciones realizadas entre ley de potencias con otras distribuciones. La distribución exponencial fue usada para confirmar que los datos tienen una cola pesada, y la distribución lognormal tiene un mejor ajuste que la ley de potencias, como se muestra también en la figura \ref{fig:ajusteDistribuciones}.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -57,7 +48,7 @@ Exponencial  & 10.64\tnote{*}  \\
 Lognormal    & -1.5 \\ \bottomrule
 \end{tabular}
 \begin{tablenotes}
-    \item[*] p-value$<$\num{0.05}.
+    \item[*] $p-valor<$\num{0.05}.
   \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -74,7 +65,7 @@ En el caso de la \textbf{\acrshort{RP}} la función \acrshort{cdf}  es:
 F(X\geq 279) \propto x^{-1.86 +1}
 \end{equation}
 
-Con el p-value$(0.03<0.05)$ se acepta la hipótesis nula los datos se distribuyen según la ley de potencias. La figura \ref{fig:ajusteDistribucionesRP} y la tabla \ref{distribucionRP} muestra también que esta distribución tiene mejor ajuste.
+Con el $p-valor(0.03<0.05)$ se acepta la hipótesis nula según la cual los datos se distribuyen según la ley de potencias. La figura \ref{fig:ajusteDistribucionesRP} y la tabla \ref{distribucionRP} muestra también que esta distribución tiene mejor ajuste.
 
 \begin{table}[htb]
 \centering
@@ -125,11 +116,11 @@ Los valores de coeficiente de agrupamiento cercanos a 1 indican alto grado de ag
 
 \section{Agrupamiento}
 
-Apliqué los algoritmos de agrupamiento: \textit{label propagation}, \textit{leading vector} y \textit{multilevel} a el grafo de la \textbf{\acrshort{RP}} y a sub-grafos de la  \textbf{\acrshort{RP-SCT}}, conformados por relaciones que tengan un mínimo de frecuencia en pacientes (\num{5}, \num{10}, \num{100}, \num{1000} y \num{10000}). Esto con el propósito de evaluar la estabilidad de los agrupamientos aunque el grafo pierda nodos.
+Se aplican los algoritmos de agrupamiento \textit{label propagation}, \textit{leading vector} y \textit{multilevel} al grafo de la \textbf{\acrshort{RP}} y a sub-grafos de la  \textbf{\acrshort{RP-SCT}}, conformados por relaciones que tengan un mínimo de frecuencia en pacientes (\num{5}, \num{10}, \num{100}, \num{1000} y \num{10000}). Esto con el propósito de evaluar la estabilidad de los agrupamientos aunque el grafo pierda nodos.
 
 La tabla \ref{res_agru} contiene los resultados de la modularidad y la cantidad de grupos encontrados al aplicar los algoritmos de agrupamiento. Se puede observar que en el caso del grafo de la \textbf{\acrshort{RP}}  se generan similares número de grupos aunque la modularidad varía en los algoritmos. La modularidad más alta es el del algoritmo \textit{multilevel} y el más bajo es el de \textit{label propagation}.
 
-En el caso de los sub-grafos \textbf{\acrshort{RP-SCT}}, el número de grados varía entre algoritmos: \textit{multilevel} es también el que mejores modularidades obtiene y mientras que \textit{leading vector} va desmejorando en su modularidad a medida que crece el grafo, \textit{label propagation} mejora. 
+En el caso de los sub-grafos \textbf{\acrshort{RP-SCT}}, el número de grados varía entre algoritmos. \textit{Multilevel} es el que mejores modularidades obtiene, \textit{leading vector} va desmejorando en su modularidad a medida que crece el grafo, \textit{Label propagation} mejora a medida que crece el grafo. 
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -158,24 +149,24 @@ Red de Problemas(\acrshort{RP})                                                 
 Estos seis grafos con sus 3 algoritmos representan grupos fuertes y débiles, a continuación presento los grupos de problemas que son consistentes en todos los agrupamientos. Además calculo la longitud media del camino mínimo entre los nodos del agrupamiento, esta información permite detectar grupos con conceptos con diferentes significados semánticos y valores atípicos.
 
 \subsection{Agrupamientos de Red de Problemas }
-Combinando los resultados de los agrupamientos hay \num{11132} posibles combinaciones, encontré 53 grupos de problemas que comparten las mismas agrupaciones. Según la tabla, \ref{gruposRP} la mayoría (19) de los grupos encontrados tienen 2 nodos, los grupos que tiene más nodos tienen en promedio una mediana de grados por nodo más grande, es decir que son nodos altamente conectados.
+Combinando los resultados de los agrupamientos hay \num{11132} posibles combinaciones, encontré 53 grupos de problemas que comparten las mismas agrupaciones. Según la tabla, \ref{gruposRP} la mayoría (19) de los grupos encontrados tienen dos nodos, los grupos que tiene más nodos tienen en promedio una mediana de grados por nodo más grande, es decir que son nodos altamente conectados.
 
-Al analizar las distancias semánticas entre los conceptos que comparten el mismo grupo, puedo observar según la figura \ref{fig:bpDistanciasSemanticasRP} que la mayoría de las medianas de las distancias se ubican cercanas a 10. Los grupos con las mayores dispersiones son el cluster\_1, cluster\_6, cluster\_10, cluster\_16, cluster\_22, cluster\_27, cluster\_30, cluster\_34 y cluster\_36. 
+En la figura \ref{fig:bpDistanciasSemanticasRP} representa las distancias semánticas entre los conceptos que comparten el mismo grupo. La mayoría de las medianas de las distancias se ubican cercanas a 10. Los grupos con las mayores dispersiones son el cluster\_1, cluster\_6, cluster\_10, cluster\_16, cluster\_22, cluster\_27, cluster\_30, cluster\_34 y cluster\_36. 
 
 En la tabla \ref{top10_rp} se encuentra los conceptos con más altas medidas de  centralidad (grado, cercanía e intermediación). En esta tabla se encuentran sólo los casos que contienen las mayores dispersiones según la distancia semántica. Se puede observar que coinciden los conceptos con los más altas métricas según el grado y la cercanía, y que difiere en el caso de la intermediación. En la métrica de intermediación se encuentran conceptos que sin tener muchas conexiones son mucho más importantes para la conexión de otros dos vértices del grafo.
 
 Por ejemplo, según lo anterior en el caso del cluster\_6 (que se puede interpretar como de enfermedades generales), los problemas con mayor grado (los más populares) son: FIEBRE (SCTID: 386661006) y TOS (SCTID: 49727002), pero el problema con mayor intermediación es RESFRIÓ COMÚN (SCTID: 82272006). Es decir, que este último conecta más otros pares de problemas que la Fiebre y la Tos. Otros ejemplos se pueden encontrar en el cluster\_10, donde el problema con mayor grado y cercanía es MALESTAR GENERAL (SCTID: 367391008), y el de mayor intermediación es INMUNODEFICIENCIA COMBINADA SEVERA (SCTID: 31323000); y en el grupo de embarazo (cluster\_16) donde los problemas con mayor grado son PACIENTE ACTUALMENTE EMBARAZADA (SCTID: 77386006) , ANSIEDAD (SCTID: 48694002) y MAREO (SCTID: 404640003), pero los de mayor intermediación son AMENAZA DE TRABAJO DE PARTO PREMATURO (SCTID: 6383007), INTOXICACIÓN POR FÁRMACO Y/O SUSTANCIA MEDICINAL (SCTID: 7895008) y SANGRADO VAGINAL (SCTID: 268471004).
 
 \subsubsection{Valores atípicos}
-Según el boxplot generado con las distancias semánticas en la figura \ref{fig:bpDistanciasSemanticasRP}, se presentan valores atípicos en los siguientes grupos:
+Según el boxplot de la figura \ref{fig:bpDistanciasSemanticasRP} generado con las distancias semánticas, se presentan valores atípicos en los siguientes grupos:
 \begin{itemize}
-\item cluster\_6: Este es un agrupamiento de enfermedades generales donde los problemas que tiene mayor distancia semántica en promedio con el resto del mismo grupo es: CIRUGÍA DE CATARATAS(PROCEDIMIENTO) (SCTID: 110473004), ATAQUE DE PÁNICO(HALLAZGO) (SCTID: 225624000), AMIGDALECTOMÍA(PROCEDIMIENTO) (SCTID: 173422009)
-\item cluster\_10: Este es un agrupamiento de administración de medicamentos y procedimientos invasivos, los problemas con mayores distancias son: ADMINISTRACIÓN DE ANTICOAGULANTE(PROCEDIMIENTO) (SCTID: 71788004), TRATAMIENTO CON ANTIBIÓTICOS INTRAVENOSOS(PROCEDIMIENTO) (SCTID: 281790008), INYECCIÓN DE GAMMAGLOBULINA (PROCEDIMIENTO) (SCTID: 180191005), CAMBIO DEL TUBO DE TRAQUEOSTOMÍA (PROCEDIMIENTO) (SCTID: 2267008). Estas distancias se explican porque la mayoría de los conceptos de este grupo están en la jerarquía de Hallazgos.
-\item cluster\_27: En este agrupamiento de enfermedades relacionadas con la edad avanzada, los problemas que tienen mayor distancia son: CONFUSIÓN AGUDA(HALLAZGO) (SCTID: 130987000), PACIENTE EN CAMA (HALLAZGO) (SCTID: 160685001).
-\item cluster\_36: En este agrupamiento de enfermedades cardiopulmonares, las mayores distancias se encuentran en los siguientes conceptos: BIOPSIA ENDOMIOCÁRDICA (PROCEDIMIENTO) (SCTID: 387829002), ALOTRASPLANTE ORTOTÓPICO DE CORAZÓN (PROCEDIMIENTO) (SCTID: 232974001) y TUMOR DE KLATSKIN (TRASTORNO) (SCTID: 253017000), esta última considerada como una enfermedad huérfana\footnote{www.orpha.net/consor/cgi-bin/OC\_Exp.php?lng=ES\&Expert=99978}.
+\item cluster\_6: Este es un agrupamiento de enfermedades generales donde los problemas que tiene mayor distancia semántica en promedio con el resto del mismo grupo son CIRUGÍA DE CATARATAS (PROCEDIMIENTO) (SCTID: 110473004),  ATAQUE DE PÁNICO (HALLAZGO) (SCTID: 225624000) y AMIGDALECTOMÍA (PROCEDIMIENTO) (SCTID: 173422009)
+\item cluster\_10: Este es un agrupamiento de administración de medicamentos y procedimientos invasivos, los problemas con mayores distancias son ADMINISTRACIÓN DE ANTICOAGULANTE (PROCEDIMIENTO) (SCTID: 71788004), TRATAMIENTO CON ANTIBIÓTICOS INTRAVENOSOS (PROCEDIMIENTO) (SCTID: 281790008),  INYECCIÓN DE GAMMAGLOBULINA (PROCEDIMIENTO) (SCTID: 180191005) y CAMBIO DEL TUBO DE TRAQUEOSTOMÍA (PROCEDIMIENTO)  (SCTID: 2267008). Estas distancias se explican porque la mayoría de los conceptos de este grupo están en la jerarquía de Hallazgos.
+\item cluster\_27: En este agrupamiento de enfermedades relacionadas con la edad avanzada, los problemas que tienen mayor distancia son CONFUSIÓN AGUDA(HALLAZGO) (SCTID: 130987000) y PACIENTE EN CAMA (HALLAZGO) (SCTID: 160685001).
+\item cluster\_36: En este agrupamiento de enfermedades cardiopulmonares, las mayores distancias se encuentran en los  conceptos BIOPSIA ENDOMIOCÁRDICA (PROCEDIMIENTO) (SCTID: 387829002), ALOTRASPLANTE ORTOTÓPICO DE CORAZÓN (PROCEDIMIENTO) (SCTID: 232974001) y TUMOR DE KLATSKIN (TRASTORNO) (SCTID: 253017000), esta última considerada como una enfermedad huérfana\footnote{www.orpha.net/consor/cgi-bin/OC\_Exp.php?lng=ES\&Expert=99978}.
 \end{itemize}
 
-Los valores atípicos en las cotas inferiores, donde las distancias semánticas son cercanas a 1,  se debe a relaciones entre conceptos ancestros y sus descendientes. Por ejemplo: en el cluster\_42: EPISTAXIS ANTERIOR (SCTID: 232354002) es descendiente de EPISTAXIS (SCTID: 249366005), y ambos conceptos están en el mismo grupo.
+Los valores atípicos en las cotas inferiores, donde las distancias semánticas son cercanas a uno,  se debe a relaciones entre conceptos ancestros y sus descendientes. Por ejemplo: en el cluster\_42: EPISTAXIS ANTERIOR (SCTID: 232354002) es descendiente de EPISTAXIS (SCTID: 249366005), y ambos conceptos están en el mismo grupo.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -214,13 +205,13 @@ Número de Nodos & Grupos Encontrados & Mediana de grados por nodo \\ \midrule
 \end{figure}
 
 \subsection{Agrupamientos de Red Semántica de Problemas}
-Combinando los resultados de los agrupamientos utilizando cualquier algoritmo de clasificación, hay \num{2,39e26} posibles combinaciones. Encontré 68 grupos de problemas que comparten las mismas agrupaciones. Según la tabla \ref{gruposRSP} La mayoría (44) de los grupos encontrados tienen 2 nodos.
+Combinando los resultados de los agrupamientos utilizando cualquier de los algoritmos, hay \num{2,39e26} posibles combinaciones. Encontré 68 grupos de problemas que comparten las mismas agrupaciones. Según la tabla \ref{gruposRSP} La mayoría (44) de los grupos encontrados tienen 2 nodos.
 
-Al analizar las distancias semánticas entre los conceptos que comparten el mismo grupo, puedo observar según la figura \ref{fig:bpDistanciasSemanticasRSP} que las medianas de las distancias tienen un mínimo de 1 y máximo de 10. A diferencia de la de \acrshort{RP},  en la \acrshort{RP-SCT}, las medianas de la distancia semántica no son constantes. 
+La figura \ref{fig:bpDistanciasSemanticasRSP} representa las distancias semánticas entre los conceptos que comparten el mismo grupo, se puede observar que las medianas de las distancias tienen un mínimo de 1 y máximo de 10. A diferencia de la de \acrshort{RP},  en la \acrshort{RP-SCT} las medianas de la distancia semántica no son constantes. 
 
-En la tabla \ref{top10_rsp} se encuentra los conceptos con más altas medidas de  centralidad (grado, cercanía e intermediación). Estos grupos son más pequeños que en la \acrshort{RP}, pero sobresalen los grupos con distancias semánticas grandes cuyos conceptos pareciera que no están muy relacionados, por ejemplo, el cluster\_0: INCISIÓN DE LA TRÁQUEA (SCTID: 48387007), AMIGDALECTOMÍA(SCTID: 173422009) y CIRUGÍA DE CATARATAS (SCTID: 110473004), el cluster\_2: FÍSTULA TRAQUEOESOFÁGICA (SCTID: 95435007) y ÚTERO UNICORNE (SCTID: 1372004), el cluster\_6: HIPERCORTISOLISMO (SCTID: 47270006) y TUMOR DE KLATSKIN (SCTID: 253017000). Sin embargo, al hacer una búsqueda rápida se pueden encontrar evidencias de las relaciones de estas enfermedades en artículos de divulgación científica, como se muestra en la tabla \ref{evidencia_grupos_2}.
+En la tabla \ref{top10_rsp} se encuentra los conceptos con las más altas medidas de  centralidad (grado, cercanía e intermediación). Estos grupos son más pequeños que en la \acrshort{RP}, pero sobresalen los grupos con distancias semánticas grandes cuyos conceptos pareciera que no están muy relacionados, por ejemplo, el cluster\_0: INCISIÓN DE LA TRÁQUEA (SCTID: 48387007), AMIGDALECTOMÍA(SCTID: 173422009) y CIRUGÍA DE CATARATAS (SCTID: 110473004), el cluster\_2: FÍSTULA TRAQUEOESOFÁGICA (SCTID: 95435007) y ÚTERO UNICORNE (SCTID: 1372004), el cluster\_6: HIPERCORTISOLISMO (SCTID: 47270006) y TUMOR DE KLATSKIN (SCTID: 253017000). Sin embargo, al hacer una búsqueda rápida se pueden encontrar evidencias de las relaciones de estas enfermedades en artículos de divulgación científica, como se muestra en la tabla \ref{evidencia_grupos_2}.
 
-Observando las diferencias de los resultados entre las dos redes, entre los grupos que estaban en la \acrshort{RP} y desaparecen en la \acrshort{RP-SCT},  se encontró evidencia de casos que son distantes semánticamente y que se encuentran en el mismo grupo en \acrshort{RP} , Ejemplos:
+Observando las diferencias de los resultados entre las dos redes, entre los grupos que estaban en la \acrshort{RP} y desaparecen en la \acrshort{RP-SCT},  se encontró evidencia de casos que son distantes semánticamente y que fueron agrupados juntos cuando se usó la red sin las aristas semánticas  \acrshort{RP} , Ejemplos:
 \begin{itemize}
 \item Distancia 10, Defecto ventilatorio (SCTID: 11483009) y Problema nasal  (SCTID: 301199001).
 \item Distancia 13, Alergia (SCTID: 106190000)  y Dermatitis atópica (SCTID: 24079001).
@@ -268,7 +259,7 @@ Número de Nodos & Grupos Encontrados & Mediana de grados por nodo \\ \midrule
 \subsubsection{Agrupamientos \textit{Label Propagation}}
 Combinando los resultados de aplicar sólo el algoritmo \textit{label propagation} en la \acrshort{RP-SCT} con diferentes cantidades mínimas de individuos que tengan el problema (RP-SCT-10.000,RP-SCT-1.000, RP-SCT-100,RP-SCT-10 y RP-SCT-5) , hay \num{5.64e9} posibles combinaciones (Ver tabla \ref{res_agru}) .  De estas combinaciones hay 232 grupos comunes a todos los resultados de agrupamiento. 
 
-Los 232 grupos tienen las siguientes características: más del 50\% de los grupos tienen menos de 50 nodos, estos grupos son muy cohesivos, ya que tienen distancias en promedio de dos saltos entre vértices y con una baja cantidad total de distancias atípicas a los otros vértices del grupo (10 en total en 144 grupos). Los grupos más grandes tienen también la mayor cantidad de vértices con valores de distancias atípicas.
+En los 232 grupos se presenta que más del 50\% de los grupos tienen menos de 50 nodos, estos grupos son muy cohesivos, ya que tienen distancias en promedio de dos saltos entre vértices y con una baja cantidad total de distancias atípicas a los otros vértices del grupo (10 en total en 144 grupos). Los grupos más grandes tienen también la mayor cantidad de vértices con valores de distancias atípicas.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -345,7 +336,7 @@ Mayor de 1000 nodos & 31 & 6 & 1,0 & 8 & 4 & 46345
 \subsection{Capacidad predictiva de los agrupamientos}
 En la sección anterior encontré 590 grupos de problemas que se constituían independientemente del algoritmo de agrupamiento o de la red de entrenamiento. Cada uno de los grupos  representa opciones de sugerencias para los usuarios. Es decir, si una lista de problemas tiene alguno de estos conceptos, los otros conceptos pueden ser sugeridos al profesional de la salud para que complete la lista del paciente.
 
-La evaluación la realicé con grupos con menos de 1000 conceptos. Teniendo en cuenta las directrices de recuperación de información: 
+Realicé la evaluación con grupos de menos de 1000 conceptos. Teniendo en cuenta las directrices de recuperación de información: 
 \begin{itemize}
 \item Un conjunto de pruebas: La \textit{query} formada por la lista de problemas antes del año 2017 y los problemas del 2017 representan la respuesta correcta,
 \item Los conceptos de snomed CT a ser recuperados: subgrafos que contengan alguno de los conceptos de la lista de problemas del paciente sin filtros y con filtro por contexto.
@@ -354,7 +345,7 @@ La evaluación la realicé con grupos con menos de 1000 conceptos. Teniendo en c
 
 \subsubsection{Directriz: Centralidad es la medida de relevancia y sin filtros de contexto}
 
-La tabla \ref{predic_agru_c} contiene los resultados de precisión y exactitud de los 10  resultados más relevantes ordenados por centralidad, en la tabla \ref{predic_agru_c_unique} no se tienen en cuenta las repeticiones. En ambas tablas se establece la comparación de asumir como verdaderos positivos los casos de predicciones exactas, o los casos cuando la distancia entre las predicciones y el verdadero resultado es menor o igual a 2. 
+La tabla \ref{predic_agru_c} contiene las métricas de precisión y exactitud de los 10  resultados más relevantes ordenados por centralidad. En la tabla \ref{predic_agru_c_unique} no se tienen en cuenta las repeticiones. En ambas tablas se establece la comparación de asumir como verdaderos positivos los casos de predicciones exactas, o los casos cuando la distancia entre las predicciones y el verdadero resultado es menor o igual a dos. 
 
 Los nodos excluidos sirven para filtrar los que por su alta medida de centralidad generan muchos falsos positivos, por ejemplo según el grado el concepto más popular es FIEBRE (SCTID: 386661006), pero al aparecer en una lista de problemas como \textit{query} hay \num{51606} posibles conceptos diferentes con los que está relacionado. Las medidas de centralidad con los que filtré y ordené los resultados son grado, intermediación, cercanía y autovector. 
 
@@ -362,7 +353,7 @@ Se puede observar en ambas tablas, que en el caso de las predicciones exactas, l
 
 Cuando las predicciones no son exactas, sino que se toma como verdadero positivo si al menos hay una distancia de hasta 2 entre la respuesta y las predicciones, los valores de precisión y exactitud aumentan, presentándose los máximos en los casos en los que no se excluyen nodos. Estos valores son en ordenamiento por grado y cercanía P@10(\num{0,948}) y Acc@10(\num{0,949}) y ordenando por autovector P@10(\num{0,947}) y Acc@10(\num{0,948}). En el caso de intermediación, como en las predicciones exactas, el máximo local está cuando se excluyen 400 nodos, donde se obtienen P@10(\num{0,972}) y Acc@10(\num{0,973}). 
 
-La precisión y exactitud son medidas que dependen de los falsos y verdaderos positivos y verdaderos negativos. En las  tablas \ref{best_results_clu} y \ref{best_results_clu_unique} se encuentran las frecuencias de estos valores para los mejores casos con y sin repeticiones respectivamente. En el caso en el que las predicciones no son exactas  hay un incremento significativo de los verdaderos positivos.
+La precisión y exactitud son medidas que dependen de los falsos positivos, verdaderos positivos y verdaderos negativos. En las  tablas \ref{best_results_clu} y \ref{best_results_clu_unique} se encuentran las frecuencias de estos valores para los mejores casos con y sin repeticiones. En el caso en el que las predicciones no son exactas  hay un incremento significativo de los verdaderos positivos.
 
 \subsubsection{Directriz: Distancia semántica es la medida de relevancia y sin filtros de contexto.}
 
@@ -555,11 +546,11 @@ Método de ordenamiento & Filtro de nodos & \multicolumn{1}{c}{FP} & \multicolum
 
 \subsubsection{Directriz: Filtros de contexto y medida de relevancia según el grado.}
 
-En las siguientes secciones  la lista de conceptos predichos están filtrados utilizando 3 criterios: (a) el servicio de atención de salud, (b) el ámbito o nivel asistencia y (c) el grupo etario. Del tal forma, que si los conceptos predichos no hacen parte del {\acrshort{refset}} de ese contexto, entonces se elimina de la lista de predicciones.
+En las siguientes secciones, la lista de conceptos predichos están filtrados utilizando tres criterios: el servicio de atención de salud, el ámbito o nivel asistencia y el grupo etario. Del tal forma, que si los conceptos predichos no hacen parte del {\acrshort{refset}} de ese contexto, entonces se elimina de la lista de predicciones.
 
 \paragraph{Agrupamientos con servicio de atención de salud}
 
-Los servicios de atención evaluados, fueron validados en el capítulo anterior con los {\acrshort{refset}} de \textit{Kaiser Permanente} (Ver sección \ref{par:contexto-areas}). Sin utilizar elementos de contexto, el mejor caso es donde se ordenan los conceptos según su distancia semántica, los valores de P@10 era de \num{0.174} y Acc@10 era de \num{0.202} con repeticiones y P@10 era de \num{0.230} y Acc@10 era de \num{0.244} sin repeticiones. En contraste, según lo registrado en la tabla \ref{predic_atencion}, usando los {\acrshort{refset}} de servicios de atención de salud todos los valores de predicción y exactitud son cercanos a \num{0.800} en todas las ocurrencias y sin repeticiones.
+Los servicios de atención que se evaluan a continuación, fueron validados en el capítulo anterior con los {\acrshort{refset}} de \textit{Kaiser Permanente} (Ver sección \ref{par:contexto-areas}). Sin utilizar elementos de contexto, el mejor caso es donde se ordenan los conceptos según su distancia semántica, admitiendo repeticiones el valor de P@10 era de \num{0.174} y Acc@10 era de \num{0.202} y sin repeticiones el valor de P@10 era de \num{0.230} y Acc@10 era de \num{0.244}. En contraste, según lo registrado en la tabla \ref{predic_atencion}, usando los {\acrshort{refset}} de servicios de atención de salud todos los valores de predicción y exactitud son cercanos a \num{0.800} con y sin repeticiones.
 
 Los servicios de atención con mejor capacidad predictiva observando las predicciones exactas son:
 
@@ -569,7 +560,7 @@ Los servicios de atención con mejor capacidad predictiva observando las predicc
 \item Cardiología (P@10=\num{0.872} y Acc@10 = \num{0.876}) con repeticiones y (P@10=\num{0.859} y Acc@10 = \num{0.860}) sin repeticiones
 \end{itemize}
 
-Si la predicción no es exacta pero se admite como verdadero positivo una distancia de 2 nodos entre la respuesta y alguna de las predicciones, entonces los valores P@10 y Acc@10 son superiores al \num{0.950}. Estos valores no varían entre los ordenamientos por centralidad o distancias semánticas.
+Si la predicción no es exacta pero se admite como verdadero positivo una distancia de dos nodos entre la respuesta y alguna de las predicciones, entonces los valores P@10 y Acc@10 son superiores al \num{0.950}. Estos valores no varían entre los ordenamientos por centralidad o distancias semánticas.
 
 
 % Please add the following required packages to your document preamble:
@@ -606,7 +597,7 @@ Urología & 0,794 & 0,806 & 0,911 & 0,916 & 0,742 & 0,751 & 0,895 & 0,899 \\ \bo
 
 \paragraph{Agrupamientos con nivel de asistencia}
 
-En la tabla \ref{predic_nivel} se encuentran los resultados de la capacidad predictiva del modelo filtrando con la información del contexto nivel de asistencia. Al compararlos con los resultados  del mejor caso sin información contextual, se desmejora el valor de P@10 en todos los niveles de asistencia.
+En la tabla \ref{predic_nivel} se encuentran los resultados de la capacidad predictiva del modelo cuando se filtra usando el contexto nivel de asistencia. Al compararlos con los resultados  del mejor caso sin información contextual, se desmejora el valor de P@10 en todos los niveles de asistencia.
 
 Los resultados obtenidos son inferiores a los obtenidos con el contexto dado por el área jerárquica.
 % Please add the following required packages to your document preamble:
@@ -636,11 +627,11 @@ Triage & 0,146 & 0,546 & 0,428 & 0,696 & 0,354 & 0,448 & 0,732 & 0,771 \\ \botto
 
 \subsubsection{Agrupamientos con grupo etario}
 
-En la tabla \ref{predic_etario} se encuentran los resultados de la capacidad predictiva del modelo, filtrando con la información del contexto de grupo etario al que pertenece el paciente. Los modelos obtenidos tienen mejor capacidad predictiva que los obtenidos en los otros contextos, según los valores de predicción y exactitud en el top 10 (P@10 y Acc@10 respectivamente).
+En la tabla \ref{predic_etario} se encuentran los resultados de la capacidad predictiva del modelo, usando el contexto de grupo etario al que pertenece el paciente para filtrar las sugerencias. Los modelos obtenidos tienen mejor capacidad predictiva que los obtenidos en los otros contextos, según los valores de predicción y exactitud en el top 10 (P@10 y Acc@10 respectivamente).
 
 El mejor modelo es el del grupo etario de los pacientes entre 75 y 101 años. Al mismo tiempo, este grupo tiene más registros en la lista de problemas que los otros grupos (ver \ref{fig:listaEdad}).
 
-En el caso de los grupos etarios de 0 a 4 años, 15 a 24 años, 25 a 34 años y 35 a 44 años, empleé el mismo filtro de problemas, ya que como se definió en el capítulo anterior los algoritmos de agrupamiento no encontraron diferencias significativas entre los problemas de estos grupos etarios. La capacidad predictiva en estos grupos es similar según su precisión y exactitud, y encuentro en ellos el peor rendimiento con un mínimo en P@10 \num{0.831} y Acc@10 \num{0.838} en todas las ocurrencias y en P@10 \num{0.850} y Acc@10 \num{0.853} sin repeticiones, estos valores corresponden al grupo etario de 0 a 4 años.
+En el caso de los grupos etarios de 0 a 4 años, 15 a 24 años, 25 a 34 años y 35 a 44 años, empleé el mismo filtro de problemas, ya que como se definió en el capítulo anterior los algoritmos de agrupamiento no encontraron diferencias significativas entre los problemas de estos grupos etarios (Ver sección \ref{par:contexto-grupo-etario}). La capacidad predictiva en estos grupos es similar, comparando su precisión y exactitud. El peor rendimiento tiene un mínimo en P@10 \num{0.831} y Acc@10 \num{0.838} en todas las ocurrencias, y en P@10 \num{0.850} y Acc@10 \num{0.853} sin repeticiones, estos valores corresponden al grupo etario de 0 a 4 años.
 
 
 % Please add the following required packages to your document preamble:
@@ -674,7 +665,7 @@ En el caso de los grupos etarios de 0 a 4 años, 15 a 24 años, 25 a 34 años y 
 \subsection{Visualización de agrupamientos por contextos}
 En esta sección se describe por medio de visualizaciones cómo los contextos y las grupos están representados. De manera general, los grupos encontrados en la lista de problemas se categorizan como se muestra en la figura \ref{fig:taxonomiaProblemas}. Un mismo concepto puede pertenecer a varios grupos. 
 
-En las visualizaciones de los grafos, los nodos con igual color representan igual grupo, el tamaño de los nodos hace referencia a su grado, y los enlaces son la co-ocurrencia de los nodos en la lista de problemas.\footnote{Puede encontrar las visualizaciones de todos los grafos en la \url{https://piwica.github.io/resultadosTesisDMHIBA/}}
+En las visualizaciones de los grafos, los nodos con igual color representan igual grupo, el tamaño de los nodos hace referencia a su grado, y los enlaces son la co-ocurrencia de los nodos en la lista de problemas.\footnote{Puede encontrar las visualizaciones de todos los grafos en la url \url{https://piwica.github.io/resultadosTesisDMHIBA/}}
 
 \begin{figure}[ht]
 \caption{Distribución de los agrupamientos en la lista de problemas}
@@ -685,7 +676,7 @@ En las visualizaciones de los grafos, los nodos con igual color representan igua
 
 La figura \ref{fig:clust_todo} representa los grupos de la lista de problemas. Mayoritariamente se pueden observar tres grupos, uno azul, otro verde y otro naranja. También mayoritariamente hay una nube densa de nodos fuertemente conectados en el centro, y pequeños grupos se diferencian de ese centro, sin embargo sólo uno de esos pequeños grupos tienen nodos de colores diferente al azul, verde y naranja.
 
-Haciendo el análisis por contexto, el número de nodos disminuye y su comportamiento varía de contexto a contexto. Por el análisis de la sección anterior, se sabe que los servicios de atención a la salud tienen mejor capacidad predictiva de la lista de problemas sin contexto. Haciendo la comparación visual de los grafos que representan las agrupaciones en los servicios de atención de salud, se pueden realizar las siguientes observaciones:
+Haciendo el análisis por contexto, el número de nodos disminuye y su comportamiento varía de contexto a contexto. Por el análisis de la sección anterior, se sabe que los servicios de atención a la salud tienen mejor capacidad predictiva que la lista de problemas sin contexto. Haciendo la comparación visual de los grafos que representan las agrupaciones en los servicios de atención de salud, se pueden realizar las siguientes observaciones:
 
 \begin{enumerate}
 \item Los grafos con mejor capacidad predictiva son los representados con las figuras \ref{fig:clust_area_pedia} (Pediatría), \ref{fig:clust_area_neuro} (Neurología) y \ref{fig:clust_area_cardio} (Cardiología), a su vez son los grafos más grandes y con mayor variedad de agrupaciones (colores) diferentes en los nodos. Cuando el algoritmo tiene en cuenta el contexto, la lista de predicciones se reduce sólo a los conceptos más cercanos en el mismo grupo.
@@ -704,43 +695,43 @@ Los grafos con el contexto del nivel asistencial o ámbito, permiten hacer las s
 \end{enumerate}
 En todos los grafo con el contexto del grupo etario se pueden observar una gran variedad de agrupaciones más pequeñas, que las separan de un centro más complejo y denso de problemas. También se observa una gran variedad de colores, los cuales significan que los métodos de agrupación han encontrado asociaciones significativas entre problemas.
 
-El grafo de la figura \ref{fig:clust_edad_0_4} que representa los problemas entre los 0 y 44 años es el más grande y complejo, y el grafo de la figura \ref{fig:clust_edad_75_101} aunque es el más simple tiene la mejor capacidad predictiva.
+El grafo de la figura \ref{fig:clust_edad_0_4} que representa los problemas con pacientes entre los 0 y 4 años es el más grande y complejo. El grafo de la figura \ref{fig:clust_edad_75_101} que representa los problemas con pacientes entre los 75 y 101 años aunque es el más simple tiene la mejor capacidad predictiva.
 
 \section{Discusión del capítulo}
 El objetivo de este capítulo fue realizar un análisis de \textit{graph mining} a la lista de problemas del HIBA con el fin identificar patrones de red y aplicar algoritmos de agrupamiento que permitan encontrar comunidades.
 
-En la identificación de patrones de red se evauaron dos redes: (1) la red formada sólo por los conceptos la lista problemas y sus co-ocurrencias en los individuos \textbf{(\acrshort{RP})}, y (2) extendiendo esta red con sus conexiones jerárquicas $|\textit{ES UN}|$  concepto de Snomed CT \textbf{(\acrshort{RP-SCT})}. La \acrshort{RP} tiene un mejor ajuste a la ley de potencias que la \acrshort{RP-SCT}. Esto debido a que la \acrshort{RP-SCT} tiene una cola mucho más pesada que la \acrshort{RP}. 
+En la identificación de patrones de red se evaluaron dos redes. La primera es una red formada sólo por los conceptos la lista problemas y sus co-ocurrencias en los individuos \textbf{(\acrshort{RP})}. En la segunda se extiende \textbf{(\acrshort{RP})} con sus conexiones jerárquicas $|\textit{ES UN}|$ a los concepto de Snomed CT \textbf{(\acrshort{RP-SCT})}. La \acrshort{RP} tiene un mejor ajuste a la ley de potencias que la \acrshort{RP-SCT}. Esto debido a que la \acrshort{RP-SCT} tiene una cola mucho más pesada que la \acrshort{RP}. 
 
-El siguiente aspecto evaluado fue los efectos de comunidad en los grafos. La diferencia de las métricas de transitividad y la transitividad local promedio, es que la primera es la medida de la transitividad local en toda la red, en la segunda se calcula por cada vértice la transitividad y los nodos con menos de dos vecinos son considerados como de transitividad cero \cite{Watts1998}. Las diferencias encontradas en  estas dos métricas en las dos redes, indican una alta presencia de nodos que no forman tríadas. Aunque los valores de la longitud media del camino mínimo entre nodos entre las dos redes es similar, para un alto coeficiente de agrupamiento como es el caso de \acrshort{RP} el efecto es que la mayoría de los nodos que son homogéneos se encuentran en pocos saltos dentro de la red, este efecto es similar al fenómeno de mundo pequeño en las redes sociales \cite{Cook2006}. 
+El siguiente aspecto evaluado fue los efectos de comunidad en los grafos. La diferencia de las métricas de transitividad y la transitividad local promedio, es que la primera es la medida de la transitividad local en toda la red, en la segunda se calcula por cada vértice la transitividad y los nodos con menos de dos vecinos son considerados como de transitividad cero \cite{Watts1998}. Las diferencias encontradas en  estas dos métricas en las dos redes, indican una alta presencia de nodos que no forman tríadas. Aunque los valores de la longitud media del camino mínimo entre nodos entre las dos redes es similar. Para un alto coeficiente de agrupamiento como es el caso de \acrshort{RP}, el efecto es que la mayoría de los nodos que son homogéneos se encuentran en pocos saltos dentro de la red. Este efecto es similar al fenómeno de mundo pequeño en las redes sociales \cite{Cook2006}. 
 
 Se evidencia que la \acrshort{RP} tiene estructuras más fuertes que la \acrshort{RP-SCT}, además que los nodos están más conectados (promedio grados más altos y longitudes medias más pequeñas). 
 
-Para detectar comunidades se usaron los  algoritmos de agrupamiento \textit{leading vector}, \textit{label propagation} y \textit{multilevel}. Las características de estos algoritmos son diferentes y presentadas en el capítulo 2 (Ver sección \ref{par:aprendizaje_nosupervisado}). La complejidad de estos algoritmos permite que puedan ser empleados en redes de larga escala y con grafos que no están conectados. Según los resultados obtenidos en la modularidad, \textit{Leading vector} es un algoritmo divisivo cuya modularidad se ve afectado por el tamaño del grafo y \textit{label propagation} va obteniendo mejores modularidades en la medida que crece el grafo. El algoritmo {multilevel} es el que mejores modularidades tiene y el número de grupos permanece constante sin importar que se modifique el tamaño del grafo.
+Para detectar comunidades se usaron los  algoritmos de agrupamiento \textit{leading vector}, \textit{label propagation} y \textit{multilevel}. Las características de estos algoritmos son diferentes y están descriptas en el capítulo 2 (Ver sección \ref{par:aprendizaje_nosupervisado}). La complejidad de estos algoritmos permite que puedan ser empleados en redes de larga escala y con grafos que no están conectados. Según los resultados obtenidos en la modularidad, \textit{Leading vector} es un algoritmo divisivo cuya modularidad se ve afectado por el tamaño del grafo y \textit{label propagation} va obteniendo mejores modularidades en la medida que crece el grafo. El algoritmo \textit{multilevel} es el que mejores modularidades tiene y el número de grupos permanece constante sin importar que se modifique el tamaño del grafo.
 
-Para evaluar la capacidad predictiva de los grupos obtenidos usé los datos de la lista de problemas en el año 2017. Lo que evalué era si había coincidencia en los 10  problemas más cercanos por medidas de centralidad o por distancia semántica. Los problemas más cercanos debían coincidir en el mismo grupo de los que están en la lista de problemas del paciente. Las medidas estadísticas que usé fueron precisión y exactitud. 
+Para evaluar la capacidad predictiva de los grupos obtenidos usé los datos de la lista de problemas en el año 2017. Lo que evalué era si en la lista de problemas del 2017 había coincidencia con los 10  problemas más cercanos por medidas de centralidad o por distancia semántica. Los problemas más cercanos debían coincidir en el mismo grupo de los que están en la lista de problemas del paciente. Las medidas estadísticas que usé fueron precisión y exactitud. 
 
 Cuando las predicciones son exactas, los resultados con precisiones más altas se logran con 20 nodos excluidos en grados, cercanía y autovector. En el caso de intermediación aumenta en la medida que más se filtren datos, con un máximo local en 400 nodos. Esto es por la relación entre falsos positivos y verdaderos positivos,  donde los filtros por grado, cercanía y autovector tienen mejores resultados por que tienen menos falsos positivos, y en el caso de la intermediación por que tienen más verdaderos positivos. 
 
 En el caso de las mediciones sin repeticiones se observa una exactitud similar en todos los experimentos y que hay una mejora no significativa en la precisión. A diferencia de los experimentos con repeticiones donde se obtiene una exactitud máxima de \num{0,397}, en el caso de los experimentos sin repeticiones la exactitud máxima es de \num{0,255}, esto se debe a que los verdaderos negativos cuentan con muchas repeticiones, en algunos casos reduciéndose a más de la mitad.
 
-En el caso del ordenamiento por distancia semántica  los resultados mejoran  en la precisión incluso sin realizar ningún filtro por medidas de centralidad, pero en cuanto a la medida de exactitud, se obtienen mejores resultados en el ordenamiento por centralidad. Por lo tanto, las medidas de centralidad permite identificar mejor los verdaderos negativos que las distancias semánticas.
+En el caso del ordenamiento por distancia semántica,  los resultados mejoran  en la precisión. Incluso sin realizar ningún filtro por medidas de centralidad, pero en cuanto a la medida de exactitud, se obtienen mejores resultados en el ordenamiento por centralidad. Por lo tanto, las medidas de centralidad permite identificar mejor los verdaderos negativos que las distancias semánticas.
 
-Cuando las predicciones no son exactas, sino que se toma como verdadero positivo si al menos hay una distancia de hasta 2 nodos entre la respuesta y las predicciones, hay un incremento significativo de los verdaderos positivos. Por lo tanto, los valores de precisión y exactitud aumentan, presentándose los máximos en los casos en los que no se excluyen nodos.  El mejor resultado se encuentra en el ordenamiento por distancia semántica de menor a mayor, con y sin repeticiones, los valores son  P@10(\num{0,995}) y Acc@10(\num{0,995}) con repeticiones y P@10(\num{0,997}) y Acc@10(\num{0,723}).  Aunque con las predicciones con distancias menores o iguales a 2 nodos, se obtienen precisiones y exactitudes por encima del \num{0.900} se requiere de un análisis más detallado para evaluar si las predicciones son realmente verdaderos positivos. 
+Cuando las predicciones no son exactas, sino que se toma como verdadero positivo si al menos hay una distancia de hasta dos nodos entre la respuesta y las predicciones, hay un incremento significativo de los verdaderos positivos. Por lo tanto, los valores de precisión y exactitud aumentan, presentándose los máximos en los casos en los que no se excluyen nodos.  El mejor resultado se encuentra en el ordenamiento por distancia semántica de menor a mayor, con y sin repeticiones, los valores con repeticiones son P@10(\num{0,995}) y Acc@10(\num{0,995}) y sin repeticiones son P@10(\num{0,997}) y Acc@10(\num{0,723}).  Aunque con las predicciones con distancias menores o iguales a dos nodos, se obtienen precisiones y exactitudes por encima del \num{0.900} se requiere de un análisis más detallado para evaluar si las predicciones son realmente verdaderos positivos. 
 
 El comportamiento diferente en los casos de intermediación se debe a que a diferencia del grado, cercanía y autovector, la intermediación no es una medida de cercanía, su valor está dado porque conecta otros pares de nodos. La interpretación es que al eliminar estos nodos entonces se eliminan los problemas que hacen parte de los síntomas subyacentes, pero no los problemas principales.
 
-Las visualizaciones permiten explicar la razón de las mejoras en las métricas de los contextos de servicios de atención y del grupo etario. Se puede observar que a diferencia de los otros contextos, aquellos en los que se conserva complejidad (por el número de nodos y enlaces) y variedad de grupos (color en los nodos), tienen mejor capacidad predictiva que aquellos que se reducen mucho en tamaño o que tienen pocos grupos. Utilizando el contexto, la precisión máxima P@10 es del \num{0.942} y la exactitud máxima A@10 es de \num{0.943} con repeticiones, y  P@10 de \num{0.948} y A@10 de \num{0.948} sin repeticiones. Estos valores fueron obtenidos en el contexto del grupo etario entre 75 y 101 años, son pacientes que por sus características tienen muchas enfermedades crónicas y varios registros en sus lista de problemas. 
+Las visualizaciones permiten explicar la razón de las mejoras en las métricas de los contextos de servicios de atención y del grupo etario. Se puede observar que a diferencia de los otros contextos, aquellos en los que se conserva complejidad (por el número de nodos y enlaces) y variedad de grupos (color en los nodos), tienen mejor capacidad predictiva que aquellos que se reducen mucho en tamaño o que tienen pocos grupos. Utilizando el contexto, en el caso con repeticiones la precisión máxima P@10 es del \num{0.942} y la exactitud máxima A@10 es de \num{0.943}, y sin precisiones son P@10 de \num{0.948} y A@10 de \num{0.948}. Estos valores fueron obtenidos en el contexto del grupo etario entre 75 y 101 años, son pacientes que por sus características tienen muchas enfermedades crónicas y varios registros en sus lista de problemas. 
 
 \section{Conclusión del capítulo}
-En este capítulo se analizaron los grafos creados a partir de la lista de problemas, sus conexiones con Snomed CT (Red \acrshort{RP}) y la co-ocurrencia en los pacientes (Red \acrshort{RP-SCT}).
+En este capítulo se analizaron el grafo creados a partir de la lista de problemas y la co-ocurrencia en los pacientes (Red \acrshort{RP}) y el grafo extendido con sus conexiones con Snomed CT (Red \acrshort{RP-SCT}).
 
 El primer análisis fue evaluar diferentes patrones de redes en estos grafos. Concluí que los grafos tienen un mejor ajuste a la ley de potencias que a otras distribuciones y que se evidencian efectos de comunidad. La utilidad de modelar la lista de problemas como un grafo radica en la posibilidad de detectar comunidades significativas que permitan realizar clasificaciones, detectar nodos influyentes y recuperar otros nodos del grupo usando algún criterio de proximidad o semejanza.
 
-En la detección de comunidades significativas se aplicaron los algoritmos de agrupamiento \textit{Leading vector}, \textit{Multilevel} y \textit{Label Propagation}, en la red de problemas \acrshort{RP-SCT} que se encontraban en al menos 5, 10, 100, 1000 y 10 000 pacientes con registros antes de diciembre de 2016 y la red \acrshort{RP}. Esto tenía el propósito de encontrar comunidades que se repitieran a pesar de los enfoques diferentes de los algoritmos y de los tamaños de los grafos. 
+En la detección de comunidades significativas se aplicaron los algoritmos de agrupamiento \textit{Leading vector}, \textit{Multilevel} y \textit{Label Propagation}. Esta detección se realizó en la la red \acrshort{RP} y en la red  \acrshort{RP-SCT} conformada por problemas que tengan registros de al menos 5, 10, 100, 1000 y 10 000 pacientes con registros antes de diciembre de 2016. Esto tenía el propósito de encontrar comunidades que se repitieran a pesar de los enfoques diferentes de los algoritmos y de los tamaños de los grafos. 
 
-Los resultados permitieron encontrar comunidades de problemas, problemas que se detectaron como atípicos debido a su distancia semántica con los otros miembros del grupo, y asociaciones novedosas entre problemas semánticamente distantes.  Los resultados también permitieron detectar grupos de problemas con un contexto similar en la red \acrshort{RP}: Ej. Enfermedades generales (cluster\_6), enfermedades relacionadas con la edad avanzada (cluster\_27), enfermedades relacionada al embarazo (cluster\_16), etc. Mientras que en la red \acrshort{RP-SCT} se encontraron en su mayoría grupos pequeños pero que presentaban asociaciones entre pares de conceptos distantes semánticamente según su clasificación en la ontología de Snomed CT, sin embargo al realizar una búsqueda bibliográfica encontré incidencias de la co-ocurrencia de estas enfermedades en pacientes.
+Los resultados permitieron encontrar comunidades, problemas que se detectaron como atípicos debido a su distancia semántica con los otros miembros del grupo, y asociaciones novedosas entre problemas semánticamente distantes.  Los resultados también permitieron detectar grupos de problemas con un contexto similar en la red \acrshort{RP}: Ej. Enfermedades generales (cluster\_6), enfermedades relacionadas con la edad avanzada (cluster\_27), enfermedades relacionada al embarazo (cluster\_16), etc. Mientras que en la red \acrshort{RP-SCT} se encontraron en su mayoría grupos pequeños pero que presentaban asociaciones entre pares de conceptos distantes semánticamente según su clasificación en la ontología de Snomed CT. Sin embargo al realizar una búsqueda bibliográfica encontré evidencias de la co-ocurrencia de estas enfermedades en pacientes.
 
-El siguiente paso dentro de la metodología fue evaluar la capacidad predictiva de las comunidades encontradas. Para lo cual en el caso de los pacientes con registros en el 2017, tomé la lista de problemas hasta el 2016 para crear la \textit{query} que permita para generar una lista de predicciones a partir de su co-ocurrencia en las comunidades. La lista de predicciones es de tamaño 10 y su ordenamiento es por la medidas de centralidad o de distancias semánticas. También evalué filtrar de la lista los nodos con mayores medidas de centralidad: grado, intermediación, cercanía y autovector. Las métricas evaluadas fueron precisión P@10 y exactitud Acc@10, tanto en predicciones exactas o si la distancia entre el problema del 2017 y la lista de predicciones es menor a 2 nodos. Los resultados de estos experimentos dieron valores muy bajos, especialmente en el caso de las predicciones exactas donde la mayoría no supera en precisión el \num{0.100} y en exactitud el \num{0.300}.
+El siguiente paso dentro de la metodología fue evaluar la capacidad predictiva de las comunidades encontradas. Para lo cual en el caso de los pacientes con registros en el 2017, tomé la lista de problemas hasta el 2016 para crear la \textit{query}. La co-ocurrencia de los problemas de esta \textit{query} dentro de las comunidades generó una lista de predicciones. La lista de predicciones es de tamaño 10 y su ordenamiento es por la medidas de centralidad o de distancias semánticas. También evalué filtrar de la lista, los nodos con mayores medidas de centralidad: grado, intermediación, cercanía y autovector. Las métricas evaluadas fueron precisión P@10 y exactitud Acc@10, tanto en predicciones exactas o si la distancia entre el problema del 2017 y la lista de predicciones es menor a dos nodos. Los resultados de estos experimentos dieron valores muy bajos, especialmente en el caso de las predicciones exactas donde la mayoría no supera en precisión el \num{0.100} y en exactitud el \num{0.300}.
 
-En la última sección, se filtraron las listas de sugerencias usando los \acrshort{refset} de los contextos del área jerárquica, nivel asistencial y grupo etario. Las métricas mejoran significativamente en cada caso. En menor grado en el nivel asistencial donde los valores de precisión y exactitud se duplican, en promedio son P@10=\num{0.150} y Acc@10=\num{0.500} en las predicciones exactas. Y en mayor grado el servicio de atención de salud y grupo etario. En estos últimos, algunos casos superan \num{0.900} en precisión y exactitud y la mayoría es ubica por encima de \num{0.800}.
+En la última sección, se filtraron las listas de sugerencias usando los \acrshort{refset} de los contextos del área jerárquica, nivel asistencial y grupo etario. Las métricas mejoran significativamente en cada caso. En menor grado en el nivel asistencial donde los valores de precisión y exactitud se duplican, en promedio son P@10=\num{0.150} y Acc@10=\num{0.500} en las predicciones exactas. Y en mayor medida en el servicio de atención de salud y grupo etario. En estos últimos, algunos casos superan \num{0.900} en precisión y exactitud y la mayoría es ubica por encima de \num{0.800}.
 
