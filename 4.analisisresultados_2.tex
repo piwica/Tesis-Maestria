@@ -1,5 +1,5 @@
 \section{Introducción}
-Este capítulo contiene la construcción de dos grafos. El primero con las relaciones a Snomed CT, y el segunda sin las relaciones. Ya que es de interés analizar si las conexiones de Snomed CT mejoran la capacidad de formar comunidades y su capacidad predictiva.
+Este capítulo contiene la construcción de dos grafos. El primero con las relaciones a Snomed CT, y el segundo sin las relaciones. Ya que es de interés analizar si las conexiones de Snomed CT mejoran la capacidad de formar comunidades y su capacidad predictiva.
 
 El análisis se compone de la aplicación de las definiciones de los grafos descriptas en los capítulos anteriores, para evaluar si los grafos formados siguen patrones de redes de gran escala. Además del análisis sobre los agrupamientos encontrados luego de aplicar los algoritmos \textit{label propagation}, \textit{leading vector} y \textit{multilevel}. 
 
@@ -8,7 +8,7 @@ Finalmente, se evaluará la capacidad predictiva de los conceptos que están en 
 \section{Definición del grafo}
 Sea el grafo de la figura \ref{fig:ModeloGrafo} $G=(V,E)$, donde $V$ denota a los vértices, equivalente a nodos: conceptos de snomed CT y pacientes, y $E$ denota las aristas, equivalente a las relaciones $|\textit{TIENE\_PROBLEMA}|$, o las relaciones jerárquicas $|\textit{ES\_UN}|$ entre los conceptos de snomed CT (Hallazgo Clínico, Procedimientos, Eventos, Situación con contexto explícito). Los valores del nivel asistencial, servicio de atención  y grupo etario son propiedades de la arista $|\textit{TIENE\_PROBLEMA}|$, ya que un mismo paciente puede acudir al hospital por el mismo problema en diferentes contextos.  Si un mismo paciente acude varias veces con el mismo problema al mismo contexto, esa información se registra en la propiedad frecuencia. A la derecha de la figura\ref{fig:ModeloGrafo} se observa una instancia del modelo, donde el paciente identificado con el id \textbf{12345} tiene el problema \textbf{Varicela}. El contexto con el que el paciente acudió al hospital es el nivel asistencia de la \textbf{Guardia}, el servicio de atención de salud es \textbf{Pediatría}, y el grupo etario es entre \textbf{5 y 14 años}. El paciente acudió \textbf{dos} veces al hospital con el mismo contexto y el mismo problema. Según snomed CT, la \textbf{varicela} es una {enfermedad viral caracterizada por exantema} y es una \textbf{infección por virus varicela zoster}.
 
-Los \num{88869} conceptos distintos de la lista de problemas están relacionados jerárquicamente con \num{11946} de snomed CT, de tal manera que al usar todos los conceptos de las jerarquías, el número de vértices y aristas de la red son $|V|=$\num{19354} y $|E|=$\num{1173234} respectivamente. 
+Los \num{88869} conceptos distintos de la lista de problemas del \acrshort{HIBA} están relacionados jerárquicamente con \num{11946} conceptos de snomed CT.  El grafo extendido con Snomed CT tiene en cantidad de vértices y aristas $|V|=$\num{19354} y $|E|=$\num{1173234} respectivamente. 
 
 Se realiza el mismo análisis sobre el subgrafo generado sólo con las relaciones $|\textit{TIENE\_PROBLEMA}|$ y los nodos que comparten esta relación. El número de vértices y aristas de este subgrafo son $|V|=$\num{11946} y $|E|=$\num{937107} respectivamente.
 
@@ -23,7 +23,7 @@ Para diferenciar las dos redes, la primera la nombro como \textbf{\acrfull{RP-SC
 
 \section{Patrones de la red de la lista de problemas}
 \subsection{Red libre de escala}
-En esta sección evalúo si la redes comparte patrones con redes de gran escala. Realizo dos pruebas, en la primera hago un ajuste a una distribución de ley de potencias usando los grados de cada nodo, y en la segunda hago una comparación con las distribuciones exponencial y logarítmica (Ver sección \ref{par:definicion-libre-escala}).
+En esta sección evalúo si la redes comparten patrones con redes de gran escala. Realizo dos pruebas, en la primera hago un ajuste a una distribución de ley de potencias usando los grados de cada nodo, y en la segunda hago una comparación con las distribuciones exponencial y logarítmica (Ver sección \ref{par:definicion-libre-escala}).
 
 En el caso de la \textbf{\acrshort{RP-SCT}} la función \acrshort{cdf} es:
 \begin{equation}
@@ -112,7 +112,7 @@ Promedio de grados                                       & \num{60.62}  & \num{7
 }
 \end{table}
 
-Los valores de coeficiente de agrupamiento cercanos a 1 indican alto grado de agrupamiento, como se puede ver en la tabla \ref{community-graphs} la \textbf{\acrshort{RP}} tiene mejores coeficientes que la \textbf{\acrshort{RP-SCT}}. 
+Los valores de coeficiente de agrupamiento cercanos a 1 indican alto grado de agrupamiento, como se puede ver en la tabla \ref{community-graphs} la \textbf{\acrshort{RP}} tiene mayores coeficientes que la \textbf{\acrshort{RP-SCT}}. 
 
 \section{Agrupamiento}
 
@@ -155,7 +155,7 @@ En la figura \ref{fig:bpDistanciasSemanticasRP} representa las distancias semán
 
 En la tabla \ref{top10_rp} se encuentra los conceptos con más altas medidas de  centralidad (grado, cercanía e intermediación). En esta tabla se encuentran sólo los casos que contienen las mayores dispersiones según la distancia semántica. Se puede observar que coinciden los conceptos con los más altas métricas según el grado y la cercanía, y que difiere en el caso de la intermediación. En la métrica de intermediación se encuentran conceptos que sin tener muchas conexiones son mucho más importantes para la conexión de otros dos vértices del grafo.
 
-Por ejemplo, según lo anterior en el caso del cluster\_6 (que se puede interpretar como de enfermedades generales), los problemas con mayor grado (los más populares) son: FIEBRE (SCTID: 386661006) y TOS (SCTID: 49727002), pero el problema con mayor intermediación es RESFRIÓ COMÚN (SCTID: 82272006). Es decir, que este último conecta más otros pares de problemas que la Fiebre y la Tos. Otros ejemplos se pueden encontrar en el cluster\_10, donde el problema con mayor grado y cercanía es MALESTAR GENERAL (SCTID: 367391008), y el de mayor intermediación es INMUNODEFICIENCIA COMBINADA SEVERA (SCTID: 31323000); y en el grupo de embarazo (cluster\_16) donde los problemas con mayor grado son PACIENTE ACTUALMENTE EMBARAZADA (SCTID: 77386006) , ANSIEDAD (SCTID: 48694002) y MAREO (SCTID: 404640003), pero los de mayor intermediación son AMENAZA DE TRABAJO DE PARTO PREMATURO (SCTID: 6383007), INTOXICACIÓN POR FÁRMACO Y/O SUSTANCIA MEDICINAL (SCTID: 7895008) y SANGRADO VAGINAL (SCTID: 268471004).
+Por ejemplo, según lo anterior en el caso del cluster\_6 (que se puede interpretar como de enfermedades generales), los problemas con mayor grado (los más populares) son: FIEBRE (SCTID: 386661006) y TOS (SCTID: 49727002), pero el problema con mayor intermediación es RESFRÍO COMÚN (SCTID: 82272006). Es decir, que este último conecta más otros pares de problemas que la Fiebre y la Tos. Otros ejemplos se pueden encontrar en el cluster\_10, donde el problema con mayor grado y cercanía es MALESTAR GENERAL (SCTID: 367391008), y el de mayor intermediación es INMUNODEFICIENCIA COMBINADA SEVERA (SCTID: 31323000); y en el grupo de embarazo (cluster\_16) donde los problemas con mayor grado son PACIENTE ACTUALMENTE EMBARAZADA (SCTID: 77386006) , ANSIEDAD (SCTID: 48694002) y MAREO (SCTID: 404640003), pero los de mayor intermediación son AMENAZA DE TRABAJO DE PARTO PREMATURO (SCTID: 6383007), INTOXICACIÓN POR FÁRMACO Y/O SUSTANCIA MEDICINAL (SCTID: 7895008) y SANGRADO VAGINAL (SCTID: 268471004).
 
 \subsubsection{Valores atípicos}
 Según el boxplot de la figura \ref{fig:bpDistanciasSemanticasRP} generado con las distancias semánticas, se presentan valores atípicos en los siguientes grupos:
@@ -259,7 +259,7 @@ Número de Nodos & Grupos Encontrados & Mediana de grados por nodo \\ \midrule
 \subsubsection{Agrupamientos \textit{Label Propagation}}
 Combinando los resultados de aplicar sólo el algoritmo \textit{label propagation} en la \acrshort{RP-SCT} con diferentes cantidades mínimas de individuos que tengan el problema (RP-SCT-10.000,RP-SCT-1.000, RP-SCT-100,RP-SCT-10 y RP-SCT-5) , hay \num{5.64e9} posibles combinaciones (Ver tabla \ref{res_agru}) .  De estas combinaciones hay 232 grupos comunes a todos los resultados de agrupamiento. 
 
-En los 232 grupos se presenta que más del 50\% de los grupos tienen menos de 50 nodos, estos grupos son muy cohesivos, ya que tienen distancias en promedio de dos saltos entre vértices y con una baja cantidad total de distancias atípicas a los otros vértices del grupo (10 en total en 144 grupos). Los grupos más grandes tienen también la mayor cantidad de vértices con valores de distancias atípicas.
+En los 232 grupos se presenta que más del 50\% de los grupos tienen menos de 50 nodos, estos grupos son muy cohesivos, ya que tienen distancias en promedio de dos saltos entre vértices y con una baja cantidad total de distancias atípicas a los otros vértices del grupo (10 en total en 144 grupos). Los grupos más grandes tienen también la mayor cantidad de vértices con valores de distancias atípicas (Ver tabla \ref{clus_lp}).
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -357,7 +357,7 @@ La precisión y exactitud son medidas que dependen de los falsos positivos, verd
 
 \subsubsection{Directriz: Distancia semántica es la medida de relevancia y sin filtros de contexto.}
 
-En las tablas \ref{predic_agru_ds} y \ref{predic_agru_c_unique}, que corresponden a ordenamiento por distancia semántica con y sin repeticiones,  obtengo los mejores valores de precisión y exactitud en los casos de las predicciones no exactas. Los valores son  P@10(\num{0,995}) y Acc@10(\num{0,995}) con repeticiones y P@10(\num{0,997}) y Acc@10(\num{0,723}) sin repeticiones en distancias de ordenadas de menor a mayor. La eliminación de los top 100 nodos con mayores medidas de centralidad afectan significativamente la capacidad predictiva de los agrupamientos. 
+En las tablas \ref{predic_agru_ds} y \ref{predic_agru_ds_unique}, que corresponden a ordenamiento por distancia semántica con y sin repeticiones,  obtengo los mejores valores de precisión y exactitud en los casos de las predicciones no exactas. Los valores son  P@10(\num{0,995}) y Acc@10(\num{0,995}) con repeticiones y P@10(\num{0,997}) y Acc@10(\num{0,723}) sin repeticiones en distancias ordenadas de menor a mayor. La eliminación de los top 100 nodos con mayores medidas de centralidad afectan significativamente la capacidad predictiva de los agrupamientos. 
 
 
 % Please add the following required packages to your document preamble:
@@ -700,7 +700,7 @@ El grafo de la figura \ref{fig:clust_edad_0_4} que representa los problemas con 
 \section{Discusión del capítulo}
 El objetivo de este capítulo fue realizar un análisis de \textit{graph mining} a la lista de problemas del HIBA con el fin identificar patrones de red y aplicar algoritmos de agrupamiento que permitan encontrar comunidades.
 
-En la identificación de patrones de red se evaluaron dos redes. La primera es una red formada sólo por los conceptos la lista problemas y sus co-ocurrencias en los individuos \textbf{(\acrshort{RP})}. En la segunda se extiende \textbf{(\acrshort{RP})} con sus conexiones jerárquicas $|\textit{ES UN}|$ a los concepto de Snomed CT \textbf{(\acrshort{RP-SCT})}. La \acrshort{RP} tiene un mejor ajuste a la ley de potencias que la \acrshort{RP-SCT}. Esto debido a que la \acrshort{RP-SCT} tiene una cola mucho más pesada que la \acrshort{RP}. 
+En la identificación de patrones de red se evaluaron dos redes. La primera es una red formada sólo por los conceptos de la lista problemas y sus co-ocurrencias en los individuos \textbf{(\acrshort{RP})}. En la segunda se extiende \textbf{(\acrshort{RP})} con sus conexiones jerárquicas $|\textit{ES\_UN}|$ a los concepto de Snomed CT \textbf{(\acrshort{RP-SCT})}. La \acrshort{RP} tiene un mejor ajuste a la ley de potencias que la \acrshort{RP-SCT}. Esto debido a que la \acrshort{RP-SCT} tiene una cola mucho más pesada que la \acrshort{RP}. 
 
 El siguiente aspecto evaluado fue los efectos de comunidad en los grafos. La diferencia de las métricas de transitividad y la transitividad local promedio, es que la primera es la medida de la transitividad local en toda la red, en la segunda se calcula por cada vértice la transitividad y los nodos con menos de dos vecinos son considerados como de transitividad cero \cite{Watts1998}. Las diferencias encontradas en  estas dos métricas en las dos redes, indican una alta presencia de nodos que no forman tríadas. Aunque los valores de la longitud media del camino mínimo entre nodos entre las dos redes es similar. Para un alto coeficiente de agrupamiento como es el caso de \acrshort{RP}, el efecto es que la mayoría de los nodos que son homogéneos se encuentran en pocos saltos dentro de la red. Este efecto es similar al fenómeno de mundo pequeño en las redes sociales \cite{Cook2006}. 
 
@@ -710,11 +710,11 @@ Para detectar comunidades se usaron los  algoritmos de agrupamiento \textit{lead
 
 Para evaluar la capacidad predictiva de los grupos obtenidos usé los datos de la lista de problemas en el año 2017. Lo que evalué era si en la lista de problemas del 2017 había coincidencia con los 10  problemas más cercanos por medidas de centralidad o por distancia semántica. Los problemas más cercanos debían coincidir en el mismo grupo de los que están en la lista de problemas del paciente. Las medidas estadísticas que usé fueron precisión y exactitud. 
 
-Cuando las predicciones son exactas, los resultados con precisiones más altas se logran con 20 nodos excluidos en grados, cercanía y autovector. En el caso de intermediación aumenta en la medida que más se filtren datos, con un máximo local en 400 nodos. Esto es por la relación entre falsos positivos y verdaderos positivos,  donde los filtros por grado, cercanía y autovector tienen mejores resultados por que tienen menos falsos positivos, y en el caso de la intermediación por que tienen más verdaderos positivos. 
+Cuando las predicciones son exactas, los resultados con precisiones más altas se logran con 20 nodos excluidos en grados, cercanía y autovector. En el caso de intermediación aumenta en la medida que más se filtren datos, con un máximo local en 400 nodos. Esto es por la relación entre falsos positivos y verdaderos positivos,  donde los filtros por grado, cercanía y autovector tienen mejores resultados porque tienen menos falsos positivos, y en el caso de la intermediación porque tienen más verdaderos positivos. 
 
 En el caso de las mediciones sin repeticiones se observa una exactitud similar en todos los experimentos y que hay una mejora no significativa en la precisión. A diferencia de los experimentos con repeticiones donde se obtiene una exactitud máxima de \num{0,397}, en el caso de los experimentos sin repeticiones la exactitud máxima es de \num{0,255}, esto se debe a que los verdaderos negativos cuentan con muchas repeticiones, en algunos casos reduciéndose a más de la mitad.
 
-En el caso del ordenamiento por distancia semántica,  los resultados mejoran  en la precisión. Incluso sin realizar ningún filtro por medidas de centralidad, pero en cuanto a la medida de exactitud, se obtienen mejores resultados en el ordenamiento por centralidad. Por lo tanto, las medidas de centralidad permite identificar mejor los verdaderos negativos que las distancias semánticas.
+En el caso del ordenamiento por distancia semántica,  los resultados mejoran  en la precisión. Incluso sin realizar ningún filtro por medidas de centralidad, pero en cuanto a la medida de exactitud, se obtienen mejores resultados en el ordenamiento por centralidad. Por lo tanto, las medidas de centralidad permiten identificar mejor los verdaderos negativos que las distancias semánticas.
 
 Cuando las predicciones no son exactas, sino que se toma como verdadero positivo si al menos hay una distancia de hasta dos nodos entre la respuesta y las predicciones, hay un incremento significativo de los verdaderos positivos. Por lo tanto, los valores de precisión y exactitud aumentan, presentándose los máximos en los casos en los que no se excluyen nodos.  El mejor resultado se encuentra en el ordenamiento por distancia semántica de menor a mayor, con y sin repeticiones, los valores con repeticiones son P@10(\num{0,995}) y Acc@10(\num{0,995}) y sin repeticiones son P@10(\num{0,997}) y Acc@10(\num{0,723}).  Aunque con las predicciones con distancias menores o iguales a dos nodos, se obtienen precisiones y exactitudes por encima del \num{0.900} se requiere de un análisis más detallado para evaluar si las predicciones son realmente verdaderos positivos. 
 

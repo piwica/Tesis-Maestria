@@ -5,7 +5,7 @@ En las primeras fases estudio el problema y los datos. La siguiente fase, que es
 
 \section{Algoritmos de aprendizaje no supervisado}
 \label{par:aprendizaje_nosupervisado}
-El paquete igraph\cite{igraph} de Python ofrece una variedad de algoritmos para realizar aprendizaje no supervisado. Sin embargo, por el tamaño del grafo algunos algoritmos son imposibles de usar en la práctica. Por ejemplo, el método \textit{leading edge betweenness} para detectar comunidades tiene una complejidad $O(|E||V|^2)$ en el peor caso (donde $|V|$ número de vértices y $|E|$ número de aristas). Para procesar el grafo de la red semántica de problemas se necesitaría 181.93 años. Los detalles de otros algoritmos para la generación de comunidades del paquete igraph se encuentran en la tabla \ref{algoritmos_igraph}.
+El paquete igraph\cite{igraph} de Python ofrece una variedad de algoritmos para realizar aprendizaje no supervisado. Sin embargo, por el tamaño del grafo algunos algoritmos son imposibles de usar en la práctica. Por ejemplo, el método \textit{leading edge betweenness} para detectar comunidades tiene una complejidad $O(|E||V|^2)$ en el peor caso (donde $|V|$ número de vértices y $|E|$ número de aristas). Para procesar el grafo de la red semántica de problemas se necesitaría en el peor de los casos más de 181.93 años. Los detalles de otros algoritmos para la generación de comunidades del paquete igraph se encuentran en la tabla \ref{algoritmos_igraph}.
 
 \begin{table}[tbp]
 \centering
@@ -21,7 +21,7 @@ Algoritmo & Observaciones & Complejidad\tnote{1}  & Cálculo de tiempo de ejecuc
 \textit{edge} \newline \textit{betweenness} & Comunidades basados en la métrica de centralidad intermediación & $O(|E||V|^2)$ en el peor caso & 181.93 años en el peor caso \\
 \textit{fast greedy} & Comunidades basadas en optimización de la modularidad & $O(|E||V|log|V|)$ en el peor caso, $O(|E|+|V|log^2|V|)$ en promedio & 22.84 minutos en el peor caso, 0.0011 segundos en promedio \\
 \textit{multilevel} & Comunidades mediante la optimización de la modularidad multinivel & En promedio lineal en grafos dispersos & 0.00064 segundos en promedio \\
-\textit{label} \newline  \textit{propagation} & Comunidades basadas en la propagación de etiquetas & $O(m+n)$ & Depende del tamaño de la matriz resultante. \\
+\textit{label} \newline  \textit{propagation} & Comunidades basadas en la propagación de etiquetas & $O(|E|+|V|)$ & Depende del tamaño de la matriz resultante. \\
 \textit{infomap} & Estructuras de comunidades que minimizan el valor esperado & No especificado &  \\ \bottomrule
 \end{tabularx}
 \begin{tablenotes}
@@ -40,7 +40,7 @@ Seleccioné los siguientes algoritmos para realizar todos los experimentos de ap
 \end{itemize} 
 El algoritmo \textit{Leading Eigenvector} implementado por igraph usa un algoritmo recursivo para detectar estructura de comunidades. Este algoritmo divide la red maximizando la modularidad respecto a la red original. 
  
-Los métodos basados en este enfoque han tenido excelentes resultados en test estandarizados. Desafortunadamente, la optimización exhaustiva de la \textbf{modularidad} requiere grandes esfuerzos computacionales, incluyendo algoritmos voraces (\textit{greedy}), enfriamiento simulado (\textit{simulated annealing}) y optimización extrema (\textit{EO}). El algoritmo desarrollado por Newman tiene un enfoque diferente. Se reescribe la función de \textbf{modularidad} en términos de la matriz, lo cual permite expresar la tarea de optimización como un problema espectral en el álgebra lineal. Este enfoque lidera una familia de algoritmos rápidos para detectar comunidades que producen resultados que compiten con los mejores métodos previos a él.
+Los métodos basados en este enfoque han tenido excelentes resultados en test estandarizados. Desafortunadamente, la optimización exhaustiva de la \textbf{modularidad} requiere grandes esfuerzos computacionales, incluyendo algoritmos voraces (\textit{greedy}), enfriamiento simulado (\textit{simulated annealing}) y optimización extrema (\textit{EO}). El algoritmo desarrollado por Newman tiene un enfoque diferente. Se reescribe la función de \textbf{modularidad} en términos de una matriz, lo cual permite expresar la tarea de optimización como un problema espectral en el álgebra lineal. Este enfoque lidera una familia de algoritmos rápidos para detectar comunidades que producen resultados que compiten con los mejores métodos previos a él.
  
 \subsection{Algoritmo: \textit{multilevel}}\cite{Blondel2008FastNetworks} 
 \begin{itemize}
@@ -49,7 +49,7 @@ Los métodos basados en este enfoque han tenido excelentes resultados en test es
 \end{itemize}
 El tamaño típico de las grandes redes se cuenta en millones cuando no miles de millones de vértices. Ejemplos de estas redes son las sociales, las telefónicas móviles o la web. En esta escala se demanda nuevos métodos para recuperar información a partir de su estructura. Un enfoque prometedor consiste en la descomposición de redes en subunidades o comunidades. La identificación de estas comunidades es de crucial importancia ya que pueden ayudar a descubrir módulos funcionales desconocidos a priori, tales como tópicos en redes de información o ciber comunidades en redes sociales. Además, las meta redes resultantes, cuyos vértices son comunidades, pueden ser usadas para visualizar la estructura de la red original.
  
-El algoritmo \textbf{multilevel} encuentra particiones con alta \textbf{modularidad} en grandes redes en poco tiempo y despliega una completa estructura de comunidad jerárquica para una red, dando así acceso a diferentes resoluciones de una detección de comunidades. El algoritmo se divide en dos fases que se repiten iterativamente. Asume que se empieza con una red ponderada de $N$ vértices. Primero, se asigna una comunidad diferente a cada vértice de la red. De esta manera, en esta partición inicial hay tantas comunidades como vértices. Entonces, por cada vértice $i$ se evalúa si mejora la \textbf{modularidad} al cambiar la comunidad asociada al vértice $i$ por las comunidades en las que están cada uno de vértices adyacentes a él. El vértice $i$ es entonces puesto en la comunidad en la cual la modularidad es máxima y positiva. Si no se obtiene una ganancia positiva, entonces el vértice $i$ se mantiene en su comunidad original. Este proceso se aplica repetidamente y de manera secuencial para todos los vértices hasta que no se puede lograr ninguna mejora.
+El algoritmo \textbf{multilevel} encuentra particiones con alta \textbf{modularidad} en grandes redes en poco tiempo y despliega una completa estructura de comunidad jerárquica para una red, dando así acceso a diferentes resoluciones de una detección de comunidades. El algoritmo se divide en dos fases que se repiten iterativamente. Asume que se empieza con una red de $N$ vértices, y cada uno de los vértices tiene un peso. Primero, se asigna una comunidad diferente a cada vértice de la red. De esta manera, en esta partición inicial hay tantas comunidades como vértices. Entonces, por cada vértice $i$ se evalúa si mejora la \textbf{modularidad} al cambiar la comunidad asociada al vértice $i$ por las comunidades en las que están cada uno de vértices adyacentes a él. El vértice $i$ es entonces puesto en la comunidad en la cual la modularidad es máxima y positiva. Si no se obtiene una ganancia positiva, entonces el vértice $i$ se mantiene en su comunidad original. Este proceso se aplica repetidamente y de manera secuencial para todos los vértices hasta que no se puede lograr ninguna mejora.
  
 \subsection{Algoritmo: \textit{label propagation}}\cite{Raghavan2007NearNetworks.}
 \begin{itemize}
@@ -68,10 +68,6 @@ Aunque las redes con una sola comunidad satisfacen el criterio de parada, romper
 
 
 \section{Metodología CRISP-DM}
-En el desarrollo de proyectos de minería de datos y descubrimiento de conocimiento, la metodología que más se usa es \textit{\acrshort{CRISP-DM}}. \acrshort{CRISP-DM} es una metodología independiente de dominio, por lo que puede utilizarse con cualquier herramienta de minería de datos y se puede aplicar para resolver cualquier problema de minería de datos.\cite{Marbn2009AModel}
-
-Este trabajo se divide en seis fases (ver Figura \ref{fig:Metodologia}). Todas las fases usan transversalmente el mismo software: Oracle para el modelo de datos ER, Neo4J\footnote{Neo4j (\url{https://neo4j.com/}) es un proyecto de código abierto que permite implementar el modelo de bases de datos de grafos. Es la solución empresarial que más se usa, combina la fortaleza del almacenamiento nativo de grafos y una arquitectura escalable y optimizada para asegurar un buen rendimiento en las consultas basadas en relaciones} para el modelo de datos de grafos, Python y Java para la limpieza, selección de datos y ejecución de modelos, y las librerías de javascript D3.js y linkurious.js para la visualización de los datos. 
-A continuación describo lo que contempla cada fases de esta tesis.
 
 \begin{figure}[ht]
 \caption{Metodología del trabajo de tesis}
@@ -79,6 +75,11 @@ A continuación describo lo que contempla cada fases de esta tesis.
 \centering
 \includegraphics[width=\textwidth]{Metodologia}
 \end{figure}
+
+En el desarrollo de proyectos de minería de datos y descubrimiento de conocimiento, la metodología que más se usa es \textit{\acrshort{CRISP-DM}}. \acrshort{CRISP-DM} es una metodología independiente de dominio, por lo que puede utilizarse con cualquier herramienta de minería de datos y se puede aplicar para resolver cualquier problema de minería de datos.\cite{Marbn2009AModel}
+
+Este trabajo se divide en seis fases (ver Figura \ref{fig:Metodologia}). Todas las fases usan transversalmente el mismo software: Oracle para el modelo de datos ER, Neo4J\footnote{Neo4j (\url{https://neo4j.com/}) es un proyecto de código abierto que permite implementar el modelo de bases de datos de grafos. Es la solución empresarial que más se usa\cite{SolidIT2019DB-EnginesDBMS}, combina la fortaleza del almacenamiento nativo de grafos y una arquitectura escalable y optimizada para asegurar un buen rendimiento en las consultas basadas en relaciones} para el modelo de datos de grafos, Python y Java para la limpieza, selección de datos y ejecución de modelos, y las librerías de javascript D3.js y linkurious.js para la visualización de los datos. 
+A continuación describo lo que contempla cada fases de esta tesis.
 
 \subsection{Fase 1: Entendimiento del Dominio.} Esta fase fue previa al trabajo de tesis en sí, y el entregable fue la propuesta de tesis. Se compone de la determinación de los objetivos, de las metas de minería de datos y la evaluación de los recursos.
 
@@ -107,7 +108,7 @@ Los contextos nivel asistencial y grupo etário tienen una cardinalidad pequeña
 
 \item Caracterización de las redes y búsqueda de patrones en las redes:
 \begin{itemize}
-\item Determinar si la distribución de la red es libre de escala: La hipótesis nula es que la los grados de los vértices se distribuyen según la ley de potencias. Se estima la función de distribución acumulativa \acrshort{cdf}, en el caso de que el p-valor de la función no permita rechazar la hipótesis nula entonces se compara el estadístico \textit{log-likelihood ratio} con otras distribuciones.
+\item Determinar si la distribución de la red es libre de escala: La hipótesis nula es que los grados de los vértices se distribuyen según la ley de potencias. Se estima la función de distribución acumulativa \acrshort{cdf}, en el caso de que el p-valor de la función no permita rechazar la hipótesis nula entonces se compara el estadístico \textit{log-likelihood ratio} con otras distribuciones.
 \item Análisis de estructuras de comunidad: Métricas para comparar cuantitativamente los grafos de la red de problemas y la red semántica de problemas. Se evalúa si los grafos presenta evidencias de tener comunidades: coeficientes de agrupamiento, longitud media del camino mínimo entre nodos y promedio de grados. El cálculo de estas métricas están disponibles en los paquetes igraph\cite{igraph} y networkx\cite{SciPyProceedings_11} de python.
 \end{itemize}
 
@@ -125,7 +126,7 @@ Los contextos nivel asistencial y grupo etário tienen una cardinalidad pequeña
 
 \item Validación de los resultados: 
 \label{par:evaluacion-resultados}
-Teniendo en cuenta las directrices de recuperación de información \cite{Manning2008IntroductionRetrieval,Hersh1994OHSUMED:Research}, el conjunto de validación tiene tres componentes: 
+Teniendo en cuenta las directrices de recuperación de información \cite{Manning2008,Hersh1994OHSUMED:Research}, el conjunto de validación tiene tres componentes: 
 
 \begin{itemize}
 \item \textbf{El conjunto de pruebas}: se conforma de los problemas registrados previamente y los valores del contexto (nivel asistencia, grupo etario y área jerárquica), que representan la consulta, y el problema a predecir que representa la respuesta correcta
@@ -135,7 +136,7 @@ Teniendo en cuenta las directrices de recuperación de información \cite{Mannin
 
 Lo que se evalúa es si los vértices que pertenecen al mismo \textit{cluster} permiten completar los problemas faltantes en la lista de los problemas de los pacientes del conjunto de datos de validación. Esta evaluación se realiza con la lista de problemas previas al 2017 y los contextos para seleccionar y filtrar la  \textbf{lista de sugerencias}, y predecir los problemas registrados en el 2017.
 
-Se evalúan por separado la capacidad predictiva(Precisión y exactitud) de los grupos encontrados a partir del grafo de la red de problemas y del grafo de la red semántica de problemas. También son evaluadas las capacidades predictivas filtrando el contexto: ámbito o nivel de asistencia, grupo etario y área jerárquica, sólo en red de problemas. La precisión y la exactitud (\textit{accuracy}) se definen como:
+Se evalúan por separado la capacidad predictiva (precisión y exactitud) de los grupos encontrados a partir del grafo de la red de problemas y del grafo de la red semántica de problemas. También son evaluadas las capacidades predictivas filtrando el contexto: ámbito o nivel de asistencia, grupo etario y área jerárquica, sólo en red de problemas. La precisión y la exactitud (\textit{accuracy}) se definen como:
 
 \begin{equation}
 Exactitud = \frac{\text{Verdaderos positivos}+\text{Verdaderos negativos}}{\text{Total de los datos}}
@@ -145,7 +146,14 @@ Exactitud = \frac{\text{Verdaderos positivos}+\text{Verdaderos negativos}}{\text
 Precision = \frac{\text{Verdaderos positivos}}{\text{Verdaderos positivos}+\text{Falsos positivos}}
 \end{equation}
 
-La exactitud suma los verdaderos positivos, que son los casos en los que la lista de sugerencia contiene la respuesta correcta, y los verdaderos negativos, que son los casos en los que la lista de sugerencias esta vacía y el problema a predecir no está dentro de los conceptos de Snomed CT a ser recuperados, y los divide en la totalidad de los datos de prueba. Se evalúa también una versión más flexible de verdadero positivo, donde se define una distancia tolerable de longitud media del camino mínimo entre la respuesta correcta y alguno de los conceptos de la lista de sugerencias. Esta distancia se estable de tamaño 3, e indica similitudes entre un concepto y los descendientes que están hasta dos vértices de distancia, o conceptos descendientes del mismo padre, como se ilustra en la figura \ref{fig:distancias_semanticas}.
+La exactitud suma los verdaderos positivos, que son los casos en los que la lista de sugerencia contiene la respuesta correcta, y los verdaderos negativos, que son los casos en los que la lista de sugerencias esta vacía y el problema a predecir no está dentro de los conceptos de Snomed CT a ser recuperados, y los divide en la totalidad de los datos de prueba. Se evalúa también una versión más flexible de verdadero positivo, donde se define una distancia tolerable de longitud media del camino mínimo entre la respuesta correcta y alguno de los conceptos de la lista de sugerencias. Esta distancia se estableció de tamaño 3, e indica similitudes entre un concepto y los descendientes que están hasta dos vértices de distancia, o conceptos descendientes del mismo padre, como se ilustra en la figura \ref{fig:distancias_semanticas}.
+
+\begin{figure}[ht]
+\caption{Modelo de datos}
+\label{fig:distancias_semanticas}
+\centering
+\includegraphics[width=0.5\textwidth]{distancias_semanticas}
+\end{figure}
  
 La precisión evalúa cuántas veces la lista de sugerencias no vacía tiene la respuesta correcta, dividido las veces que se obtuvo una respuesta positiva. Teniendo en cuenta que las listas de sugerencias son de un tamaño $n$ ordenados según la relevancia, las medidas son llamadas precisión al $n$ o $P@n$ y exactitud al $n$ o $Acc@n$.
 

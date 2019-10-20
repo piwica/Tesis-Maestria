@@ -7,7 +7,7 @@ En esta tesis, construí por medio de algoritmos de \textit{graphmining} tres ni
 
 En el caso de los problemas asociados a servicios de atención de salud, realicé una validación de su cubrimiento con los \acrshort{refset} publicados por el consorcio \textit{Kaiser Permanente}. En el este capítulo repasaré las contribuciones de estas clasificaciones al proceso de la construcción de \acrshort{refset} de Snomed CT, y presentaré algunas ideas sobre el trabajo futuro de esta línea de investigación.
 
-Se aplicaron algoritmos de aprendizaje no supervisado al grafo construido con la red de problemas (\acrshort{RP})  y sus conexiones semánticas son Snomed CT (\acrshort{RP-SCT}). Los grupos que fueron consistentes en diferentes agrupamientos fueron evaluados. Se midió  la precisión y exactitud de una lista de predicciones de 10 conceptos que intentaba predecir los problemas que fueron registrados a los pacientes en el año 2017, a partir de los registros de su lista de problemas previo a diciembre de 2016. 
+Se aplicaron algoritmos de aprendizaje no supervisado al grafo construido con la red de problemas (\acrshort{RP})  y sus conexiones semánticas son Snomed CT (\acrshort{RP-SCT}). Los grupos que fueron consistentes en diferentes agrupamientos fueron evaluados. Se midió  la precisión y exactitud de una lista de predicciones de 10 conceptos que intentaba predecir los problemas que fueron registrados a los pacientes en el año 2017, a partir de los registros de su lista de problemas previo al 31 diciembre de 2016. 
 
 Los \acrshort{refset} de contextos permitieron acotar el universo de búsqueda, y mejoraron significativamente las métricas de precisión y exactitud.
 
@@ -18,7 +18,7 @@ El primer objetivo del uso significativo de Snomed CT es mantener actualizada la
 
 La metodología para la construcción de los \acrshort{refset} de Servicios de atención de salud y la comparación con otros experimentos realizados por nova scotia\cite{nova} fueron presentados en el congreso Medical Informatics Europe 2018.\cite{Avila2018SelectionSubsets.}
 
-Con el desarrollo de esta tesis, concluimos que la construcción de estos \acrshort{refset} mejora significativamente la recuperación de información en la lista de problemas. Ya que la precisión y exactitud mejoró significativamente con el uso de \acrshort{refset} de contexto.
+Con el desarrollo de esta tesis, concluimos que la construcción de estos \acrshort{refset} mejora significativamente la recuperación de información en la lista de problemas, que la precisión y exactitud mejoró significativamente con el uso de \acrshort{refset} de contexto.
 
 Los servicios del Hospital Italiano de Buenos Aires, son usados por historias clínicas electrónicas de Argentina, Uruguay y Chile. En trabajos futuros, sería muy beneficioso realizar un consenso entre el uso de las listas de problemas de todos estos centros médicos, para establecer una única lista de problemas controlada que además esté ponderada con la frecuencia de uso en las bases de datos clínicas. Un trabajo similar fue realizado por Kaiser Permanente. Como resultado Kaiser Permanente ha liberado una única lista de problemas desde el 2009 para ser usado en todas las clínicas de su consorcio y mantener la interoperabilidad\cite{Dolin2004KaiserTerminology.}. El trabajo futuro que se propone tendría la validez internacional de los países del cono sur.
 
@@ -32,7 +32,7 @@ El enfoque basado en conocimiento explota principalmente la estructura jerárqui
 
 El enfoque basado en corpus usa un gran corpus con textos específicos del dominio para determinar el valor de la información de cada concepto. Este valor se determina por la frecuencia del concepto en el corpus. Los menos frecuentes son vistos como más informativos que los más comunes.\cite{Mabotuwana2013}
 
-No hay una métrica \textit{gold estandar} para determinar la similaridad entre dos conceptos de una ontología. En un trabajo futuro se evaluaran los dos enfoques, dado que se cuenta con la ontología y el corpus de la lista de problemas. Esta línea de investigación tiene  el objetivo de hallar una métrica con cierto nivel de confianza que determine cuándo dos conceptos son clínicamente similares.
+No hay una métrica \textit{gold estandar} para determinar la similaridad entre dos conceptos de una ontología. En un trabajo futuro se evaluarán los dos enfoques, dado que se cuenta con la ontología y el corpus de la lista de problemas. Esta línea de investigación tiene  el objetivo de hallar una métrica con cierto nivel de confianza que determine cuándo dos conceptos son clínicamente similares.
 
 \section{Implementación en una Historia Clínica Electrónica}
 

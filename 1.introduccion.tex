@@ -35,7 +35,7 @@ El proceso de la codificación se realiza de manera secundaria y centralizada. U
 \subsection{Snomed CT}
 Snomed es una nomenclatura desarrollada por el Colegio Americano de Patólogos con descripciones de morfología y anatomía. Su primera versión fue lanzada en el año \num{1965}.Desde entonces tuvo diferentes versiones, una de estas versiones fue Snomed RT del año 1997 cuyo desarrollo se basó en \textbf{lógica descriptiva}, la cual especificaba su semántica. Esto significa que el conocimiento está representado de una forma estructurada y formalmente bien comprendida. Esta última versión se unió en el año \num{2002} a \textit{Clinical Terms Version 3} desarrollada por el sistema de salud británico, dando origen a Snomed CT por \textit{Clinical Terms}. En 2007, la \textit{\acrfull{IHTSDO}} adquirió los derechos de propiedad intelectual sobre todas las versiones de Snomed. Aunque en un principio se tratara de una nomenclatura sistematizada de medicina, en la actualidad es la terminología más completa y precisa del mundo. \cite{Bhattacharyya2016}
 
-Snomed CT permite el almacenamiento y la recuperación de información clínica basada en su significado, es decir que la definición de la información se construye a partir de relaciones semánticas \cite{Rector,Bhattacharyya2016,ihtsdo2016SG}. Cuando un sólo concepto no es suficiente para definir la información, se puede crear uno nuevo siguiendo especificaciones previamente estableces de representación composicional. Este proceso se llama post-coordinación. De lo contrario, cuando un sólo concepto es suficiente para definir la información y mapea de manera exacta con un concepto de Snomed CT, se llama pre-coordinación. El \acrshort{HIBA} extendió Snomed CT a partir del año 2002. Al año \num{2017}, \num{1700000} descripciones de texto libre estaban agrupadas en \num{520000} conceptos post-coordinados y \num{60000} pre-coordinados. 
+Snomed CT permite el almacenamiento y la recuperación de información clínica basada en su significado, es decir que la definición de la información se construye a partir de relaciones semánticas \cite{Rector,Bhattacharyya2016,ihtsdo2016SG}. Cuando un solo concepto no es suficiente para definir la información, se puede crear uno nuevo usando  especificaciones previamente establecidas según la representación composicional. Este proceso se llama post-coordinación. De lo contrario, cuando un solo concepto es suficiente para definir la información y mapea de manera exacta con un concepto de Snomed CT, se llama pre-coordinación. El \acrshort{HIBA} extendió Snomed CT a partir del año 2002. Al año \num{2017}, \num{1700000} descripciones de texto libre estaban agrupadas en \num{520000} conceptos post-coordinados y \num{60000} pre-coordinados. 
 
 \subsubsection{Componentes de Snomed CT}
 El modelo lógico de Snomed CT define tipos de componentes y la manera en la cual cada componente  y sus derivados están relacionados. Los tipos de componentes son conceptos, descripciones y relaciones:\cite{ihtsdo2016SG}
@@ -51,7 +51,7 @@ Una relación representa una asociación entre dos conceptos. Las relaciones se 
 
 \begin{enumerate}
 \item Relaciones subtipo: Usa la relación $|\text{ES UN}|$, de tal manera que el concepto $P$ $|\text{ES UN}|$ $Q$,  define que el concepto $P$ es un subtipo de concepto $Q$, o de manera inversa que $Q$ es un supertipo de $P$
-\item Relaciones atributos: Una relación atributo contribuye a la definición del concepto mediante la asociación con otros valores que permiten la caracterización del concepto, estos valores pueden ser estructuras corporales, sustancias, objetos físicos, etc.
+\item Relaciones atributos: Una relación atributo contribuye a la definición del concepto mediante la asociación con otros valores que permiten la caracterización del concepto. Estos valores pueden ser estructuras corporales, sustancias, objetos físicos, etc.
 \end{enumerate}
 
 Por consiguiente, el modelo lógico especifica una representación estructurada de los conceptos para definir las entidades clínicas, las descripciones  que son usadas para representar las diferentes variaciones léxicas del concepto, y las relaciones entre los conceptos.\cite{ihtsdo2016SG}
@@ -89,7 +89,7 @@ Hay 19 jerarquías, no todas son usadas para representar conceptos clínicos. La
 \item Por último, los \textbf{objetos físicos }representan a los objetos naturales o hechos por el hombre.
 \end{itemize}
  
-La tabla \ref{jerarquiasLista} contiene las jerarquías usadas en la lista de problemas y la frecuencia de conceptos de Snomed CT, se puede observar que las jerarquías más usadas son hallazgo clínico, situación con contexto explícito y procedimientos.
+La tabla \ref{jerarquiasLista} contiene las jerarquías usadas en la lista de problemas y la frecuencia de conceptos de Snomed CT. Se puede observar que las jerarquías más usadas son hallazgo clínico, situación con contexto explícito y procedimientos.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -127,13 +127,13 @@ Existen \textit{\acrshort{refset}} públicos con características similares a lo
 \label{par:listaproblemas-HCE}
 Cualquier usuario con acceso a la \acrshort{HCE} puede registrar un problema, este usuario puede pertenece a una área administrativa o asistencial del \acrshort{HIBA}. Por consiguiente, las áreas jerárquicas que tiene el \acrshort{HIBA} responden a necesidades operativas de la \acrshort{HCE}, y tienen diferentes niveles de agregación, por ejemplo: Sección de neurocirugía vascular hace parte de una área más general llamada Servicio de neurocirugía. También existen áreas jerárquicas con muy pocos registros o que son \textit{ad hoc} por ejemplo: Instituto universitario H.I., Programa de prevención del cáncer de colon hereditario, Laser en rinosinusología.
 
-Además cada registro de la lista de problemas tiene asociado el nivel de asistencia que indica el ámbito en el que fue cargado el problema. Los niveles de asistencia son las diferentes modalidades de contacto que tiene el paciente con el hospital, asegurando una óptima atención en cada situación específica. En la \acrshort{HCE} el nivel de asistencia puede ser cualquier de los siguientes valores:
+Además cada registro de la lista de problemas tiene asociado el nivel de asistencia que indica el ámbito en el que fue cargado el problema. Los niveles de asistencia son las diferentes modalidades de contacto que tiene el paciente con el hospital, asegurando una óptima atención en cada situación específica. En la \acrshort{HCE} el nivel de asistencia puede ser cualquiera de los siguientes valores:
 
 \begin{itemize}
 \item Ambulatorio: Se tiene definido cuándo empieza y cuándo termina esa atención. El paciente solicita previamente un turno ambulatorio.
 \item Episodio ambulatorio: Se sabe cuándo empieza pero no cuándo termina; entonces la modalidad de registro cambia. En el ambulatorio generalmente hay alguien que longitudinalmente ve al paciente en distintos momentos.
 \item Triage: Se genera cuando un paciente tiene un contacto con el hospital sin un turno previo, consiste en una revisión médica rápida que permite definir la prioridad de atención.
-\item Guardia: Los pacientes críticos con inminencia de muerte o que ingresa con una patología aguda, de gravedad moderada o severa, pero sin muerte inminente por la misma. En este nivel de asistencia se espera que el alta del nivel se dé entre las 24 y 36 horas de su ingreso, pudiendo trasladarse a otro nivel asistencial del hospital, o a otro hospital, o más rara vez a su domicilio.
+\item Guardia: Los pacientes críticos con inminencia de muerte o que ingresan con una patología aguda, de gravedad moderada o severa, pero sin muerte inminente por la misma. En este nivel de asistencia se espera que el alta del nivel se dé entre las 24 y 36 horas de su ingreso, pudiendo trasladarse a otro nivel asistencial del hospital, o a otro hospital, o más rara vez a su domicilio.
 \item Internación: Tiene un periodo limitado del cuidado, el paciente es tratado por un episodio grave de una enfermedad, cuyas condiciones puedan resultar en un trauma o su muerte. Los tipos de internación son general, domiciliaria y geriátrica.
 \end{itemize}
 
@@ -158,7 +158,7 @@ En consecuencia, el concepto abstracto de una red cubre una amplia variedad de e
 \paragraph{Redes de salud:} A continuación enumero algunos trabajos con redes en el área de la salud.
 \begin{itemize}
 \item La red de enfermedades humanas \cite{Goh2007TheNetwork.} es una red de trastornos y enfermedades genéticas vinculadas por genes en común. Esta red permite explorar el fenotipo y las enfermedades genéticas asociadas, indicando así el origen genético que tienen en común muchas enfermedades. El proyecto nació en el 2007, y para el 2014 se agregó la red de síntomas a partir de metadata de los encabezados de temas médicos (MeSH\footnote{MeSH por Medical Subject Headings, es el vocabulario controlado Biblioteca Nacional de Medicina. Este vocabulario se usa para indexar artículos para la base de datos MEDLINE y PubMED. Cada cita de los artículos se asocia con un conjunto de palabras claves MeSH que describen el contenido de la cita.}) de PubMED. A partir de estas redes se han hecho múltiples trabajos que explican la interacción entre enfermedades, interacciones entre proteínas, interacciones de enfermedades con drogas y comorbolidades.
-\item La red de medicina \cite{Haaren2013,Barabasi2011NetworkDisease}, fue creada  bajo la premisa de que una enfermedad es rara vez consecuencia de una anormalidad en una sola parte del sistema corporal del paciente. Esto implica que las redes deben ilustrar el impacto y la complejidad de la asociación de las enfermedades, además que estás enfermedades pueden ser agrupadas y segmentadas.
+\item La red de medicina \cite{Haaren2013,Barabasi2011NetworkDisease}, fue creada  bajo la premisa de que una enfermedad es rara vez consecuencia de una anormalidad en una sola parte del sistema corporal del paciente. Esto implica que las redes deben ilustrar el impacto y la complejidad de la asociación de las enfermedades, además que estas enfermedades pueden ser agrupadas y segmentadas.
 \end{itemize}
 
 \subsection{Grafos}
@@ -183,7 +183,7 @@ Si todos los vértices de $G$ son adyacentes entre si, entonces se dice que $G$ 
 Los vértices o aristas que no son adyacentes a ningún otro se llaman \textbf{independientes}
 
 \paragraph{Grado}
-El \textbf{grado} de un vértice $v$ es el número de $|E(v)|$ de aristas de $v$, es decir el número de vértices adyacentes a $v$. Un vértice de grado 0 es \textbf{independiente}.
+El \textbf{grado} de un vértice $v$ $|E(v)|$ es el número  de aristas de $v$, es decir el número de vértices adyacentes a $v$. Un vértice de grado 0 es \textbf{independiente}.
 
 \paragraph{Subgrafo}
 Sea $G\cup  G':=(V\cup  V', E\cup  E')$ y $G\cap  G':=(V\cap  V', E\cap  E')$. Si $G\cap G' = 0$  entonces $G$ y $G'$ son \textbf{disjuntos}. Si  $V'\subseteq V$ y $E'\subseteq E$, entonces $G'$ es un \textbf{subgrafo} de $G$ (y $G$ es un \textbf{supergrafo} de $G'$), la notación es $G'\subseteq G$. Formalmente se dice que $G$ contiene a $G'$.
@@ -196,10 +196,12 @@ V={x_{0},x_{1},...,x_{k}}, E={x_{0}x_{1},x_{1}x_{2},...,x_{k-1}x_{k}}
 
 donde las $x_{i}$ son todas distintas. Los vértices $x_{0}$ y $x_{k}$ están enlazados por $P$ y se llaman vértices \textbf{terminales}. Los vértices $x_{1},...,x_{k-1}$ son los vértices \textbf{internos} de $P$. El número de aristas de un camino es su \textbf{longitud}.
 
+Una notación usual para representar un camino es la secuencia de sus vértices, de tal forma que $P=x_{0}x_{1}...x_{k}$ se denota como camino $P$ de $x_{0}$ a $x_{k}$ (también entre $x_{0}$ y $x_{k}$).
+
 Si $P=x_{0}...x_{k-1}$ es un camino y $k\geq 3$, entonces el grafo $C:=P+x_{k-1}x_{0}$ se llama un \textbf{ciclo}. Se denomina ciclo por su (cíclica) secuencia de vértices, el ciclo anterior se escribe como $x_{0}...x_{k-1}x_{0}$.
 
 \paragraph{Grafos dirigidos}
-Un \textbf{grafo dirigido} es un par $(V,E)$ de conjuntos disjuntos de vértices y aristas que juntos formas dos mapas (1) inicial: $E\rightarrow V$ y (2) terminal: $E\rightarrow V$, asignándole a cada arista $e$ un \textbf{vértice inicial} $inicial(e)$ y un \textbf{vértice termina}l $terminal(e)$. Se dice que la arista $e$ se dirige desde $inicial(e)$ a $terminal(e)$.
+Un \textbf{grafo dirigido} es un par $(V,E)$ de conjuntos disjuntos de vértices y aristas que juntos forman dos mapas (1) inicial: $E\rightarrow V$ y (2) terminal: $E\rightarrow V$, asignándole a cada arista $e$ un \textbf{vértice inicial} $inicial(e)$ y un \textbf{vértice termina}l $terminal(e)$. Se dice que la arista $e$ se dirige desde $inicial(e)$ a $terminal(e)$.
 
 \paragraph{Grafo de Snomed CT}
 Al diseccionar la estructura de Snomed CT, cada concepto se representa con un vértice y cada relación entre los conceptos se representa por una arista. No hay relaciones circulares y todas son unidireccionales sin excepciones, pero un vértice $inicial(e)$ puede tener más de una relación de salida o vértices $terminal(e)$, de esta manera se construye un grafo acíclico dirigido. \cite{Bhattacharyya2016}
@@ -223,7 +225,7 @@ p(ax)=bp(x)
  
 Donde $a$ y $b$ son constantes. En otras palabras, no existe una escala característica con la variable aleatoria. La forma funcional es la misma para todas las escalas. La red con una distribución libre de escalas para los grados nodales también se denomina \textbf{red libre de escala}.
  
-Mientras que para las distribuciones normales, es extremadamente raro que un evento ocurra con una desviación muy lejana de la media, en las distribuciones de ley de potencias la cola es mucho más larga. De tal manera es común que algunos vértices de la red tengan alto grado mientras que la mayoría tengan pocas conexiones. La razón es que la cola de una distribución de ley de potencias decae polinomialmente. Esto es asintotáticamente más lento que en la distribución normal que lo hace exponencialmente, resultando en un fenómeno de cola pesada. La curva de la distribución de ley de potencias se convierte en una recta si graficamos la distribución en una escala log-log, ya que
+Mientras que para las distribuciones normales, es extremadamente raro que un evento ocurra con una desviación muy lejana de la media, en las distribuciones de ley de potencias la cola es mucho más larga. De tal manera, es común que algunos vértices de la red tengan alto grado mientras que la mayoría tengan pocas conexiones. La razón es que la cola de una distribución de ley de potencias decae polinomialmente. Esto es asintotáticamente más lento que en la distribución normal que lo hace exponencialmente, resultando en un fenómeno de cola pesada. La curva de la distribución de ley de potencias se convierte en una recta si graficamos la distribución en una escala log-log, ya que
 \begin{equation}
 \log p(x) =-\alpha \log x + \log C
 \end{equation}
@@ -249,12 +251,12 @@ La fuerza de las comunidades se miden con diferentes métricas, en esta tesis se
 La transitividad \cite{Wasserman1994} $C^{\Delta}$, se calcula como una medida de la proporción de triángulos cerrados en un grafo:
 \begin{equation}
 \label{equ:coeficiente_transitividad}
-C^{\Delta} =3x\frac{\text{número de triángulos}}{\text{número de tripletas conectadas}}
+C^{\Delta} =3\cdot\frac{\text{número de triángulos}}{\text{número de tripletas conectadas}}
 \end{equation}
 Esta métrica muestra de manera global cuán agrupado es el grafo, ya que representa la probabilidad de que dos vértices estén conectados si comparten un vecino en común. En el contexto de la lista de problemas, si los problemas $P1$, $P2$ co-ocurren en pacientes que también tengan $P3$, esta métrica representa la probabilidad de que $P1$ y $P2$ ocurran juntas.
 
 \subparagraph{Coeficiente de agrupamiento - Promedio}\cite{Saramaki2006,Kaiser2008}
-El promedio del coeficiente de agrupamiento del grafo G, necesita del cálculo local de los coeficientes de agrupamiento de cada vértice i,
+El promedio del coeficiente de agrupamiento del grafo G, necesita del cálculo local de los coeficientes de agrupamiento de cada vértice i. En el caso de los grafos dirigidos,
 
 \begin{equation}
 c_{i} = \frac{\Gamma_{v_{i}}}{|E(v_{i})|(|E(v_{i})|-1)},
@@ -267,6 +269,8 @@ Finalmente, el coeficiente de agrupamiento se calcula con la siguiente ecuación
 \label{equ:coeficiente_promedio}
 C = \frac{1}{n}\sum_{v \in G} c_v,
 \end{equation}
+
+Donde $n$ es el número de vértices evaluados. 
 
 El coeficiente de agrupamiento promedio produce una alta varianza para los vértices con menos grados. Por ejemplo, para vértices con grado 2, $C_{i}$ es 0 o 1.\cite{Tang2010} %%Se usa comúnmente para estudios numéricos mientras que la \textbf{transitividad} se utiliza más para el estudio analítico.%%
 
@@ -286,16 +290,9 @@ Cálculo de la media de la distancia entre los vértices en un grafo. Comunidade
 La distancia semántica se usa para calcular similaridad entre conceptos. En diferentes trabajos en el dominio médico \cite{Wang2010,Gan2013,Pedersen2007,Zare2015ASNOMED-CT} se presentan diferentes maneras más sofisticadas de calcular la similaridad que la longitud media del camino mínimo. Sin embargo, estos enfoques son también alguna variante de la longitud media del camino mínimo.
 El modelo de datos define la arista "$|\text{ES UN}|$" para establecer relaciones entre conceptos ancestros y descendientes, de tal manera que todos los conceptos son un subtipo de otro más general, y un concepto puede tener uno o más descendientes con varios niveles de especificación.
 
-\begin{figure}[ht]
-\caption{Modelo de datos}
-\label{fig:distancias_semanticas}
-\centering
-\includegraphics[width=0.5\textwidth]{distancias_semanticas}
-\end{figure}
-
 
 \subsection{\textit{Graphmining}}
-La minería de datos se ha convertido en sinónimo de encontrar patrones frecuentes en datos transaccionales, el término más general descubrimiento de conocimiento abarca esta y otras tareas. Descubrimiento o aprendizaje no supervisado en \textit{graphmining} implica no sólo la tarea de encontrar patrones en un conjunto de transacciones, sino también encontrar la posible superposición de patrones en un gran grafo. Descubrimiento también implica la tarea de \textbf{\textit{clustering}}, la cual intenta describir todos los datos por medio de la identificación clases de grafos que comparten patrones comunes de atributos y relaciones entre si. \textit{Clustering} también puede extraer relaciones entre \textit{clusters}, resultando en una organización jerárquica o taxonómica.\cite{Cook2006}
+La minería de datos se ha convertido en sinónimo de encontrar patrones frecuentes en datos transaccionales, el término más general descubrimiento de conocimiento abarca esta y otras tareas. Descubrimiento o aprendizaje no supervisado en \textit{graphmining} implica no sólo la tarea de encontrar patrones en un conjunto de transacciones, sino también encontrar la posible superposición de patrones en un gran grafo. Descubrimiento también implica la tarea de \textbf{\textit{clustering}}, la cual intenta describir todos los datos por medio de la identificación de clases de grafos que comparten patrones comunes de atributos y relaciones entre sí. \textit{Clustering} también puede extraer relaciones entre \textit{clusters}, resultando en una organización jerárquica o taxonómica.\cite{Cook2006}
  
 En contraste, el aprendizaje supervisado es la tarea de extraer patrones que distinguen un conjunto de otros. Estos conjuntos se llaman los ejemplos positivos y los negativos. Este conjunto de ejemplos pueden contener muchas transacciones de grafos o un sólo gran grafo. El objetivo es encontrar un patrón de relación entre nodos que aparezca a menudo en los ejemplos positivos pero no en los ejemplos negativos. Tal patrón se usa para predecir la clase (positiva o negativa) de nuevos ejemplos. \cite{Cook2006}
  
@@ -317,7 +314,6 @@ Usualmente, la medida de intermediación está normalizada en el rango de [0, 1]
 \end{itemize}
 \item Clasificación de redes y detección de \textit{outliers}. Algunos problemas están etiquetados con información contextual: servicio de salud, ámbito y grupo etario. Por ejemplo, en una red con algunos problemas pocos comunes identificados como del Servicio Cardiológico, ¿es posible inferir otros problemas poco comunes asociados por su co-ocurrencia en los pacientes?
   \item \textit{Clustering}. Según Blonde et al.\cite{Blondel2008FastNetworks}, el problema de \textit{clustering} requiere la partición de una red en grupos de vértices densamente conectados, donde los vértices que pertenecen a diferentes grupos se conectan escasamente. Las formulaciones exactas de este problema de optimización son computacionalmente intratables. En los últimos años se han propuesto muchos algoritmos para encontrar particiones razonablemente buenas de una manera razonablemente rápida, debido al incremento de la disponibilidad de conjuntos de datos con grandes redes y el impacto de las redes en la vida. Se pueden distinguir los siguientes tipos de algoritmos \label{par:algoritmos-nosupervisados}:
-.
 \begin{itemize}
 \item \textbf{Divisivos:} Se comienza con todo el grafo y se van eliminando iterativamente las aristas, dividiendo así progresivamente el grafo en subgrafos desconectados más y más pequeños. Estos subgrafos se identifican como comunidades. El punto crucial en un algoritmo divisivo es la selección de las aristas que se van a eliminar, las cuales deben ser las que conectan comunidades y no las aristas que están dentro de las comunidades. \cite{Radicchi2004DefiningNetworks,Girvan2002CommunityNetworks.,Newman2004FastNetworks}
 \item \textbf{Aglomerativos:} Para cada uno de los vértices del grafo se calcula un peso, el cual mide qué tan conectados están los vértices. A partir del conjunto de todos los vértices sin aristas, se ordenan decrecientemente los vértices según su pesos, y se agregan iterativamente las aristas entre pares similares de vértices. De esta manera, los vértices se agrupan en comunidades cada vez más grandes, y el árbol se construye hasta la raíz. Este árbol representa a todo el grafo. \cite{Radicchi2004DefiningNetworks,Pons2005ComputingWalks}
@@ -348,9 +344,9 @@ Esta función de beneficio se llama \textbf{modularidad}. La modularidad de una 
 \paragraph{Comparación de las comunidades con un \textit{gold-standard}.}
 \label{par:cubrimiento}
 
-El término \textit{gold-standard} \cite{Versi1992quotGoldTerm.} se utiliza en los trabajos científicos para referirse a valores de referencia que están disponible en condiciones razonables. No es la prueba perfecta, sino la mejor disponible. El \textit{gold-standard} es importante ante la imposibilidad de realizar mediciones directas para determinar si los conceptos que están dentro de una comunidad realmente pertenecen o no a ella. Los \textit{gold-standard} con el que se realizan las mediciones son los públicos y disponibles por la organización Kaiser Permanente (Ver sección \ref{par:kaiser-permanente}).
+El término \textit{gold-standard} \cite{Versi1992GoldTerm.} se utiliza en los trabajos científicos para referirse a valores de referencia que están disponible en condiciones razonables. No es la prueba perfecta, sino la mejor disponible. El \textit{gold-standard} es importante ante la imposibilidad de realizar mediciones directas para determinar si los conceptos que están dentro de una comunidad realmente pertenecen o no a ella. Los \textit{gold-standard} con el que se realizan las mediciones son los públicos y disponibles por la organización Kaiser Permanente (Ver sección \ref{par:kaiser-permanente}).
 
-La medición que se realizo se llama cubrimiento, la cual se define como la proporción de los conceptos que se comparten entre los dos conjuntos de datos, al tamaño del \textit{\acrshort{refset}} (Ver sección \ref{par:refset}) de referencia $T$, como se define en la ecuación \ref{eq:cubrimiento}
+La medición que se realizó se llama cubrimiento, la cual se define como la proporción de los conceptos que se comparten entre los dos conjuntos de datos, al tamaño del \textit{\acrshort{refset}} (Ver sección \ref{par:refset}) de referencia $T$, como se define en la ecuación \ref{eq:cubrimiento}
 
 \begin{equation}\label{eq:cubrimiento}
 \textup{cubrimiento} = \frac{\textup{conceptos mapeados en T}}{\textup{Tamaño de T}}

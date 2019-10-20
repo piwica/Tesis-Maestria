@@ -6,7 +6,7 @@ La primera tarea permite determinar la calidad de los datos y definir los criter
 \section{Comprensión de datos}
 La lista de problemas registra las observaciones y hallazgos realizados a los pacientes y otra información del contexto. Los problemas de los pacientes son descripciones que se agrupan en conceptos, y los conceptos a su vez pertenecen a uno o varios \textit{\acrshort{refset}}.
 
-Cualquier usuario con acceso a la \acrshort{HCE} puede registrar un problema, este usuario puede pertenece a una área administrativa o asistencial del \acrshort{HIBA}. Algunas de las áreas tienen sub-áreas, presentando así una estructura jerárquica. Cuando se registra un problema, se asocia el área jerárquica del que registra.
+Cualquier usuario con acceso a la \acrshort{HCE} puede registrar un problema, este usuario puede pertenecer a una área administrativa o asistencial del \acrshort{HIBA}. Algunas de las áreas tienen sub-áreas, presentando así una estructura jerárquica. Cuando se registra un problema, se asocia el área jerárquica del que registra.
 
 Además cada registro tiene el atributo nivel de asistencia que indica el ámbito en el que fue cargado el problema (1 = Ambulatorio , 2 = Internacion General, 3 = Guardia, 4 = Triage, 5 = Internacion Geriatrica, 6 = Internacion Domiciliaria, 7 = Seguimiento Domiciliario, 8 = Episodio Externo, 9 = Episodio Ambulatorio). La figura \ref{fig:ModeloER} contiene el modelo entidad relación, donde se muestra cómo se relacionan estos datos.
 
@@ -33,7 +33,7 @@ En cuanto a los conceptos diferentes registrados por año, se observa una distri
 \includegraphics[width=\textwidth]{chart1}
 \end{figure}
 
-\subsection{Distribución por individuo}
+\subsection{Distribución por paciente (individuo)}
 Según la figura \ref{fig:listaIndividuos} la mayoría de los individuos tiene sólo un problema registrado en su lista de problemas, estos corresponde al \num{34.1}\% de los datos. Los individuos que tienen registrados hasta 10 problemas en la lista son el \num{80}\% de los datos.
 
 \begin{figure}[htbp]
@@ -69,7 +69,7 @@ Los contextos que tuve en cuenta en esta tesis fueron área jerárquica, nivel d
 % \item Internación: Tiene un periodo limitado del cuidado, el paciente es tratado por un episodio grave de una enfermedad, cuyas condiciones puedan resultar en un trauma o su muerte. Los tipos de internación son general, domiciliaria y geriátrica.
 % \end{itemize}
 
-Según la tabla \ref{nivel_asistencia} se puede observar que en cuatro niveles de asistencia (Ambulatorio, Guardia, Triage e Internación general (Ver sección \ref{par:listaproblemas-HCE})) están el 97\% del total de los registros de la lista de problemas. De estos cuatro niveles de asistencia, en el caso de Ambulatoria y Guardia hay una relación en la que por cada diez registros hay un concepto de Snomed CT diferente asociado a la lista de problemas. Triage es la relación más baja ya que es 20:1 entre los registros y los conceptos de Snomed  CT, e Internación General es la más alta (10:2).
+Según la tabla \ref{nivel_asistencia} se puede observar que en cuatro niveles de asistencia (Ambulatorio, Guardia, Triage e Internación general (Ver sección \ref{par:listaproblemas-HCE})) están el 97\% del total de los registros de la lista de problemas. De estos cuatro niveles de asistencia, en el caso de Ambulatoria por cada 81 registros hay un concepto de Snomed CT diferente asociado a la lista de problemas, en la guardia esta relación es de 105:1. Triage es la relación más baja ya que es 188:1 entre los registros y los conceptos de Snomed  CT, e Internación General es la más alta (42:1).
 
 \begin{table}[tb]
 \centering
@@ -113,7 +113,7 @@ La \acrshort{HCE} tiene 918 áreas jerárquicas, de las cuales 601 tienen usuari
 
 \section{\textit{Refsets} según el contexto}
 
-En la primera fase de preparación de los datos, cree la base de datos de grafos. En el modelo de datos que se observa a la izquierda de la figura \ref{fig:ModeloDatosContexto} los vértices son los \textbf{conceptos} que está relacionados entre si por la arista \textbf{(ES\_UN)}, y los \textbf{contextos} están relacionados con los \textbf{conceptos} con la arista \textbf{(REGISTRA\_PROBLEMA)}, esta relación tiene el atributo \textbf{Frecuencia}. Este modelo representa los diferentes niveles de generalización de los conceptos con la relación (ES\_UN). También se representa que un contexto (área jerárquica, nivel asistencial o grupo etario) tiene varios conceptos y un concepto puede estar en varios contextos con la relación (REGISTRA\_PROBLEMA). A la derecha de la figura  \ref{fig:ModeloDatosContexto} hay una instancia de este modelo. Se representa que contextualmente el concepto varicela está registrado 150 veces en el área jerárquica Pediatría, 20 veces en el nivel asistencial Triage y 10 en el grupo etario de 5 a 14 años. Semánticamente, la varicela es una enfermedad viral caracterizada por exantema y es una infección por virus varicela zoster.
+En la primera fase de preparación de los datos, creé la base de datos de grafos. En el modelo de datos que se observa a la izquierda de la figura \ref{fig:ModeloDatosContexto} los vértices son los \textbf{conceptos} que está relacionados entre si por la arista \textbf{(ES\_UN)}, y los \textbf{contextos} están relacionados con los \textbf{conceptos} con la arista \textbf{(REGISTRA\_PROBLEMA)}, esta relación tiene el atributo \textbf{Frecuencia}. Este modelo representa los diferentes niveles de generalización de los conceptos con la relación (ES\_UN). También se representa que un contexto (área jerárquica, nivel asistencial o grupo etario) tiene varios conceptos y un concepto puede estar en varios contextos con la relación (REGISTRA\_PROBLEMA). A la derecha de la figura  \ref{fig:ModeloDatosContexto} hay una instancia de este modelo. Se representa que contextualmente el concepto varicela está registrado 150 veces en el área jerárquica Pediatría, 20 veces en el nivel asistencial Triage y 10 en el grupo etario de 5 a 14 años. Semánticamente, la varicela es una enfermedad viral caracterizada por exantema y es una infección por virus varicela zoster.
 
 \begin{figure}[htbp]
 \caption{Modelo de datos con contexto}
@@ -133,7 +133,7 @@ Con el fin de encontrar conceptos que estén asociados a los niveles de asistenc
 \end{itemize}
 \footnote{La fase de diseño y evaluación (Sección \ref{par:disenho_evaluacion}) contiene los pasos que se siguieron para realizar los test de signficancia de los \textit{clusters}}
 
-La tabla \ref{nivel_asistencia_clus} contiene los conceptos que se comparten en todos los grupos después de aplicar los algoritmos de agrupamiento. Los niveles de asistencia Internación general e Internación domiciliaria contienen los mismos conceptos. Son 3002 conceptos que representan su contexto. Estos dos niveles de asistencia se fusionaran en uno solo.
+La tabla \ref{nivel_asistencia_clus} contiene los conceptos que se comparten en todos los grupos después de aplicar los algoritmos de agrupamiento. Los niveles de asistencia Internación general e Internación domiciliaria contienen los mismos conceptos. Después de fusionar estos dos niveles, son 3002 conceptos que representan su contexto.
 
 \begin{table}[htb]
 \centering
@@ -141,7 +141,7 @@ La tabla \ref{nivel_asistencia_clus} contiene los conceptos que se comparten en 
 \label{nivel_asistencia_clus}
 \begin{tabular}{@{}lr@{}}
 \toprule
-Nivel de Asistencia o ámbito & Conceptos del grupo \\ \midrule
+Nivel de Asistencia o ámbito & Conceptos finales del grupo \\ \midrule
 Ambulatorio & \num{6304} \\
 Guardia & \num{2269} \\
 Triage & \num{779} \\
@@ -384,7 +384,7 @@ Como se muestra en la tabla \ref{cubrimiento_1y3}, hay una significativa mejora 
 En el caso del cubrimiento de los conceptos de \acrshort{HIBA} por \textit{Kaiser Permanente}, el cubrimiento también mejora pero sigue siendo muy pequeño, esto se debe a que el  \acrshort{HIBA} tiene no sólo más conceptos en los \textit{\acrshort{refset}}  sino que se evidencia una mayor diversidad en ellos.
  
 \section{Discusión del capítulo}
-El objetivo de este capítulo era consolidar el conjunto de datos que se usará para entrenamiento y validación de los modelos. Para poder lograr este objetivo primero realicé un análisis descriptivo de cada una de las dimensiones y luego cree \textit{\acrshort{refset}} que pueden ser utilizados como vocabularios controlados dependientes de contextos.
+El objetivo de este capítulo era consolidar el conjunto de datos que se usará para entrenamiento y validación de los modelos. Para poder lograr este objetivo primero realicé un análisis descriptivo de cada una de las dimensiones y luego creé \textit{\acrshort{refset}} que pueden ser utilizados como vocabularios controlados dependientes de contextos.
 
 En la primera sección abordé la comprensión de los datos de la lista de problemas. Este análisis me permitió identificar valores atípicos y datos de error al momento de la carga, revisando la distribución desde diferentes dimensiones: tiempo, individuos, conceptos y contextos. 
 
@@ -406,7 +406,7 @@ Con el siguiente proceso se detectaron solapamiento entre aquellos servicios con
 
 Los servicios con mejor $F1 score$ son: servicio de cardiología pediátrica (0,871), servicio de fisioterapia (0,993), servicio de ginecoobstetricia (0,877), servicio de oftalmología adultos (0,938), servicio de psiquiatría (0,827), servicio de psiquiatría pediátrica(0,945) y  servicio de traumatología (0,821). Estos valores muestran que los conceptos diferencian bien estos servicios, y que no deberían ser fusionados aunque uno sea padre del otro como el caso de  servicio de psiquiatría y servicio de psiquiatría pediátrica.
 
-Como resultado de estos procesos obtuve 29 servicios finales. Estos servicios tienen mejor $F1 score$ global que los 44 servicios. Para evaluar el cubrimiento de los {\acrshort{refset}}, use como referencia los donados por \textit{Kaiser Permanente }a Snomed CT, en ellos encontré 10 {\acrshort{refset}}de \acrshort{CMT} que eran afines a 16 de los 29 servicios finales. Los resultados obtenidos muestran que la mayoría de los servicios tienen una cobertura entre 0,30 y 0,45. Los que se ubican con mejor cobertura son pediatría (0,56), cardiología(0,46) y dermatología (0,45). El de peor cobertura es oncología (0,07), este es el único caso en el que el {\acrshort{refset}}creado por el \acrshort{HIBA} es de menor tamaño al de referencia, en todos los otros casos el tamaño de los {\acrshort{refset}} del \acrshort{HIBA} es superior en tamaño a los de referencia. 
+Como resultado de estos procesos obtuve 29 servicios finales. Estos servicios tienen mejor $F1 score$ global que los 44 servicios. Para evaluar el cubrimiento de los {\acrshort{refset}}, use como referencia los donados por \textit{Kaiser Permanente }a Snomed CT, en ellos encontré 10 {\acrshort{refset}} de \acrshort{CMT} que eran afines a 16 de los 29 servicios finales. Los resultados obtenidos muestran que la mayoría de los servicios tienen una cobertura entre 0,30 y 0,45. Los que se ubican con mejor cobertura son pediatría (0,56), cardiología(0,46) y dermatología (0,45). El de peor cobertura es oncología (0,07), este es el único caso en el que el {\acrshort{refset}} creado por el \acrshort{HIBA} es de menor tamaño al de referencia, en todos los otros casos el tamaño de los {\acrshort{refset}} del \acrshort{HIBA} es superior en tamaño a los de referencia. 
 
 Los niveles de precisión entre los dos conjuntos de datos hace compleja la tarea de comparación. Por lo tanto, contrasté estos resultados con la cobertura calculada con diferentes distancias semánticas, encontrando que hay una significativa mejora en los valores de cubrimiento. Incluso con distancia \textless= 2,  la mayoría de los servicios alcanzan más de un 90\% de cubrimiento de conceptos de \acrshort{CMT} .
 
@@ -442,4 +442,4 @@ En este capítulo he presentado las decisiones en la extracción, transformació
 
 La transformación más compleja fue la de la definición del contexto de los 29 servicios de atención a partir de las 901 áreas jerárquicas. Si bien agrupar los conceptos por contexto es necesario para facilitar el uso significativo de la Snomed CT, son escasos los ejemplos sobre metodologías o  {\acrshort{refset}} públicos que puedan ser usados como referencia.
 
-En este capítulo usé modelos de aprendizaje no supervisado y supervisado para definir qué servicios, niveles asistenciales y grupos etarios pueden ser diferenciables de los demás a partir de sus conceptos. En el caso de los servicios, Una vez fueron definidos evalué su cubrimiento con respecto a los  {\acrshort{refset}} de referencia de \textit{Kaiser Permanente}, aunque en la mayoría de los casos da un cubrimiento exacto superior al 40\%, si se utilizan las distancias semánticas estos cubrimientos se incrementan significativamente, sobrepasando en la mayoría de los casos el 90\%.
+En este capítulo usé modelos de aprendizaje no supervisado y supervisado para definir qué servicios, niveles asistenciales y grupos etarios pueden ser diferenciables de los demás a partir de sus conceptos. En el caso de los servicios, una vez que fueron definidos evalué su cubrimiento con respecto a los  {\acrshort{refset}} de referencia de \textit{Kaiser Permanente}, aunque en la mayoría de los casos da un cubrimiento exacto superior al 40\%, si se utilizan las distancias semánticas estos cubrimientos se incrementan significativamente, sobrepasando en la mayoría de los casos el 90\%.
